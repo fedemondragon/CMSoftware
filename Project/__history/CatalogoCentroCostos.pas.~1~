@@ -1,0 +1,34 @@
+unit CatalogoCentroCostos;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.Buttons, Vcl.ToolWin;
+
+type
+  TFormCatalogoCentroCostos = class(TForm)
+    ToolBar1: TToolBar;
+    SpeedButtonAgregar: TSpeedButton;
+    SpeedButtonModificar: TSpeedButton;
+    SpeedButtonEliminar: TSpeedButton;
+    ToolButton1: TToolButton;
+    SpeedButtonBuscar: TSpeedButton;
+    SpeedButtonImprimir: TSpeedButton;
+    ToolButton2: TToolButton;
+    SpeedButtonSalir: TSpeedButton;
+    ToolBar2: TToolBar;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormCatalogoCentroCostos: TFormCatalogoCentroCostos;
+
+implementation
+
+{$R *.dfm}
+
+end.

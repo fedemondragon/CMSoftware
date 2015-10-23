@@ -1,0 +1,25 @@
+object DataModule1: TDataModule1
+  OldCreateOrder = False
+  Height = 398
+  Width = 651
+  object DataSourceProducto: TDataSource
+    DataSet = FDQueryProducto
+    Left = 72
+    Top = 40
+  end
+  object FDQueryProducto: TFDQuery
+    Connection = FormMainMenu.FDConnectionPrincipal
+    SQL.Strings = (
+      'Select * from Equipo;')
+    Left = 200
+    Top = 56
+  end
+  object FDTable1: TFDTable
+    Connection = FormMainMenu.FDConnectionPrincipal
+    UpdateOptions.UpdateTableName = '"Tipo_equipo"'
+    SchemaName = 'CMSoftware'
+    TableName = '"Tipo_equipo"'
+    Left = 288
+    Top = 152
+  end
+end

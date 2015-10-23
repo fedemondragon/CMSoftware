@@ -1,0 +1,35 @@
+unit Entidades;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls;
+
+type
+  TFormEntidades = class(TForm)
+    GroupBoxTiposdeEquipos: TGroupBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    EditClave: TEdit;
+    EditTipoEquipo: TEdit;
+    MemoUbicacion: TMemo;
+    BitBtnGuardar: TBitBtn;
+    BitBtnCerrar: TBitBtn;
+    Label4: TLabel;
+    EditResponsable: TEdit;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormEntidades: TFormEntidades;
+
+implementation
+
+{$R *.dfm}
+
+end.

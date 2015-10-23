@@ -1,0 +1,18 @@
+program CMSoftware;
+
+uses
+  Vcl.Forms,
+  MainMenu in 'MainMenu.pas' {FormMainMenu},
+  Producto in 'Producto.pas' {FormProductos},
+  Proveedor in 'Proveedor.pas' {Form1};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TFormMainMenu, FormMainMenu);
+  Application.CreateForm(TFormProductos, FormProductos);
+  Application.CreateForm(TForm1, Form1);
+  Application.Run;
+end.

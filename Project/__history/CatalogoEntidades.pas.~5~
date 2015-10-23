@@ -1,0 +1,97 @@
+unit CatalogoEntidades;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls, cxLookAndFeels,
+  cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter, cxData,
+  cxDataStorage, cxEdit, cxNavigator, Data.DB, cxDBData, FireDAC.UI.Intf,
+  FireDAC.VCLUI.Wait, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, cxGridCustomTableView,
+  cxGridTableView, cxGridDBTableView, cxGridCustomPopupMenu, cxGridPopupMenu,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, FireDAC.Comp.UI, cxGridLevel,
+  cxClasses, cxGridCustomView, cxGrid, Vcl.ComCtrls, Vcl.Buttons, Vcl.ToolWin;
+
+type
+  TFormCatalogoEntidades = class(TForm)
+    ToolBar2: TToolBar;
+    ToolBar1: TToolBar;
+    SpeedButtonAgregar: TSpeedButton;
+    SpeedButtonModificar: TSpeedButton;
+    SpeedButtonEliminar: TSpeedButton;
+    ToolButton2: TToolButton;
+    SpeedButtonBuscar: TSpeedButton;
+    SpeedButtonImprimir: TSpeedButton;
+    ToolButton1: TToolButton;
+    SpeedButtonSalir: TSpeedButton;
+    cxGridProveedor: TcxGrid;
+    cxGridProveedorDBTableView1: TcxGridDBTableView;
+    cxGridProveedorLevel1: TcxGridLevel;
+    FDGUIxWaitCursorEnbtidades: TFDGUIxWaitCursor;
+    FDTableEntidades: TFDTable;
+    cxGridPopupMenuEntidades: TcxGridPopupMenu;
+    DataSourceEntidades: TDataSource;
+    cxGridProveedorDBTableView1id_entidad: TcxGridDBColumn;
+    cxGridProveedorDBTableView1nombre_entidad: TcxGridDBColumn;
+    cxGridProveedorDBTableView1ubicacion: TcxGridDBColumn;
+    cxGridProveedorDBTableView1responsable: TcxGridDBColumn;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+    procedure SpeedButtonSalirClick(Sender: TObject);
+    procedure SpeedButtonAgregarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormCatalogoEntidades: TFormCatalogoEntidades;
+
+implementation
+
+{$R *.dfm}
+
+uses DataModuleInventarios, Entidades, Equipo;
+
+procedure TFormCatalogoEntidades.FormActivate(Sender: TObject);
+begin
+  DataSourceEntidades.DataSet.Refresh;
+end;
+
+procedure TFormCatalogoEntidades.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+   Action:=caFree;
+end;
+
+procedure TFormCatalogoEntidades.SpeedButtonAgregarClick(Sender: TObject);
+var
+  entidad:Integer;
+begin
+     //Dame la ultima clave del equipo
+  With  DataModule1.FDQueryEntidades do
+      Begin
+        Close;
+        sql.Clear;
+        Sql.add('Select max(id_entidad) from "CMSoftware"."Entidad"');
+        open;
+        entidad:=Fields[0].Asinteger + 1;
+      End;
+      //Asigna lave y abre modulo
+  FormEntidades.Show;
+
+  FormEntidades.EditClave.text:=IntToStr(entidad);
+  FormEntidades.EditTipoEquipo.SetFocus;
+  FormEntidades.BitBtnGuardar.Caption:='&Guardar';
+
+end;
+
+procedure TFormCatalogoEntidades.SpeedButtonSalirClick(Sender: TObject);
+begin
+  close;
+end;
+
+end.

@@ -1,0 +1,30 @@
+unit Proveedor;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls,
+  Vcl.TabNotBk;
+
+type
+  TFormProveedor = class(TForm)
+    TabbedNotebook1: TTabbedNotebook;
+    GroupBox7: TGroupBox;
+    BitBtnGuardar: TBitBtn;
+    BitBtnAceptar: TBitBtn;
+    BitBtnCerrar: TBitBtn;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormProveedor: TFormProveedor;
+
+implementation
+
+{$R *.dfm}
+
+end.

@@ -1,0 +1,152 @@
+unit catalogoProveedor;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, Vcl.ToolWin, Vcl.ComCtrls,
+  Vcl.ExtCtrls, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters,
+  cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator,
+  Data.DB, cxDBData, FireDAC.UI.Intf, FireDAC.VCLUI.Wait, cxGridCustomPopupMenu,
+  cxGridPopupMenu, FireDAC.Stan.Intf, FireDAC.Comp.UI, cxGridLevel, cxClasses,
+  cxGridCustomView, cxGridCustomTableView, cxGridTableView, cxGridDBTableView,
+  cxGrid, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
+  FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async,
+  FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+
+type
+  TFormCatalogoProveedores = class(TForm)
+    ToolBar1: TToolBar;
+    SpeedButton1: TSpeedButton;
+    SpeedButton2: TSpeedButton;
+    SpeedButton3: TSpeedButton;
+    SpeedButton4: TSpeedButton;
+    SpeedButton5: TSpeedButton;
+    SpeedButton6: TSpeedButton;
+    ToolButton1: TToolButton;
+    ToolButton2: TToolButton;
+    cxGridProveedorDBTableView1: TcxGridDBTableView;
+    cxGridProveedorLevel1: TcxGridLevel;
+    cxGridProveedor: TcxGrid;
+    FDGUIxWaitCursorProveedor: TFDGUIxWaitCursor;
+    cxGridPopupMenuProveedor: TcxGridPopupMenu;
+    DataSourceProveedores: TDataSource;
+    FDTableProveedores: TFDTable;
+    cxGridProveedorDBTableView1id_proveedor: TcxGridDBColumn;
+    cxGridProveedorDBTableView1nombre: TcxGridDBColumn;
+    cxGridProveedorDBTableView1calle: TcxGridDBColumn;
+    cxGridProveedorDBTableView1num_ext: TcxGridDBColumn;
+    cxGridProveedorDBTableView1num_int: TcxGridDBColumn;
+    cxGridProveedorDBTableView1cp: TcxGridDBColumn;
+    cxGridProveedorDBTableView1poblacion: TcxGridDBColumn;
+    cxGridProveedorDBTableView1estado: TcxGridDBColumn;
+    cxGridProveedorDBTableView1municipio: TcxGridDBColumn;
+    cxGridProveedorDBTableView1colonia: TcxGridDBColumn;
+    cxGridProveedorDBTableView1pais: TcxGridDBColumn;
+    cxGridProveedorDBTableView1clasificacion: TcxGridDBColumn;
+    cxGridProveedorDBTableView1rfc: TcxGridDBColumn;
+    cxGridProveedorDBTableView1telefono: TcxGridDBColumn;
+    cxGridProveedorDBTableView1pagina_web: TcxGridDBColumn;
+    cxGridProveedorDBTableView1centro_costos: TcxGridDBColumn;
+    ToolBar2: TToolBar;
+    procedure SpeedButton6Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure SpeedButton2Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    cuenta:Integer;
+  end;
+
+var
+  FormCatalogoProveedores: TFormCatalogoProveedores;
+
+implementation
+
+{$R *.dfm}
+
+uses DataModuleInventarios, Producto, Proveedor;
+
+procedure TFormCatalogoProveedores.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+    Action:=caFree;
+end;
+
+procedure TFormCatalogoProveedores.SpeedButton1Click(Sender: TObject);
+begin
+      //Dame la ultima clave del PROVEEDOR
+  With  DataModuleInventarios.DataModule1.FDQueryproveedor do
+      Begin
+        Close;
+        sql.Clear;
+        Sql.add('Select max(id_proveedor) from "CMSoftware"."Proveedor"');
+        open;
+        cuenta:=Fields[0].Asinteger + 1;
+      End;
+      //Asigna lave y abre modulo
+  FormProveedor.Show;
+  FormProveedor.TabbedNotebook1.PageIndex:=0;
+  FormProveedor.EditClave.text:=IntToStr(cuenta);
+  FormProveedor.EditNombre.SetFocus;
+  FormProveedor.BitBtnGuardar.Caption:='&Guardar';
+end;
+
+procedure TFormCatalogoProveedores.SpeedButton2Click(Sender: TObject);
+var
+  Clave_proveedor:Integer;
+begin
+ FormProveedor.TabbedNotebook1.PageIndex:=0;
+  Clave_proveedor:=StrToInt(DataSourceProveedores.DataSet.Fields[24].AsString);
+With datamoduleinventarios.DataModule1.FDQueryProveedor do //consulta el producto
+              begin
+                 Close;
+                 sql.Clear;
+                 Sql.Add('select id_proveedor,nombre,calle,num_ext,num_int,cp,poblacion,estado,');
+                 Sql.Add('municipio,colonia,pais,clasificacion,rfc,telefono,pagina_web,centro_costos,');
+                 Sql.Add('observaciones,campolibre1,campolibre2,campolibre3,descrip_libre1,descrip_libre2,descrip_libre3,monto_comprado,fecha_ult_comp');
+                 Sql.Add('from "CMSoftware"."Proveedor" where id_proveedor=:param1');
+                 Params[0].AsInteger:=Clave_proveedor;
+                 open;
+
+            With FormProveedor do
+               begin
+                 EditNombre.Text;
+                 EditCalle.Text;
+                 EditNumext.Text;
+                 EditNumint.Text;
+                 EditCP.Text;
+                 EditPoblacion.Text;
+                 EditEstado.Text;
+                 EditMunicipio.Text;
+                 EditColonia.Text;
+                 EditPais.Text;
+                 EditClasificacion.Text;
+                 EditRFC.Text;
+                 EditTel.Text;
+                 Editweb.Text;
+                 EditCentroCostos.Text;
+                 MemoObservaciones.Lines.Text;
+                 EditLibre1.Text;
+                 EditLibre2.Text;
+                 EditLibre3.Text;
+                 EditCampo1.Text;
+                 EditCampo2.Text;
+                 EditCampo3.Text;
+                 EditMonto.Text;
+                 EditFechaUltimaCompra.Text;
+
+               end;
+  end;
+  FormProveedor.Show;
+
+end;
+
+procedure TFormCatalogoProveedores.SpeedButton6Click(Sender: TObject);
+begin
+  close;
+end;
+
+end.

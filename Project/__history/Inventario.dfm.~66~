@@ -1,0 +1,230 @@
+object FormInventario: TFormInventario
+  Left = 0
+  Top = 0
+  Caption = 'Inventario de productos '
+  ClientHeight = 551
+  ClientWidth = 906
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  FormStyle = fsMDIChild
+  OldCreateOrder = False
+  Visible = True
+  WindowState = wsMaximized
+  OnClose = FormClose
+  PixelsPerInch = 96
+  TextHeight = 13
+  object ToolBar1: TToolBar
+    Left = 0
+    Top = 23
+    Width = 906
+    Height = 49
+    ButtonHeight = 42
+    Caption = 'ToolBar1'
+    EdgeBorders = [ebLeft, ebTop, ebRight, ebBottom]
+    TabOrder = 0
+    object SpeedButton1: TSpeedButton
+      Left = 0
+      Top = 0
+      Width = 41
+      Height = 42
+      Hint = 'Agregar'
+      Caption = 'Agre'
+      ParentShowHint = False
+      ShowHint = True
+      OnClick = SpeedButton1Click
+    end
+    object SpeedButton2: TSpeedButton
+      Left = 41
+      Top = 0
+      Width = 41
+      Height = 42
+      Hint = 'Modificar'
+      Caption = 'Mod'
+      ParentShowHint = False
+      ShowHint = True
+      OnClick = SpeedButton2Click
+    end
+    object SpeedButton3: TSpeedButton
+      Left = 82
+      Top = 0
+      Width = 41
+      Height = 42
+      Hint = 'Eliminar'
+      Caption = 'Elimin'
+      ParentShowHint = False
+      ShowHint = True
+      OnClick = SpeedButton3Click
+    end
+    object ToolButton1: TToolButton
+      Left = 123
+      Top = 0
+      Width = 8
+      Caption = 'ToolButton1'
+      Style = tbsSeparator
+    end
+    object SpeedButton4: TSpeedButton
+      Left = 131
+      Top = 0
+      Width = 41
+      Height = 42
+      Hint = 'Buscar'
+      Caption = 'Busca'
+      ParentShowHint = False
+      ShowHint = True
+    end
+    object SpeedButton5: TSpeedButton
+      Left = 172
+      Top = 0
+      Width = 41
+      Height = 42
+      Hint = 'Imprimir'
+      Caption = 'Impri'
+      ParentShowHint = False
+      ShowHint = True
+    end
+    object ToolButton2: TToolButton
+      Left = 213
+      Top = 0
+      Width = 8
+      Caption = 'ToolButton2'
+      ImageIndex = 0
+      Style = tbsSeparator
+    end
+    object SpeedButton6: TSpeedButton
+      Left = 221
+      Top = 0
+      Width = 41
+      Height = 42
+      Caption = 'Salir'
+      OnClick = SpeedButton6Click
+    end
+  end
+  object ToolBar2: TToolBar
+    Left = 0
+    Top = 0
+    Width = 906
+    Height = 23
+    Caption = 'ToolBar2'
+    Color = clBlue
+    GradientEndColor = clBlue
+    HotTrackColor = clBlue
+    ParentColor = False
+    TabOrder = 1
+  end
+  object cxGridInventarios: TcxGrid
+    Left = 0
+    Top = 72
+    Width = 906
+    Height = 479
+    Align = alClient
+    TabOrder = 2
+    LevelTabs.Style = 5
+    object cxGridInventariosDBTableView1: TcxGridDBTableView
+      Navigator.Buttons.CustomButtons = <>
+      DataController.DataSource = DataSourceInventarios
+      DataController.Summary.DefaultGroupSummaryItems = <>
+      DataController.Summary.FooterSummaryItems = <>
+      DataController.Summary.SummaryGroups = <>
+      OptionsSelection.CellSelect = False
+      OptionsSelection.UnselectFocusedRecordOnExit = False
+      object cxGridInventariosDBTableView1id_clave: TcxGridDBColumn
+        Caption = 'CLAVE'
+        DataBinding.FieldName = 'id_clave'
+        Width = 97
+      end
+      object cxGridInventariosDBTableView1descripcion: TcxGridDBColumn
+        Caption = 'DESCRIPCION'
+        DataBinding.FieldName = 'descripcion'
+        Width = 104
+      end
+      object cxGridInventariosDBTableView1tipo_producto: TcxGridDBColumn
+        Caption = 'TIPO DE PRODUCTO'
+        DataBinding.FieldName = 'tipo_producto'
+        Width = 120
+      end
+      object cxGridInventariosDBTableView1linea: TcxGridDBColumn
+        Caption = 'LINEA'
+        DataBinding.FieldName = 'linea'
+        Width = 100
+      end
+      object cxGridInventariosDBTableView1control: TcxGridDBColumn
+        Caption = 'CONTROL'
+        DataBinding.FieldName = 'control'
+        Width = 95
+      end
+      object cxGridInventariosDBTableView1unidad_ent: TcxGridDBColumn
+        Caption = 'UNIDA DE ENTRADA'
+        DataBinding.FieldName = 'unidad_ent'
+        Width = 107
+      end
+      object cxGridInventariosDBTableView1unidad_sal: TcxGridDBColumn
+        Caption = 'UNIDAD DE SALIDA'
+        DataBinding.FieldName = 'unidad_sal'
+        Width = 134
+      end
+      object cxGridInventariosDBTableView1factor_uni: TcxGridDBColumn
+        Caption = 'FACTOR UNIDADES'
+        DataBinding.FieldName = 'factor_uni'
+        Width = 112
+      end
+      object cxGridInventariosDBTableView1unidad_emp: TcxGridDBColumn
+        Caption = 'UNIDA DE EMPAQUE'
+        DataBinding.FieldName = 'unidad_emp'
+        Width = 84
+      end
+      object cxGridInventariosDBTableView1precio_lista: TcxGridDBColumn
+        Caption = 'PRECIO LISTA'
+        DataBinding.FieldName = 'precio_lista'
+        Width = 122
+      end
+      object cxGridInventariosDBTableView1existencia: TcxGridDBColumn
+        Caption = 'EXISTENCIA'
+        DataBinding.FieldName = 'existencia'
+        Width = 134
+      end
+      object cxGridInventariosDBTableView1stock_min: TcxGridDBColumn
+        Caption = 'STOCK MIN'
+        DataBinding.FieldName = 'stock_min'
+        Width = 170
+      end
+      object cxGridInventariosDBTableView1stock_max: TcxGridDBColumn
+        Caption = 'STOCK MAX'
+        DataBinding.FieldName = 'stock_max'
+        Width = 160
+      end
+    end
+    object cxGridInventariosLevel1: TcxGridLevel
+      GridView = cxGridInventariosDBTableView1
+    end
+  end
+  object DataSourceInventarios: TDataSource
+    DataSet = FDTableInventarios
+    Left = 88
+    Top = 176
+  end
+  object FDTableInventarios: TFDTable
+    Active = True
+    IndexFieldNames = 'id_clave'
+    Connection = FormMainMenu.FDConnectionPrincipal
+    UpdateOptions.UpdateTableName = '"CMSoftware"."Producto"'
+    TableName = '"CMSoftware"."Producto"'
+    Left = 96
+    Top = 232
+  end
+  object FDGUIxWaitCursorInventarios: TFDGUIxWaitCursor
+    Provider = 'Forms'
+    Left = 88
+    Top = 296
+  end
+  object cxGridPopupMenuInventarios: TcxGridPopupMenu
+    Grid = cxGridInventarios
+    PopupMenus = <>
+    AlwaysFireOnPopup = True
+    Left = 256
+    Top = 320
+  end
+end

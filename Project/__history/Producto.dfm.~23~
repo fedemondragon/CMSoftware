@@ -1,0 +1,347 @@
+object FormProductos: TFormProductos
+  Left = 0
+  Top = 0
+  Caption = 'C'#225'talogo de Productos y Servicios'
+  ClientHeight = 484
+  ClientWidth = 506
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object TabbedNotebook1: TTabbedNotebook
+    Left = 0
+    Top = 0
+    Width = 506
+    Height = 441
+    Align = alTop
+    TabFont.Charset = DEFAULT_CHARSET
+    TabFont.Color = clBtnText
+    TabFont.Height = -11
+    TabFont.Name = 'Tahoma'
+    TabFont.Style = []
+    TabOrder = 0
+    ExplicitLeft = 8
+    ExplicitWidth = 502
+    object TTabPage
+      Left = 4
+      Top = 24
+      Caption = 'Datos Generales'
+      ExplicitWidth = 292
+      ExplicitHeight = 222
+      object GroupBox1: TGroupBox
+        Left = 10
+        Top = 7
+        Width = 479
+        Height = 137
+        TabOrder = 0
+        object Label1: TLabel
+          Left = 32
+          Top = 75
+          Width = 27
+          Height = 13
+          Caption = 'Clave'
+        end
+        object Label2: TLabel
+          Left = 32
+          Top = 104
+          Width = 54
+          Height = 13
+          Caption = 'Descripci'#243'n'
+        end
+        object Image1: TImage
+          Left = 352
+          Top = 3
+          Width = 97
+          Height = 96
+        end
+        object Edit1: TEdit
+          Left = 104
+          Top = 72
+          Width = 121
+          Height = 21
+          TabOrder = 0
+          Text = 'Edit1'
+        end
+        object Edit2: TEdit
+          Left = 104
+          Top = 105
+          Width = 366
+          Height = 21
+          TabOrder = 1
+          Text = 'Edit2'
+        end
+        object BitBtn1: TBitBtn
+          Left = 231
+          Top = 70
+          Width = 75
+          Height = 25
+          Caption = 'Buscar'
+          TabOrder = 2
+        end
+      end
+      object GroupBox2: TGroupBox
+        Left = 8
+        Top = 150
+        Width = 481
+        Height = 250
+        TabOrder = 1
+        object Label9: TLabel
+          Left = 24
+          Top = 72
+          Width = 25
+          Height = 13
+          Caption = 'L'#237'nea'
+        end
+        object GroupBox3: TGroupBox
+          Left = 15
+          Top = 16
+          Width = 454
+          Height = 33
+          TabOrder = 0
+          object RadioButtonProducto: TRadioButton
+            Left = 27
+            Top = 8
+            Width = 113
+            Height = 17
+            Caption = 'Producto'
+            Checked = True
+            TabOrder = 0
+            TabStop = True
+          end
+          object RadioButtonServicio: TRadioButton
+            Left = 169
+            Top = 8
+            Width = 113
+            Height = 17
+            Caption = 'Servicio'
+            TabOrder = 1
+          end
+          object RadioButtonKit: TRadioButton
+            Left = 336
+            Top = 8
+            Width = 113
+            Height = 17
+            Caption = 'Kit'
+            TabOrder = 2
+          end
+        end
+        object Edit10: TEdit
+          Left = 72
+          Top = 68
+          Width = 121
+          Height = 21
+          TabOrder = 1
+          Text = 'Edit10'
+        end
+        object BitBtnBuscar: TBitBtn
+          Left = 199
+          Top = 68
+          Width = 75
+          Height = 25
+          Caption = 'Buscar'
+          TabOrder = 2
+        end
+        object GroupBoxControl: TGroupBox
+          Left = 280
+          Top = 59
+          Width = 189
+          Height = 182
+          TabOrder = 3
+        end
+      end
+    end
+    object TTabPage
+      Left = 4
+      Top = 24
+      Caption = 'Precios y Control'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
+      object Edit7: TEdit
+        Left = 192
+        Top = 320
+        Width = 121
+        Height = 21
+        TabOrder = 0
+        Text = 'Edit7'
+      end
+      object GroupBox6: TGroupBox
+        Left = 5
+        Top = 5
+        Width = 484
+        Height = 137
+        TabOrder = 1
+        object Label7: TLabel
+          Left = 32
+          Top = 75
+          Width = 27
+          Height = 13
+          Caption = 'Clave'
+        end
+        object Label8: TLabel
+          Left = 32
+          Top = 104
+          Width = 54
+          Height = 13
+          Caption = 'Descripci'#243'n'
+        end
+        object Image4: TImage
+          Left = 352
+          Top = 3
+          Width = 97
+          Height = 96
+        end
+        object Edit8: TEdit
+          Left = 104
+          Top = 72
+          Width = 121
+          Height = 21
+          TabOrder = 0
+          Text = 'Edit1'
+        end
+        object Edit9: TEdit
+          Left = 104
+          Top = 105
+          Width = 366
+          Height = 21
+          TabOrder = 1
+          Text = 'Edit2'
+        end
+        object BitBtn4: TBitBtn
+          Left = 231
+          Top = 70
+          Width = 75
+          Height = 25
+          Caption = 'Buscar'
+          TabOrder = 2
+        end
+      end
+    end
+    object TTabPage
+      Left = 4
+      Top = 24
+      Caption = 'Hist'#243'ricos'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
+      object GroupBox4: TGroupBox
+        Left = 7
+        Top = 7
+        Width = 482
+        Height = 137
+        TabOrder = 0
+        object Label3: TLabel
+          Left = 32
+          Top = 75
+          Width = 27
+          Height = 13
+          Caption = 'Clave'
+        end
+        object Label4: TLabel
+          Left = 32
+          Top = 104
+          Width = 54
+          Height = 13
+          Caption = 'Descripci'#243'n'
+        end
+        object Image2: TImage
+          Left = 352
+          Top = 3
+          Width = 97
+          Height = 96
+        end
+        object Edit3: TEdit
+          Left = 104
+          Top = 72
+          Width = 121
+          Height = 21
+          TabOrder = 0
+          Text = 'Edit1'
+        end
+        object Edit4: TEdit
+          Left = 104
+          Top = 105
+          Width = 366
+          Height = 21
+          TabOrder = 1
+          Text = 'Edit2'
+        end
+        object BitBtn2: TBitBtn
+          Left = 231
+          Top = 70
+          Width = 75
+          Height = 25
+          Caption = 'Buscar'
+          TabOrder = 2
+        end
+      end
+    end
+    object TTabPage
+      Left = 4
+      Top = 24
+      Caption = 'Datos Adicionales'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
+      object GroupBox5: TGroupBox
+        Left = 7
+        Top = 5
+        Width = 482
+        Height = 137
+        TabOrder = 0
+        object Label5: TLabel
+          Left = 32
+          Top = 75
+          Width = 27
+          Height = 13
+          Caption = 'Clave'
+        end
+        object Label6: TLabel
+          Left = 32
+          Top = 104
+          Width = 54
+          Height = 13
+          Caption = 'Descripci'#243'n'
+        end
+        object Image3: TImage
+          Left = 352
+          Top = 3
+          Width = 97
+          Height = 96
+        end
+        object Edit5: TEdit
+          Left = 104
+          Top = 72
+          Width = 121
+          Height = 21
+          TabOrder = 0
+          Text = 'Edit1'
+        end
+        object Edit6: TEdit
+          Left = 104
+          Top = 105
+          Width = 366
+          Height = 21
+          TabOrder = 1
+          Text = 'Edit2'
+        end
+        object BitBtn3: TBitBtn
+          Left = 231
+          Top = 70
+          Width = 75
+          Height = 25
+          Caption = 'Buscar'
+          TabOrder = 2
+        end
+      end
+    end
+  end
+end

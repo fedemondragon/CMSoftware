@@ -1,0 +1,57 @@
+unit catalogoProveedor;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, Vcl.ToolWin, Vcl.ComCtrls,
+  Vcl.ExtCtrls, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters,
+  cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator,
+  Data.DB, cxDBData, FireDAC.UI.Intf, FireDAC.VCLUI.Wait, cxGridCustomPopupMenu,
+  cxGridPopupMenu, FireDAC.Stan.Intf, FireDAC.Comp.UI, cxGridLevel, cxClasses,
+  cxGridCustomView, cxGridCustomTableView, cxGridTableView, cxGridDBTableView,
+  cxGrid;
+
+type
+  TFormCatalogoProveedores = class(TForm)
+    ToolBar1: TToolBar;
+    SpeedButton1: TSpeedButton;
+    SpeedButton2: TSpeedButton;
+    SpeedButton3: TSpeedButton;
+    SpeedButton4: TSpeedButton;
+    SpeedButton5: TSpeedButton;
+    SpeedButton6: TSpeedButton;
+    ToolButton1: TToolButton;
+    ToolButton2: TToolButton;
+    cxGridProveedorDBTableView1: TcxGridDBTableView;
+    cxGridProveedorLevel1: TcxGridLevel;
+    cxGridProveedor: TcxGrid;
+    FDGUIxWaitCursorProveedor: TFDGUIxWaitCursor;
+    cxGridPopupMenuProveedor: TcxGridPopupMenu;
+    procedure SpeedButton6Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormCatalogoProveedores: TFormCatalogoProveedores;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFormCatalogoProveedores.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  Action:=caFree;
+end;
+
+procedure TFormCatalogoProveedores.SpeedButton6Click(Sender: TObject);
+begin
+     close;
+end;
+
+end.

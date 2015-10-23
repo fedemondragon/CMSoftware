@@ -1,0 +1,49 @@
+unit Equipo;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls,
+  Vcl.TabNotBk;
+
+type
+  TFormEquipos = class(TForm)
+    TabbedNotebook1: TTabbedNotebook;
+    GroupBox1: TGroupBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    EditEquipo: TEdit;
+    BitBtn1: TBitBtn;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Edit3: TEdit;
+    Edit4: TEdit;
+    ComboBox1: TComboBox;
+    BitBtn2: TBitBtn;
+    Edit5: TEdit;
+    Edit6: TEdit;
+    Label9: TLabel;
+    ComboBox2: TComboBox;
+    Label10: TLabel;
+    ComboBox3: TComboBox;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormEquipos: TFormEquipos;
+
+implementation
+
+{$R *.dfm}
+
+end.

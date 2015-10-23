@@ -1,0 +1,113 @@
+unit Proveedor;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls,
+  Vcl.TabNotBk;
+
+type
+  TFormProveedor = class(TForm)
+    TabbedNotebook1: TTabbedNotebook;
+    GroupBox7: TGroupBox;
+    BitBtnGuardar: TBitBtn;
+    BitBtnCerrar: TBitBtn;
+    GroupBox1: TGroupBox;
+    EditClave: TEdit;
+    EditNombre: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    GroupBox2: TGroupBox;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    EditCalle: TEdit;
+    EditNumext: TEdit;
+    EditNumint: TEdit;
+    Label15: TLabel;
+    EditPoblacion: TEdit;
+    EditColonia: TEdit;
+    EditCP: TEdit;
+    EditEstado: TEdit;
+    EditPais: TEdit;
+    EditMunicipio: TEdit;
+    EditClasificacion: TEdit;
+    EditRFC: TEdit;
+    EditTel: TEdit;
+    Label16: TLabel;
+    Editweb: TEdit;
+    GroupBox3: TGroupBox;
+    EditCentroCostos: TEdit;
+    GroupBox4: TGroupBox;
+    Label17: TLabel;
+    Label18: TLabel;
+    EditMonto: TEdit;
+    EditFechaUltimaCompra: TEdit;
+    GroupBox5: TGroupBox;
+    MemoObservaciones: TMemo;
+    GroupBox6: TGroupBox;
+    EditLibre1: TEdit;
+    EditLibre2: TEdit;
+    EditLibre3: TEdit;
+    EditCampo1: TEdit;
+    EditCampo2: TEdit;
+    EditCampo3: TEdit;
+    Label19: TLabel;
+    Label20: TLabel;
+    procedure BitBtnCerrarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormProveedor: TFormProveedor;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFormProveedor.BitBtnCerrarClick(Sender: TObject);
+begin
+close;
+          //INICIA PROCESO DE LIMPIEZA DE FORMULARIO
+          EditClave.Clear;
+          EditNombre.Clear;
+          EditCalle.Clear;
+          EditLinea.Clear;
+          EditNumext.Clear;
+          EditNumint.Clear;
+          EditCP.Clear;
+          EditPoblacion.Clear;
+          EditColonia.Clear;
+          EditEstado.Clear;
+          EditPais.Clear;
+          EditMunicipio.Clear;
+          EditClasificacion.Clear;
+          EditRFC.Clear;
+          EditTel.Clear;
+          Editweb.Clear;
+          EditCentroCostos.Clear;
+          EditMonto.Clear;
+          EditFechaUltimaCompra.Clear;
+          MemoObservaciones.Lines.Clear;
+          EditLibre1.Clear;
+          EditLibre2.Clear;
+          EditLibre3.Clear;
+          EditCampo1.Clear;
+          EditCampo2.Clear;
+          EditCampo3.Clear;
+end;
+
+end.

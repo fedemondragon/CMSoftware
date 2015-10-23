@@ -1,0 +1,83 @@
+unit CatalogoCompras;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls, cxLookAndFeels,
+  cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter, cxData,
+  cxDataStorage, cxEdit, cxNavigator, Data.DB, cxDBData, cxGridLevel,
+  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxClasses,
+  cxGridCustomView, cxGrid, Vcl.ComCtrls, Vcl.Buttons, Vcl.ToolWin,StrUtils;
+
+type
+  TFormCatalogoCompras = class(TForm)
+    ToolBar2: TToolBar;
+    ToolBar1: TToolBar;
+    SpeedButtonAgregar: TSpeedButton;
+    SpeedButtonModificar: TSpeedButton;
+    SpeedButtonEliminar: TSpeedButton;
+    ToolButton2: TToolButton;
+    SpeedButtonBuscar: TSpeedButton;
+    SpeedButtonImprimir: TSpeedButton;
+    ToolButton1: TToolButton;
+    SpeedButtonSalir: TSpeedButton;
+    cxGridProveedor: TcxGrid;
+    cxGridProveedorDBTableView1: TcxGridDBTableView;
+    cxGridProveedorLevel1: TcxGridLevel;
+    SpeedButton1: TSpeedButton;
+    cxGridProveedorDBTableView1Column1: TcxGridDBColumn;
+    cxGridProveedorDBTableView1Column2: TcxGridDBColumn;
+    cxGridProveedorDBTableView1Column3: TcxGridDBColumn;
+    procedure SpeedButtonSalirClick(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure SpeedButtonAgregarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormCatalogoCompras: TFormCatalogoCompras;
+
+implementation
+
+{$R *.dfm}
+
+uses catalogoProveedor, Compra, AltaCompra, DataModuleInventarios, MainMenu;
+
+procedure TFormCatalogoCompras.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  Action:=caFree;
+end;
+
+procedure TFormCatalogoCompras.SpeedButton1Click(Sender: TObject);
+begin
+  TFormCatalogoProveedores.Create(Self).Show;
+end;
+
+procedure TFormCatalogoCompras.SpeedButtonAgregarClick(Sender: TObject);
+begin
+   FormAltacompra.Show;
+
+  With datamodule1.fdQueryusuario do
+   Begin
+     Sql.Clear;
+     Sql.Add('Select "CMSoftware"."Folios".num_folio from "CMSoftware"."Folios","CMSoftware"."Usuario" where "CMSoftware"."Usuario".id_usuario=:param1 ');
+     Sql.Add('and  "CMSoftware"."Folios".id_folio = "CMSoftware"."Usuario"."id_folioOC"');
+     Params[0].AsInteger:=StrToInt(RightStr(FormMAinMenu.StatusBarMainMenu.Panels[0].Text,3));
+     open;
+     FormAltacompra.EditNumeroCompra.Text:=Fields[0].AsString;
+   End;
+
+end;
+
+procedure TFormCatalogoCompras.SpeedButtonSalirClick(Sender: TObject);
+begin
+  close;
+end;
+
+end.

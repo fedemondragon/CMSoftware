@@ -1,0 +1,107 @@
+unit Compra;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.Buttons, Vcl.ToolWin,
+  cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxStyles,
+  cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator, Data.DB,
+  cxDBData, cxGridLevel, cxClasses, cxGridCustomView, cxGridCustomTableView,
+  cxGridTableView, cxGridDBTableView, cxGrid, Vcl.StdCtrls;
+
+type
+  TFormCompra = class(TForm)
+    ToolBar2: TToolBar;
+    ToolBar1: TToolBar;
+    SpeedButtonAgregar: TSpeedButton;
+    SpeedButtonModificar: TSpeedButton;
+    SpeedButtonEliminar: TSpeedButton;
+    ToolButton1: TToolButton;
+    SpeedButtonBuscar: TSpeedButton;
+    SpeedButtonImprimir: TSpeedButton;
+    ToolButton2: TToolButton;
+    SpeedButtonSalir: TSpeedButton;
+    GroupBox1: TGroupBox;
+    cxGrid1DBTableView1: TcxGridDBTableView;
+    cxGrid1Level1: TcxGridLevel;
+    cxGrid1: TcxGrid;
+    Label1: TLabel;
+    ComboBoxTipoCompra: TComboBox;
+    EditNumOrden: TEdit;
+    Label2: TLabel;
+    Label3: TLabel;
+    EditNumeroCompra: TEdit;
+    Label4: TLabel;
+    DateTimePickerFecha: TDateTimePicker;
+    ComboBoxProveedor: TComboBox;
+    Label5: TLabel;
+    Label6: TLabel;
+    EditRFC: TEdit;
+    Label7: TLabel;
+    EditNombreProveedor: TEdit;
+    Label8: TLabel;
+    EditCalle: TEdit;
+    Label9: TLabel;
+    EditColonia: TEdit;
+    Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    EditMunicipio: TEdit;
+    EditEstado: TEdit;
+    EditPais: TEdit;
+    Label13: TLabel;
+    Label14: TLabel;
+    EditNumInt: TEdit;
+    EditNumExt: TEdit;
+    EditCantidad: TEdit;
+    Label15: TLabel;
+    Label16: TLabel;
+    ComboBoxAlmacen: TComboBox;
+    EditProducto: TEdit;
+    Label17: TLabel;
+    EditCostoUnitario: TEdit;
+    Label18: TLabel;
+    EditSubtotalPartida: TEdit;
+    Label19: TLabel;
+    SpeedButton1: TSpeedButton;
+    SpeedButton2: TSpeedButton;
+    Edit16: TEdit;
+    Edit17: TEdit;
+    Edit18: TEdit;
+    Label20: TLabel;
+    Label21: TLabel;
+    Label22: TLabel;
+    procedure SpeedButtonSalirClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure ComboBoxTipoCompraKeyPress(Sender: TObject; var Key: Char);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormCompra: TFormCompra;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFormCompra.ComboBoxTipoCompraKeyPress(Sender: TObject; var Key: Char);
+begin
+  if Key=#13 then then
+
+end;
+
+procedure TFormCompra.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  action:=cafree;
+end;
+
+procedure TFormCompra.SpeedButtonSalirClick(Sender: TObject);
+begin
+  close;
+end;
+
+end.

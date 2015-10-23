@@ -1,0 +1,33 @@
+unit TipoEquipos;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons;
+
+type
+  TFormTipoEquipos = class(TForm)
+    GroupBoxTiposdeEquipos: TGroupBox;
+    Edit1: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    Edit2: TEdit;
+    Memo1: TMemo;
+    BitBtnAceptar: TBitBtn;
+    BitBtnCerrar: TBitBtn;
+    BitBtnGuardar: TBitBtn;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormTipoEquipos: TFormTipoEquipos;
+
+implementation
+
+{$R *.dfm}
+
+end.

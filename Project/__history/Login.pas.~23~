@@ -1,0 +1,96 @@
+unit Login;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, dxGDIPlusClasses, Vcl.ExtCtrls,
+  Vcl.StdCtrls, Vcl.Buttons, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+
+type
+  TFormLogin = class(TForm)
+    Image1: TImage;
+    GroupBox1: TGroupBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    EditUsuario: TEdit;
+    EditContra: TEdit;
+    BitBtnSalir: TBitBtn;
+    FDQueryLogin: TFDQuery;
+    BitBtnEntrar: TBitBtn;
+    procedure BitBtnSalirClick(Sender: TObject);
+    procedure BitBtnEntrarClick(Sender: TObject);
+    procedure EditUsuarioKeyPress(Sender: TObject; var Key: Char);
+    procedure EditContraKeyPress(Sender: TObject; var Key: Char);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormLogin: TFormLogin;
+
+implementation
+
+{$R *.dfm}
+
+uses MainMenu;
+
+procedure TFormLogin.BitBtnEntrarClick(Sender: TObject);
+var
+  permiso:Integer;
+begin
+  With FDQueryLogin do
+  Begin
+    Sql.Clear;
+    Sql.Add('Select count(*) from  "CMSoftware"."Usuario" where id_usuario=:param1 and contrasena=:param2 and estatus=:param3 ');
+    Params[0].AsInteger:=StrToInt(EditUsuario.Text);
+    Params[1].AsString:=EditContra.Text;
+    Params[2].AsInteger:=1;
+    open;
+    permiso:=Fields[0].AsInteger;
+  End;
+ if permiso=1 then
+
+  With FDQueryLogin do
+    Begin
+     Sql.clear;
+     Sql.Add('Select id_usuario,nombre,id_folio,contrasena,compras,usuarios,inventario,servicios,ot,reportes,estatus');
+     Sql.Add('from "CMSoftware"."Usuario" where id_usuario=:param1');
+     Params[0].AsInteger:=StrToInt(EditUsuario.Text);
+     open;
+     FormLogin.Close;
+    End
+  else
+ShowMessage('¡El nombre del usuario o la contreaseña son incorrectos!');
+
+
+
+end;
+
+procedure TFormLogin.BitBtnSalirClick(Sender: TObject);
+begin
+  FormMainMenu.Close;
+  EditUsuario.Clear;
+  EditContra.Clear;
+end;
+
+procedure TFormLogin.EditContraKeyPress(Sender: TObject; var Key: Char);
+begin
+  if key=#13 then
+    BitBtnEntrar.SetFocus;
+
+end;
+
+procedure TFormLogin.EditUsuarioKeyPress(Sender: TObject; var Key: Char);
+begin
+  if key=#13 then
+    EditContra.SetFocus;
+end;
+
+end.

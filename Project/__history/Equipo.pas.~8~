@@ -1,0 +1,66 @@
+unit Equipo;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls,
+  Vcl.TabNotBk;
+
+type
+  TFormEquipos = class(TForm)
+    TabbedNotebook1: TTabbedNotebook;
+    GroupBox1: TGroupBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    EditEquipoNombre: TEdit;
+    BitBtn1: TBitBtn;
+    Editid_equipo: TEdit;
+    EditCapacidad: TEdit;
+    EditIdentificador: TEdit;
+    EditCodigo: TEdit;
+    ComboBoxPrioridad: TComboBox;
+    BitBtn2: TBitBtn;
+    EditClasificacion1: TEdit;
+    EditClasificacion2: TEdit;
+    Label9: TLabel;
+    ComboBoxCentroCostos: TComboBox;
+    Label10: TLabel;
+    ComboBoxLocalizacion: TComboBox;
+    BitBtnCerrar: TBitBtn;
+    BitBtnGuardar: TBitBtn;
+    GroupBox2: TGroupBox;
+    MemoObservaciones: TMemo;
+    GroupBox3: TGroupBox;
+    EditCampolibre1: TEdit;
+    EditCampolibre2: TEdit;
+    EditCampolibre3: TEdit;
+    EditDescribe1: TEdit;
+    EditDescribe2: TEdit;
+    EditDescribe3: TEdit;
+    procedure BitBtnCerrarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormEquipos: TFormEquipos;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFormEquipos.BitBtnCerrarClick(Sender: TObject);
+begin
+  close;
+end;
+
+end.

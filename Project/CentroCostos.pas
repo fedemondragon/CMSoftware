@@ -1,0 +1,98 @@
+unit CentroCostos;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client;
+
+type
+  TFormCentroCostos = class(TForm)
+    GroupBox1: TGroupBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    EditCuenta: TEdit;
+    EditDescripcion: TEdit;
+    Label3: TLabel;
+    ComboBoxTipo: TComboBox;
+    BitBtnCerrar: TBitBtn;
+    BitBtnGuardar: TBitBtn;
+    FDQueryCentroCostos: TFDQuery;
+    procedure BitBtnGuardarClick(Sender: TObject);
+    procedure BitBtnCerrarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormCentroCostos: TFormCentroCostos;
+
+implementation
+
+{$R *.dfm}
+
+uses CatalogoCentroCostos;
+
+procedure TFormCentroCostos.BitBtnCerrarClick(Sender: TObject);
+begin
+  close;
+end;
+
+procedure TFormCentroCostos.BitBtnGuardarClick(Sender: TObject);
+var
+  Save:Integer;
+begin
+  if BitBtnGuardar.Caption='&Guardar' then
+    begin
+      Save:=Application.MessageBox('¿Desea Guardar el registro?','¡Confirmando!',MB_YESNOCANCEL);
+        if Save=IDYES then
+          begin
+            With FDQueryCentroCostos do //Inserta el centro de costos
+              begin
+                 sql.Clear;
+                 Sql.Add('Insert into "CMSoftware"."Centro_costos"(id_cuenta,descripcion,tipo)');
+                 Sql.Add('values(:param1,:param2,:param3)');
+                 Params[0].AsString:=EditCuenta.Text;
+                 Params[1].AsString:=EditDescripcion.Text;
+                 Params[2].AsString:=ComboBoxTipo.Text;
+                 ExecSQL;
+
+                  CLOSE;
+          //INICIA PROCESO DE LIMPIEZA DE FORMULARIO
+                 EditCuenta.Clear;
+                 EditDescripcion.Clear;
+                 ComboBoxTipo.Text:='';
+              end;
+          end;
+
+    end
+  else
+  if BitBtnGuardar.Caption='&Modificar' then
+    begin
+      Save:=Application.MessageBox('¿Desea Modificar el registro?','¡Confirmando!',MB_YESNOCANCEL);
+        if Save=IDYES then
+          begin
+            With FDQueryCentroCostos do //Actualiza el centro de costos
+              begin
+                 sql.Clear;
+                 Sql.Add('Update "CMSoftware"."Centro_costos" set id_cuenta=:param1,descripcion=:param2,tipo=:param3');
+                 Sql.Add('where id_cuenta=:param1');
+
+                 Params[0].AsString:=EditCuenta.Text;
+                 Params[1].AsString:=EditDescripcion.Text;
+                 Params[2].AsString:=ComboBoxTipo.Text;
+                 ExecSQL;
+
+            end;
+          end;
+
+    end
+end;
+
+end.

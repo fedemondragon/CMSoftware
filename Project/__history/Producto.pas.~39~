@@ -1,0 +1,108 @@
+unit Producto;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.TabNotBk,
+  Vcl.ExtCtrls, Vcl.Buttons;
+
+type
+  TFormProductos = class(TForm)
+    TabbedNotebook1: TTabbedNotebook;
+    GroupBox2: TGroupBox;
+    GroupBox3: TGroupBox;
+    RadioButtonProducto: TRadioButton;
+    RadioButtonServicio: TRadioButton;
+    RadioButtonKit: TRadioButton;
+    Label9: TLabel;
+    EditLinea: TEdit;
+    BitBtnBuscar: TBitBtn;
+    GroupBoxControl: TGroupBox;
+    Label10: TLabel;
+    Label11: TLabel;
+    EditUnidad_entrada: TEdit;
+    EditUnidad_salida: TEdit;
+    Label12: TLabel;
+    EditFactor_unidades: TEdit;
+    Label13: TLabel;
+    EditUnidad_empaque: TEdit;
+    BitBtnAlmacenes: TBitBtn;
+    Label14: TLabel;
+    GroupBox7: TGroupBox;
+    BitBtnGuardar: TBitBtn;
+    BitBtnAceptar: TBitBtn;
+    BitBtnCerrar: TBitBtn;
+    GroupBox8: TGroupBox;
+    Label15: TLabel;
+    EditPrecioLista: TEdit;
+    BitBtnPrecios: TBitBtn;
+    EditMoneda: TEdit;
+    Label16: TLabel;
+    GroupBox9: TGroupBox;
+    Label17: TLabel;
+    Label18: TLabel;
+    Label19: TLabel;
+    EditExistencia: TEdit;
+    EditStockMin: TEdit;
+    EditStockMax: TEdit;
+    GroupBox10: TGroupBox;
+    GroupBox11: TGroupBox;
+    Label20: TLabel;
+    Label21: TLabel;
+    EditIVA: TEdit;
+    Label22: TLabel;
+    GroupBox12: TGroupBox;
+    Label23: TLabel;
+    Editproveedor: TEdit;
+    BitBtn7: TBitBtn;
+    GroupBox13: TGroupBox;
+    Label24: TLabel;
+    Label25: TLabel;
+    EditPromedio: TEdit;
+    EditUltimo: TEdit;
+    GroupBox14: TGroupBox;
+    Label26: TLabel;
+    Label27: TLabel;
+    EditFechaUltimaCompra: TEdit;
+    Label28: TLabel;
+    EditCantidadAcumulada: TEdit;
+    EditmontoAcumulado: TEdit;
+    GroupBox15: TGroupBox;
+    MemoObserva: TMemo;
+    EditCampoLibre1: TEdit;
+    EditCampoLibre2: TEdit;
+    EditCampoLibre3: TEdit;
+    EditDescripcionLibre1: TEdit;
+    EditDescripcionLibre2: TEdit;
+    EditDescripcionLibre3: TEdit;
+    GroupBox1: TGroupBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    ImageProducto: TImage;
+    Editid_producto: TEdit;
+    BitBtnBuscaproducto: TBitBtn;
+    EditDescripcion: TEdit;
+    EditCentroCostos: TEdit;
+    Label3: TLabel;
+    Label4: TLabel;
+    procedure BitBtnCerrarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormProductos: TFormProductos;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFormProductos.BitBtnCerrarClick(Sender: TObject);
+begin
+  close;
+end;
+
+end.

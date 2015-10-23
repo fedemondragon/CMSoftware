@@ -1,0 +1,124 @@
+unit MainMenu;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.Buttons, Vcl.ToolWin,
+  Vcl.ComCtrls, Vcl.ExtCtrls, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.PG,
+  FireDAC.Phys.PGDef, Data.DB, FireDAC.Comp.Client, FireDAC.Stan.Param,
+  FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet,
+  Vcl.StdCtrls, Vcl.Grids, Vcl.DBGrids, cxGraphics, cxControls, cxLookAndFeels,
+  cxLookAndFeelPainters, dxStatusBar, cxClasses, cxGridCustomPopupMenu,
+  cxGridPopupMenu;
+
+type
+  TFormMainMenu = class(TForm)
+    MainMenu: TMainMenu;
+    Modulos1: TMenuItem;
+    Administracin1: TMenuItem;
+    Usuarios1: TMenuItem;
+    Compras1: TMenuItem;
+    Inventarios1: TMenuItem;
+    Servicio1: TMenuItem;
+    PlaneadordeOrdendeTrabajo1: TMenuItem;
+    Reportes1: TMenuItem;
+    StockMnimoyMximo1: TMenuItem;
+    Inventariosfaltantes1: TMenuItem;
+    Reimpresindedocumentos1: TMenuItem;
+    OrdenesdeTrabajo1: TMenuItem;
+    OrdendeCompra1: TMenuItem;
+    MovimientoalInventario1: TMenuItem;
+    OrdendeSlida1: TMenuItem;
+    Altadecompras1: TMenuItem;
+    Consultadedocumentos1: TMenuItem;
+    Ctalogodeproductosyservicios1: TMenuItem;
+    Movimientosalinventario1: TMenuItem;
+    Disponibilidaddeinventarios1: TMenuItem;
+    Ctalogodeproveedores1: TMenuItem;
+    Ctalogodeequipos1: TMenuItem;
+    CtalogodeEntidades1: TMenuItem;
+    OrdenesdeTrabajo2: TMenuItem;
+    Ctalogodeserviciosdemantenimiento1: TMenuItem;
+    HistorialdelMantenimiento1: TMenuItem;
+    OrdenesdeSlida1: TMenuItem;
+    Ayuda1: TMenuItem;
+    AcercadeCMSoftware1: TMenuItem;
+    Ctalogodetcnicos1: TMenuItem;
+    N1: TMenuItem;
+    ToolBar1: TToolBar;
+    SpeedButtonProveedor: TSpeedButton;
+    SpeedButtonInventarios: TSpeedButton;
+    ToolButton1: TToolButton;
+    SpeedButtonServicios: TSpeedButton;
+    FDConnectionPrincipal: TFDConnection;
+    StatusBar1: TStatusBar;
+    SpeedButtonSalir: TSpeedButton;
+    Catlogodelineadeproductos1: TMenuItem;
+    N2: TMenuItem;
+    N3: TMenuItem;
+    N4: TMenuItem;
+    N5: TMenuItem;
+    SpeedButtonCompras: TSpeedButton;
+    N6: TMenuItem;
+    Salir1: TMenuItem;
+    procedure Ctalogodeproductosyservicios1Click(Sender: TObject);
+    procedure SpeedButtonInventariosClick(Sender: TObject);
+    procedure SpeedButtonSalirClick(Sender: TObject);
+    procedure SpeedButtonProveedorClick(Sender: TObject);
+    procedure AcercadeCMSoftware1Click(Sender: TObject);
+    procedure Salir1Click(Sender: TObject);
+    procedure N3Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormMainMenu: TFormMainMenu;
+
+implementation
+
+{$R *.dfm}
+
+uses Producto, Usuario, Inventario, catalogoProveedor, AcercadeCMSoftware;
+
+procedure TFormMainMenu.AcercadeCMSoftware1Click(Sender: TObject);
+begin
+      FormAbout.show;
+end;
+
+procedure TFormMainMenu.Ctalogodeproductosyservicios1Click(Sender: TObject);
+begin
+   SpeedButtonInventarios.Click;
+end;
+
+procedure TFormMainMenu.N3Click(Sender: TObject);
+begin
+       FormCentroCostos.show;
+end;
+
+procedure TFormMainMenu.Salir1Click(Sender: TObject);
+begin
+  Close;
+end;
+
+procedure TFormMainMenu.SpeedButtonInventariosClick(Sender: TObject);
+begin
+  TFormInventario.Create(Self).Show;
+end;
+
+procedure TFormMainMenu.SpeedButtonProveedorClick(Sender: TObject);
+begin
+    TFormCatalogoProveedores.Create(Self).Show;
+end;
+
+procedure TFormMainMenu.SpeedButtonSalirClick(Sender: TObject);
+begin
+    close;
+end;
+
+end.

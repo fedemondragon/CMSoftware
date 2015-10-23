@@ -1,0 +1,102 @@
+object FormEntidades: TFormEntidades
+  Left = 0
+  Top = 0
+  Caption = 'Entidades'
+  ClientHeight = 242
+  ClientWidth = 527
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object GroupBoxTiposdeEquipos: TGroupBox
+    Left = 8
+    Top = 8
+    Width = 511
+    Height = 177
+    Caption = 'Entidad y Localizaci'#243'n'
+    TabOrder = 0
+    object Label1: TLabel
+      Left = 24
+      Top = 24
+      Width = 27
+      Height = 13
+      Caption = 'Clave'
+    end
+    object Label2: TLabel
+      Left = 24
+      Top = 56
+      Width = 37
+      Height = 13
+      Caption = 'Nombre'
+    end
+    object Label3: TLabel
+      Left = 24
+      Top = 88
+      Width = 71
+      Height = 13
+      Caption = 'Observaciones'
+    end
+    object EditClave: TEdit
+      Left = 72
+      Top = 21
+      Width = 409
+      Height = 21
+      TabOrder = 0
+    end
+    object EditTipoEquipo: TEdit
+      Left = 72
+      Top = 56
+      Width = 409
+      Height = 21
+      TabOrder = 1
+    end
+    object MemoObservaciones: TMemo
+      Left = 72
+      Top = 104
+      Width = 409
+      Height = 68
+      ScrollBars = ssVertical
+      TabOrder = 2
+    end
+  end
+  object BitBtnGuardar: TBitBtn
+    Left = 139
+    Top = 191
+    Width = 75
+    Height = 25
+    Hint = 'Guardar no cierra ventana'
+    Caption = '&Guardar'
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 1
+  end
+  object BitBtnCerrar: TBitBtn
+    Left = 322
+    Top = 191
+    Width = 75
+    Height = 25
+    Hint = 'Cancela los cambios y cierra la ventana'
+    Caption = '&Cerrar'
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 2
+  end
+  object TreeView1: TTreeView
+    Left = 216
+    Top = 48
+    Width = 121
+    Height = 97
+    Indent = 19
+    TabOrder = 3
+    Items.NodeData = {
+      03010000002E0000000000000000000000FFFFFFFFFFFFFFFF00000000000000
+      0001000000010845006400690066006900630069006F00260000000000000000
+      000000FFFFFFFFFFFFFFFF00000000000000000000000001045000690073006F
+      00}
+  end
+end

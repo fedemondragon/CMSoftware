@@ -1,0 +1,51 @@
+unit CatalogoLinea;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls, cxLookAndFeels,
+  cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter, cxData,
+  cxDataStorage, cxEdit, cxNavigator, Data.DB, cxDBData, FireDAC.UI.Intf,
+  FireDAC.VCLUI.Wait, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, cxGridCustomTableView,
+  cxGridTableView, cxGridDBTableView, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  FireDAC.Comp.UI, Vcl.ComCtrls, Vcl.Buttons, Vcl.ToolWin, cxGridLevel,
+  cxClasses, cxGridCustomView, cxGrid;
+
+type
+  TFormCatalogoLinea = class(TForm)
+    cxGridCentroCostos: TcxGrid;
+    cxGridCentroCostosDBTableView1: TcxGridDBTableView;
+    cxGridCentroCostosLevel1: TcxGridLevel;
+    ToolBar1: TToolBar;
+    SpeedButtonAgregar: TSpeedButton;
+    SpeedButtonModificar: TSpeedButton;
+    SpeedButtonEliminar: TSpeedButton;
+    ToolButton1: TToolButton;
+    SpeedButtonBuscar: TSpeedButton;
+    SpeedButtonImprimir: TSpeedButton;
+    ToolButton2: TToolButton;
+    SpeedButtonSalir: TSpeedButton;
+    ToolBar2: TToolBar;
+    FDGUIxWaitCursorLinea: TFDGUIxWaitCursor;
+    FDTableLinea: TFDTable;
+    DataSourceLinea: TDataSource;
+    cxGridCentroCostosDBTableView1id_linea: TcxGridDBColumn;
+    cxGridCentroCostosDBTableView1descripcion: TcxGridDBColumn;
+    cxGridCentroCostosDBTableView1centro_costos: TcxGridDBColumn;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormCatalogoLinea: TFormCatalogoLinea;
+
+implementation
+
+{$R *.dfm}
+
+end.

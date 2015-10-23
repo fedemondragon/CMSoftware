@@ -1,0 +1,196 @@
+object DataModule1: TDataModule1
+  OldCreateOrder = False
+  Height = 398
+  Width = 651
+  object DataSourceProducto: TDataSource
+    Left = 72
+    Top = 40
+  end
+  object FDTable1: TFDTable
+    Connection = FormMainMenu.FDConnectionPrincipal
+    UpdateOptions.UpdateTableName = '"Producto"'
+    SchemaName = 'CMSoftware'
+    TableName = '"Producto"'
+    Left = 288
+    Top = 152
+  end
+  object FDQueryProducto: TFDQuery
+    Connection = FormMainMenu.FDConnectionPrincipal
+    SQL.Strings = (
+      'select * from "CMSoftware"."Producto";')
+    Left = 192
+    Top = 192
+    object FDQueryProductoid_clave: TFMTBCDField
+      FieldName = 'id_clave'
+      Origin = 'id_clave'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Precision = 64
+      Size = 0
+    end
+    object FDQueryProductodescripcion: TWideStringField
+      FieldName = 'descripcion'
+      Origin = 'descripcion'
+      FixedChar = True
+      Size = 1000
+    end
+    object FDQueryProductotipo_producto: TFMTBCDField
+      FieldName = 'tipo_producto'
+      Origin = 'tipo_producto'
+      Precision = 64
+      Size = 0
+    end
+    object FDQueryProductolinea: TWideStringField
+      FieldName = 'linea'
+      Origin = 'linea'
+      FixedChar = True
+    end
+    object FDQueryProductocontrol: TWideStringField
+      FieldName = 'control'
+      Origin = 'control'
+      FixedChar = True
+      Size = 50
+    end
+    object FDQueryProductounidad_ent: TWideStringField
+      FieldName = 'unidad_ent'
+      Origin = 'unidad_ent'
+      FixedChar = True
+      Size = 2
+    end
+    object FDQueryProductounidad_sal: TWideStringField
+      FieldName = 'unidad_sal'
+      Origin = 'unidad_sal'
+      FixedChar = True
+      Size = 2
+    end
+    object FDQueryProductofactor_uni: TFMTBCDField
+      FieldName = 'factor_uni'
+      Origin = 'factor_uni'
+      Precision = 64
+      Size = 0
+    end
+    object FDQueryProductounidad_emp: TFMTBCDField
+      FieldName = 'unidad_emp'
+      Origin = 'unidad_emp'
+      Precision = 64
+      Size = 0
+    end
+    object FDQueryProductoprecio_lista: TFMTBCDField
+      FieldName = 'precio_lista'
+      Origin = 'precio_lista'
+      Precision = 64
+      Size = 0
+    end
+    object FDQueryProductomoneda: TWideStringField
+      FieldName = 'moneda'
+      Origin = 'moneda'
+      FixedChar = True
+      Size = 10
+    end
+    object FDQueryProductocentro_costos: TWideStringField
+      FieldName = 'centro_costos'
+      Origin = 'centro_costos'
+      FixedChar = True
+      Size = 100
+    end
+    object FDQueryProductoimpuesto: TFMTBCDField
+      FieldName = 'impuesto'
+      Origin = 'impuesto'
+      Precision = 64
+      Size = 0
+    end
+    object FDQueryProductoexistencia: TFMTBCDField
+      FieldName = 'existencia'
+      Origin = 'existencia'
+      Precision = 64
+      Size = 0
+    end
+    object FDQueryProductostock_min: TFMTBCDField
+      FieldName = 'stock_min'
+      Origin = 'stock_min'
+      Precision = 64
+      Size = 0
+    end
+    object FDQueryProductostock_max: TFMTBCDField
+      FieldName = 'stock_max'
+      Origin = 'stock_max'
+      Precision = 64
+      Size = 0
+    end
+    object FDQueryProductopromedio: TFMTBCDField
+      FieldName = 'promedio'
+      Origin = 'promedio'
+      Precision = 64
+      Size = 0
+    end
+    object FDQueryProductoultimo_costo: TFMTBCDField
+      FieldName = 'ultimo_costo'
+      Origin = 'ultimo_costo'
+      Precision = 64
+      Size = 0
+    end
+    object FDQueryProductocantidad_acumulada: TFMTBCDField
+      FieldName = 'cantidad_acumulada'
+      Origin = 'cantidad_acumulada'
+      Precision = 64
+      Size = 0
+    end
+    object FDQueryProductomonto_acum: TFMTBCDField
+      FieldName = 'monto_acum'
+      Origin = 'monto_acum'
+      Precision = 64
+      Size = 0
+    end
+    object FDQueryProductofecha_ult_com: TDateField
+      FieldName = 'fecha_ult_com'
+      Origin = 'fecha_ult_com'
+    end
+    object FDQueryProductoobservaciones: TWideStringField
+      FieldName = 'observaciones'
+      Origin = 'observaciones'
+      FixedChar = True
+      Size = 1000
+    end
+    object FDQueryProductocampolibre1: TWideStringField
+      FieldName = 'campolibre1'
+      Origin = 'campolibre1'
+      FixedChar = True
+      Size = 200
+    end
+    object FDQueryProductocampolibre2: TWideStringField
+      FieldName = 'campolibre2'
+      Origin = 'campolibre2'
+      FixedChar = True
+      Size = 200
+    end
+    object FDQueryProductocampolibre3: TWideStringField
+      FieldName = 'campolibre3'
+      Origin = 'campolibre3'
+      FixedChar = True
+      Size = 200
+    end
+    object FDQueryProductodescrip_libre1: TWideStringField
+      FieldName = 'descrip_libre1'
+      Origin = 'descrip_libre1'
+      FixedChar = True
+      Size = 200
+    end
+    object FDQueryProductodescrip_libre2: TWideStringField
+      FieldName = 'descrip_libre2'
+      Origin = 'descrip_libre2'
+      FixedChar = True
+      Size = 200
+    end
+    object FDQueryProductodescrip_libre3: TWideStringField
+      FieldName = 'descrip_libre3'
+      Origin = 'descrip_libre3'
+      FixedChar = True
+      Size = 200
+    end
+    object FDQueryProductoproveedor: TWideStringField
+      FieldName = 'proveedor'
+      Origin = 'proveedor'
+      FixedChar = True
+      Size = 2000
+    end
+  end
+end

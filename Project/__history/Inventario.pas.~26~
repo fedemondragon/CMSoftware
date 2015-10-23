@@ -1,0 +1,103 @@
+unit Inventario;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ToolWin, Vcl.ComCtrls, Vcl.Buttons,
+  Vcl.Menus, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters,
+  cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator,
+  Data.DB, cxDBData, cxGridLevel, cxClasses, cxGridCustomView,
+  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, dxServerModeData,
+  dxServerModeFireDACDataSource, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  FireDAC.UI.Intf, FireDAC.VCLUI.Wait, FireDAC.Comp.UI;
+
+type
+  TFormInventario = class(TForm)
+    ToolBar1: TToolBar;
+    SpeedButton1: TSpeedButton;
+    SpeedButton2: TSpeedButton;
+    SpeedButton3: TSpeedButton;
+    ToolButton1: TToolButton;
+    SpeedButton4: TSpeedButton;
+    SpeedButton5: TSpeedButton;
+    ToolButton2: TToolButton;
+    SpeedButton6: TSpeedButton;
+    ToolBar2: TToolBar;
+    cxGrid1DBTableView1: TcxGridDBTableView;
+    cxGrid1Level1: TcxGridLevel;
+    cxGrid1: TcxGrid;
+    DataSourceInventarios: TDataSource;
+    FDTableInventarios: TFDTable;
+    FDGUIxWaitCursorInventarios: TFDGUIxWaitCursor;
+    cxGrid1DBTableView1id_clave: TcxGridDBColumn;
+    cxGrid1DBTableView1descripcion: TcxGridDBColumn;
+    cxGrid1DBTableView1tipo_producto: TcxGridDBColumn;
+    cxGrid1DBTableView1linea: TcxGridDBColumn;
+    cxGrid1DBTableView1control: TcxGridDBColumn;
+    cxGrid1DBTableView1unidad_ent: TcxGridDBColumn;
+    cxGrid1DBTableView1unidad_sal: TcxGridDBColumn;
+    cxGrid1DBTableView1factor_uni: TcxGridDBColumn;
+    cxGrid1DBTableView1unidad_emp: TcxGridDBColumn;
+    cxGrid1DBTableView1precio_lista: TcxGridDBColumn;
+    cxGrid1DBTableView1existencia: TcxGridDBColumn;
+    cxGrid1DBTableView1stock_min: TcxGridDBColumn;
+    cxGrid1DBTableView1stock_max: TcxGridDBColumn;
+    cxGrid1DBTableView1fecha_ult_com: TcxGridDBColumn;
+    cxGrid1DBTableView1Column1: TcxGridDBColumn;
+    MainMenu1: TMainMenu;
+    Archivo1: TMenuItem;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure SpeedButton6Click(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    var
+  cuenta:Integer;
+
+  end;
+
+var
+  FormInventario: TFormInventario;
+
+implementation
+
+{$R *.dfm}
+
+uses Producto, DataModuleInventarios;
+
+procedure TFormInventario.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action:=caFree;
+end;
+
+procedure TFormInventario.SpeedButton1Click(Sender: TObject);
+
+begin
+       //Dame la ultima clave del producto
+  With  DataModuleInventarios.DataModule1.FDQueryProducto do
+      Begin
+        Close;
+        sql.Clear;
+        Sql.add('Select max(id_clave) from "CMSoftware"."Producto"');
+        open;
+        cuenta:=Fields[0].Asinteger + 1;
+      End;
+      //Asigna lave y abre modulo
+  FormProductos.Show;
+  FormProductos.TabbedNotebook1.PageIndex:=0;
+  FormProductos.Editid_producto.text:=IntToStr(cuenta);
+
+end;
+
+procedure TFormInventario.SpeedButton6Click(Sender: TObject);
+begin
+  close;
+end;
+
+end.

@@ -1,0 +1,35 @@
+program CMSoftware;
+
+uses
+  Vcl.Forms,
+  MainMenu in 'MainMenu.pas' {FormMainMenu},
+  Producto in 'Producto.pas' {FormProductos},
+  Proveedor in 'Proveedor.pas' {FormProveedor},
+  Equipo in 'Equipo.pas' {FormEquipos},
+  CentroCostos in 'CentroCostos.pas' {FormCentroCostos},
+  TipoEquipos in 'TipoEquipos.pas' {FormTipoEquipos},
+  Usuario in 'Usuario.pas' {FormUsuarios},
+  Inventario in 'Inventario.pas' {FormInventario},
+  DataModuleInventarios in 'DataModuleInventarios.pas' {DataModule1: TDataModule},
+  catalogoProveedor in 'catalogoProveedor.pas' {FormCatalogoProveedores},
+  AcercadeCMSoftware in 'AcercadeCMSoftware.pas' {FormAbout},
+  Planeador in 'Planeador.pas' {FormPlaneador},
+  CatalogoCentroCostos in 'CatalogoCentroCostos.pas' {FormCatalogoCentroCostos};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TFormMainMenu, FormMainMenu);
+  Application.CreateForm(TFormProductos, FormProductos);
+  Application.CreateForm(TFormProveedor, FormProveedor);
+  Application.CreateForm(TFormEquipos, FormEquipos);
+  Application.CreateForm(TFormTipoEquipos, FormTipoEquipos);
+  Application.CreateForm(TFormUsuarios, FormUsuarios);
+  Application.CreateForm(TDataModule1, DataModule1);
+  Application.CreateForm(TFormAbout, FormAbout);
+  Application.CreateForm(TFormPlaneador, FormPlaneador);
+  Application.CreateForm(TFormCatalogoCentroCostos, FormCatalogoCentroCostos);
+  Application.Run;
+end.

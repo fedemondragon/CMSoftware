@@ -1,0 +1,433 @@
+unit AltaCompra;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls, cxLookAndFeels,
+  cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter, cxData,
+  cxDataStorage, cxEdit, cxNavigator, Data.DB, cxDBData, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.UI.Intf, FireDAC.VCLUI.Wait, FireDAC.Comp.UI, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, cxGridLevel, cxClasses, cxGridCustomView,
+  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
+  Vcl.ComCtrls, Vcl.StdCtrls, Vcl.Buttons, Vcl.ToolWin,StrUtils;
+
+type
+  TFormAltacompra = class(TForm)
+    ToolBar2: TToolBar;
+    ToolBar1: TToolBar;
+    SpeedButtonAgregar: TSpeedButton;
+    SpeedButtonModificar: TSpeedButton;
+    SpeedButton1: TSpeedButton;
+    SpeedButton2: TSpeedButton;
+    ToolButton1: TToolButton;
+    SpeedButtonBuscar: TSpeedButton;
+    SpeedButtonImprimir: TSpeedButton;
+    ToolButton2: TToolButton;
+    SpeedButtonSalir: TSpeedButton;
+    GroupBox1: TGroupBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    Label16: TLabel;
+    ComboBoxTipoCompra: TComboBox;
+    EditNumOrden: TEdit;
+    EditNumeroCompra: TEdit;
+    DateTimePickerFecha: TDateTimePicker;
+    EditRFC: TEdit;
+    EditNombreProveedor: TEdit;
+    EditCalle: TEdit;
+    EditColonia: TEdit;
+    EditMunicipio: TEdit;
+    EditEstado: TEdit;
+    EditPais: TEdit;
+    EditNumInt: TEdit;
+    EditNumExt: TEdit;
+    ComboBoxAlmacen: TComboBox;
+    EditCantidad: TEdit;
+    EditProducto: TEdit;
+    EditCostoUnitario: TEdit;
+    EditSubtotalPartida: TEdit;
+    Label19: TLabel;
+    Label18: TLabel;
+    Label17: TLabel;
+    Label15: TLabel;
+    cxGridDetalleCompra: TcxGrid;
+    cxGridDetalleCompraDBTableView1: TcxGridDBTableView;
+    cxGridDetalleCompraLevel1: TcxGridLevel;
+    DataSourceDetalleCompra: TDataSource;
+    FDQueryEncabezadoCompra: TFDQuery;
+    FDQueryDetalleCompra: TFDQuery;
+    FDGUIxWaitCursorCompra: TFDGUIxWaitCursor;
+    Label20: TLabel;
+    EditDescripcionProducto: TEdit;
+    EditFactorUnidades: TEdit;
+    Label21: TLabel;
+    Label22: TLabel;
+    EditTotalPartida: TEdit;
+    BitBtnBusca: TBitBtn;
+    Editid_proveedor: TEdit;
+    cxGridDetalleCompraDBTableView1cantidad: TcxGridDBColumn;
+    cxGridDetalleCompraDBTableView1id_clave: TcxGridDBColumn;
+    cxGridDetalleCompraDBTableView1descuento_unitario: TcxGridDBColumn;
+    cxGridDetalleCompraDBTableView1iva_partida: TcxGridDBColumn;
+    cxGridDetalleCompraDBTableView1costo_unitario: TcxGridDBColumn;
+    cxGridDetalleCompraDBTableView1subtotal_partida: TcxGridDBColumn;
+    cxGridDetalleCompraDBTableView1almacen: TcxGridDBColumn;
+    cxGridDetalleCompraDBTableView1unidad: TcxGridDBColumn;
+    BitBtnBuscaProducto: TBitBtn;
+    EditUnidad: TEdit;
+    Label23: TLabel;
+    EditDescuento: TEdit;
+    Label24: TLabel;
+    Label25: TLabel;
+    EditIVA: TEdit;
+    Label26: TLabel;
+    Label27: TLabel;
+    EditSubtotal: TEdit;
+    Edit2: TEdit;
+    Edit3: TEdit;
+    Edit4: TEdit;
+    Label28: TLabel;
+    Label29: TLabel;
+    Label30: TLabel;
+    Label31: TLabel;
+    cxStyleRepository1: TcxStyleRepository;
+    cxStyle1: TcxStyle;
+    FDQueryDetalleCompracantidad: TFMTBCDField;
+    FDQueryDetalleCompraid_clave: TWideStringField;
+    FDQueryDetalleCompraunidad: TWideStringField;
+    FDQueryDetalleCompraalmacen: TFMTBCDField;
+    FDQueryDetalleCompradescuento_unitario: TFMTBCDField;
+    FDQueryDetalleCompraiva_partida: TFMTBCDField;
+    FDQueryDetalleCompracosto_unitario: TFMTBCDField;
+    FDQueryDetalleComprasubtotal_partida: TFMTBCDField;
+    cxStyle2: TcxStyle;
+    procedure ComboBoxTipoCompraKeyPress(Sender: TObject; var Key: Char);
+    procedure DateTimePickerFechaKeyPress(Sender: TObject; var Key: Char);
+    procedure SpeedButtonSalirClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure BitBtnBuscaClick(Sender: TObject);
+    procedure Editid_proveedorKeyPress(Sender: TObject; var Key: Char);
+    procedure ComboBoxAlmacenDropDown(Sender: TObject);
+    procedure ComboBoxAlmacenKeyPress(Sender: TObject; var Key: Char);
+    procedure EditCantidadKeyPress(Sender: TObject; var Key: Char);
+    procedure EditProductoKeyPress(Sender: TObject; var Key: Char);
+    procedure EditCostoUnitarioKeyPress(Sender: TObject; var Key: Char);
+    procedure BitBtnBuscaProductoClick(Sender: TObject);
+    procedure EditSubtotalPartidaKeyPress(Sender: TObject; var Key: Char);
+    procedure EditDescuentoKeyPress(Sender: TObject; var Key: Char);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+     Subtotal,total:real;
+  end;
+
+var
+  FormAltacompra: TFormAltacompra;
+
+implementation
+
+{$R *.dfm}
+
+uses BuscaProveedor, DataModuleInventarios, BuscaProducto;
+
+procedure TFormAltacompra.BitBtnBuscaClick(Sender: TObject);
+begin
+    FormBuscaProveedor.show;
+end;
+
+procedure TFormAltacompra.BitBtnBuscaProductoClick(Sender: TObject);
+begin
+  FormBuscaProducto.show;
+end;
+
+procedure TFormAltacompra.ComboBoxAlmacenDropDown(Sender: TObject);
+begin
+  With DataModule1.FDQueryAlmacenes do
+  begin
+    Sql.Clear;
+    Sql.Add('Select id_almacen,descripcion from "CMSoftware"."Almacenes"');
+    Active:=True;
+    ComboBoxAlmacen.Clear;
+    while not DataModule1.FDQueryAlmacenes.Eof  do
+    begin
+      ComboBoxAlmacen.Items.Add(Fields[0].AsString+' '+Fields[1].AsString);
+      Next;
+    end;
+     close;
+     open;
+  end;
+end;
+
+procedure TFormAltacompra.ComboBoxAlmacenKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  if Key=#13 then
+    EditCantidad.SetFocus;
+end;
+
+procedure TFormAltacompra.ComboBoxTipoCompraKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  if Key=#13   then
+    DateTimePickerFecha.SetFocus;
+end;
+
+procedure TFormAltacompra.DateTimePickerFechaKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  if Key=#13   then
+    Editid_proveedor.SetFocus;
+end;
+
+procedure TFormAltacompra.EditCantidadKeyPress(Sender: TObject; var Key: Char);
+begin
+if Key=#13 then
+    Begin
+     Subtotal:=StrTofloat(EditCantidad.Text)*(StrTofloat(EditCostoUnitario.Text));
+     EditSubtotalPartida.Text:=FloatToStr(Subtotal);
+     Total:=Subtotal* (StrToFloat('1'+'.'+EditIVA.Text));
+     EditTotalPartida.Text:=FloatToStr(Total);
+    EditProducto.SetFocus;
+
+    End;
+end;
+
+procedure TFormAltacompra.EditCostoUnitarioKeyPress(Sender: TObject;
+  var Key: Char);
+var
+Subtotal_descuento:Integer;
+
+begin
+if Key=#13 then
+   Begin
+     Subtotal:=StrTofloat(EditCantidad.Text)*(StrTofloat(EditCostoUnitario.Text));
+     Subtotal_descuento:=Subtotal*(StrToInt(EditDescuento.Text+'%'));
+     EditSubtotalPartida.Text:=FloatToStr(Subtotal_descuento);
+     Total:=Subtotal_descuento* (StrToFloat('1'+'.'+EditIVA.Text));
+     EditTotalPartida.Text:=FloatToStr(Total);
+     EditSubtotalPartida.SetFocus;
+   End;
+
+end;
+
+procedure TFormAltacompra.EditDescuentoKeyPress(Sender: TObject; var Key: Char);
+begin
+  if key=#13 then
+    EditCostoUnitario.SetFocus;
+end;
+
+procedure TFormAltacompra.Editid_proveedorKeyPress(Sender: TObject;
+  var Key: Char);
+ var
+  id_proveedor,cuentaProveedor:Integer;
+begin
+  if Key=#13   then
+  Begin
+    if Editid_proveedor.text='' then
+    Begin
+     ShowMessage('No puede estar vacio');
+     EditRFC.Clear;
+     EditNombreProveedor.Clear;
+     EditCalle.Clear;
+     EditColonia.Clear;
+     EditNumInt.Clear;
+     EditNumExt.Clear;
+     EditMunicipio.Clear;
+     EditEstado.Clear;
+     EditPais.Clear;
+    end
+      else
+
+    With DataModule1.FDQueryProveedor do
+     Begin
+       Sql.Clear;
+       sql.Add('Select count(*) from "CMSoftware"."Proveedor" where id_proveedor=:param1');
+       Params[0].AsInteger:=StrToInt(Editid_proveedor.Text);
+       open;
+       CuentaProveedor:=Fields[0].AsInteger;
+     End;
+        if (CuentaProveedor=0)  Then
+         Begin
+          ShowMessage('EL proveedor no existe ');
+          EditRFC.Clear;
+          EditNombreProveedor.Clear;
+          EditCalle.Clear;
+          EditColonia.Clear;
+          EditNumInt.Clear;
+          EditNumExt.Clear;
+          EditMunicipio.Clear;
+          EditEstado.Clear;
+          EditPais.Clear;
+         End else
+
+   Begin
+     With datamodule1.FDQueryProveedor do
+   begin
+     sql.Clear;
+     Sql.Add('Select rfc,nombre,calle,colonia,num_int,num_ext,municipio,estado,pais from "CMSoftware"."Proveedor"');
+     Sql.Add('Where id_proveedor=:param1');
+     Params[0].AsInteger:=StrToInt(Editid_proveedor.Text);
+     open;
+
+     EditRFC.Text:=fields[0].AsString;
+     EditNombreProveedor.Text:=Fields[1].AsString;
+     EditCalle.Text:=Fields[2].AsString;
+     EditColonia.Text:=Fields[3].AsString;
+     EditNumInt.Text:=Fields[4].AsString;
+     EditNumExt.Text:=Fields[5].AsString;
+     EditMunicipio.Text:=Fields[6].AsString;
+     EditEstado.Text:=Fields[7].AsString;
+     EditPais.Text:=Fields[8].Asstring;
+   end;
+   ComboBoxAlmacen.SetFocus;
+  end;
+  End;
+end;
+
+procedure TFormAltacompra.EditProductoKeyPress(Sender: TObject; var Key: Char);
+ var
+    CuentaProducto:Integer;
+begin
+if Key=#13 then
+    Begin
+
+    With DataModule1.FDQueryProducto do
+     Begin
+       Sql.Clear;
+       sql.Add('Select count(*) from "CMSoftware"."Producto" where id_clave=:param1');
+       Params[0].AsString:=EditProducto.Text;
+       open;
+       CuentaProducto:=Fields[0].AsInteger;
+     End;
+
+       if CuentaProducto=0 then
+       ShowMessage('No existe el producto') else
+     Begin
+    With DataModule1.FDQueryProducto do
+    begin
+      Sql.Clear;
+      Sql.Add('Select descripcion,unidad_ent,impuesto,ultimo_costo,factor_uni from "CMSoftware"."Producto" where id_clave =:param1');
+      Params[0].AsString:=EditProducto.Text;
+      open;
+    EditDescripcionProducto.Text:=Fields[0].AsString;
+    EditUnidad.Text:=Fields[1].AsString;
+    EditIVA.Text:=Fields[2].AsString;
+    EditCostoUnitario.Text:=Fields[3].AsString;
+    EditFactorUnidades.Text:=Fields[4].AsString;
+    end;
+     Subtotal:=StrTofloat(EditCantidad.Text)*(StrTofloat(EditCostoUnitario.Text));
+     EditSubtotalPartida.Text:=FloatToStr(Subtotal);
+     Total:=Subtotal* (StrToFloat('1'+'.'+EditIVA.Text));
+     EditTotalPartida.Text:=FloatToStr(Total);
+     EditDescuento.SetFocus;
+    End;
+      end;
+
+end;
+
+procedure TFormAltacompra.EditSubtotalPartidaKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+if Key=#13 then
+   Begin
+     With FDQueryDetalleCompra do
+       Begin
+        Sql.Clear;
+        SQL.Add('Insert into "CMSoftware"."Detalle_compra" (num_compra,cantidad,id_clave,unidad,descuento_unitario,iva_partida,');
+        SQL.Add('costo_unitario,subtotal_partida,almacen) values(:param1,:param2,:param3,:param4,:param5,:param6,');
+        SQL.Add(':param7,:param8,:param9)');
+        Params[0].AsString:=EditNumeroCompra.Text;
+        Params[1].AsFloat:=StrToFloat(EditCantidad.Text);
+        Params[2].AsString:=EditProducto.Text;
+        Params[3].AsString:=EditUnidad.Text;
+        Params[4].AsFloat:=StrToFloat(EditDescuento.Text);
+        Params[5].AsFloat:=StrToFloat(EditIVA.Text);
+        Params[6].AsFloat:=StrToFloat(EditCostoUnitario.Text);
+        Params[7].AsFloat:=StrToFloat(EditSubtotalPartida.Text);
+        Params[8].AsInteger:=StrToInt(LeftStr(ComboBoxAlmacen.Text,1));
+        ExecSQL;
+       End;
+     With FDQueryDetalleCompra do
+     Begin
+       sql.Clear;
+       Sql.Add('Select cantidad,id_clave,unidad,almacen,descuento_unitario,iva_partida,costo_unitario,subtotal_partida');
+       Sql.Add('from "CMSoftware"."Detalle_compra"  where num_compra=:param1');
+       PArams[0].AsString:=EditNumeroCompra.Text;
+       open;
+       DataSourceDetalleCompra.DataSet.Refresh;
+     End;
+      //limpia el detalle
+     EditCantidad.text:='1';
+     EditProducto.Clear;
+     EditCostoUnitario.text:='0';
+     EditSubtotalPartida.text:='0';
+     EditDescripcionProducto.Clear;
+     EditFactorUnidades.Clear;
+     EditTotalPartida.Clear;
+     EditCantidad.SetFocus;
+//     EditSubtotal.Text:=cxGridDetalleCompraDBTableView1.
+   End;
+
+
+
+end;
+
+procedure TFormAltacompra.FormClose(Sender: TObject; var Action: TCloseAction);
+var
+  Save:Integer;
+begin
+      Save:=Application.MessageBox('¿Desea Guardar el registro?','¡Confirmando!',MB_YESNOCANCEL);
+        if Save=IDYES then
+        ShowMessage('Guardado') else
+        if SAVE=IDNO then
+        ShowMessage('NO Guardado');
+
+end;
+
+procedure TFormAltacompra.SpeedButtonSalirClick(Sender: TObject);
+begin
+     Editid_proveedor.Text:='0';
+  close;
+
+     EditNumOrden.Clear;
+     EditNumeroCompra.Clear;
+     ComboBoxAlmacen.Text:='';
+     Editid_proveedor.Text:='';
+     ComboBoxTipoCompra.Text:='';
+     EditRFC.Clear;
+     EditNombreProveedor.Clear;
+     EditCalle.Clear;
+     EditColonia.Clear;
+     EditNumInt.Clear;
+     EditNumExt.Clear;
+     EditMunicipio.Clear;
+     EditEstado.Clear;
+     EditPais.Clear;
+     //limpia el detalle
+     EditCantidad.text:='1';
+     EditProducto.Clear;
+     EditCostoUnitario.text:='0';
+     EditSubtotalPartida.text:='0';
+     EditDescripcionProducto.Clear;
+     EditFactorUnidades.Clear;
+     EditTotalPartida.Clear;
+
+end;
+
+end.

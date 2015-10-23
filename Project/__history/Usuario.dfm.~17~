@@ -1,0 +1,319 @@
+object FormUsuarios: TFormUsuarios
+  Left = 0
+  Top = 0
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
+  Caption = 'Administraci'#243'n de usuarios'
+  ClientHeight = 453
+  ClientWidth = 840
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  PixelsPerInch = 96
+  TextHeight = 13
+  object GroupBox1: TGroupBox
+    Left = 8
+    Top = 8
+    Width = 801
+    Height = 121
+    Caption = 'Datos Generales'
+    TabOrder = 0
+    object Label1: TLabel
+      Left = 24
+      Top = 32
+      Width = 25
+      Height = 13
+      Caption = 'Login'
+    end
+    object Label2: TLabel
+      Left = 24
+      Top = 59
+      Width = 46
+      Height = 13
+      Caption = 'Password'
+    end
+    object Label3: TLabel
+      Left = 24
+      Top = 88
+      Width = 90
+      Height = 13
+      Caption = 'Nombre y apellidos'
+    end
+    object Label4: TLabel
+      Left = 528
+      Top = 24
+      Width = 36
+      Height = 13
+      Caption = 'Estatus'
+    end
+    object Edit1: TEdit
+      Left = 76
+      Top = 24
+      Width = 429
+      Height = 21
+      TabOrder = 0
+      Text = 'Edit1'
+    end
+    object Edit2: TEdit
+      Left = 76
+      Top = 51
+      Width = 429
+      Height = 21
+      TabOrder = 1
+      Text = 'Edit2'
+    end
+    object Edit3: TEdit
+      Left = 128
+      Top = 80
+      Width = 377
+      Height = 21
+      TabOrder = 2
+      Text = 'Edit3'
+    end
+    object ComboBoxEstatus: TComboBox
+      Left = 592
+      Top = 24
+      Width = 97
+      Height = 21
+      Style = csDropDownList
+      TabOrder = 3
+      Items.Strings = (
+        'Activo'
+        'Suspendido')
+    end
+  end
+  object GroupBox2: TGroupBox
+    Left = 8
+    Top = 133
+    Width = 801
+    Height = 274
+    Caption = 'Seguridad'
+    TabOrder = 1
+    object Label5: TLabel
+      Left = 519
+      Top = 25
+      Width = 67
+      Height = 13
+      Caption = 'Folio Compras'
+    end
+    object Label6: TLabel
+      Left = 592
+      Top = 46
+      Width = 24
+      Height = 13
+      Caption = 'Serie'
+    end
+    object Label7: TLabel
+      Left = 696
+      Top = 46
+      Width = 22
+      Height = 13
+      Caption = 'Folio'
+    end
+    object Label8: TLabel
+      Left = 519
+      Top = 89
+      Width = 39
+      Height = 13
+      Caption = 'Folio OT'
+    end
+    object Label9: TLabel
+      Left = 592
+      Top = 110
+      Width = 24
+      Height = 13
+      Caption = 'Serie'
+    end
+    object Label10: TLabel
+      Left = 696
+      Top = 110
+      Width = 22
+      Height = 13
+      Caption = 'Folio'
+    end
+    object Label11: TLabel
+      Left = 519
+      Top = 161
+      Width = 72
+      Height = 13
+      Caption = 'Folio Mov. Inv.'
+    end
+    object Label12: TLabel
+      Left = 592
+      Top = 182
+      Width = 24
+      Height = 13
+      Caption = 'Serie'
+    end
+    object Label13: TLabel
+      Left = 696
+      Top = 182
+      Width = 22
+      Height = 13
+      Caption = 'Folio'
+    end
+    object CheckBox1: TCheckBox
+      Left = 17
+      Top = 24
+      Width = 97
+      Height = 17
+      Caption = 'Compras'
+      TabOrder = 0
+    end
+    object CheckBox2: TCheckBox
+      Left = 17
+      Top = 47
+      Width = 152
+      Height = 17
+      Caption = 'Administraci'#243'n de usuarios'
+      TabOrder = 1
+    end
+    object CheckBox3: TCheckBox
+      Left = 17
+      Top = 70
+      Width = 152
+      Height = 17
+      Caption = 'Movimientos al inventario'
+      TabOrder = 2
+    end
+    object CheckBox4: TCheckBox
+      Left = 208
+      Top = 24
+      Width = 97
+      Height = 17
+      Caption = 'Servicios'
+      TabOrder = 3
+    end
+    object CheckBox5: TCheckBox
+      Left = 208
+      Top = 48
+      Width = 97
+      Height = 17
+      Caption = 'Planeador de OT'
+      TabOrder = 4
+    end
+    object CheckBox6: TCheckBox
+      Left = 208
+      Top = 71
+      Width = 97
+      Height = 17
+      Caption = 'Reportes'
+      TabOrder = 5
+    end
+    object ComboBoxFolios: TComboBox
+      Left = 592
+      Top = 22
+      Width = 145
+      Height = 21
+      TabOrder = 6
+      OnChange = ComboBoxFoliosChange
+      OnDropDown = ComboBoxFoliosDropDown
+    end
+    object EditSerie: TEdit
+      Left = 592
+      Top = 59
+      Width = 73
+      Height = 21
+      ReadOnly = True
+      TabOrder = 7
+    end
+    object EditFolio: TEdit
+      Left = 695
+      Top = 59
+      Width = 100
+      Height = 21
+      ReadOnly = True
+      TabOrder = 8
+    end
+    object ComboBoxOT: TComboBox
+      Left = 592
+      Top = 86
+      Width = 145
+      Height = 21
+      TabOrder = 9
+      OnChange = ComboBoxFoliosChange
+      OnDropDown = ComboBoxFoliosDropDown
+    end
+    object EditSerieOT: TEdit
+      Left = 592
+      Top = 123
+      Width = 73
+      Height = 21
+      ReadOnly = True
+      TabOrder = 10
+    end
+    object EditFolioOT: TEdit
+      Left = 698
+      Top = 128
+      Width = 100
+      Height = 21
+      ReadOnly = True
+      TabOrder = 11
+    end
+    object ComboBoxInvent: TComboBox
+      Left = 592
+      Top = 155
+      Width = 145
+      Height = 21
+      TabOrder = 12
+      OnChange = ComboBoxFoliosChange
+      OnDropDown = ComboBoxFoliosDropDown
+    end
+    object EditSerieInv: TEdit
+      Left = 592
+      Top = 195
+      Width = 73
+      Height = 21
+      ReadOnly = True
+      TabOrder = 13
+    end
+    object EditFolioInv: TEdit
+      Left = 698
+      Top = 195
+      Width = 100
+      Height = 21
+      ReadOnly = True
+      TabOrder = 14
+    end
+  end
+  object BitBtnAceptar: TBitBtn
+    Left = 174
+    Top = 413
+    Width = 75
+    Height = 25
+    Hint = 'Guarda el registro y cierra la ventana'
+    Caption = 'Folios'
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 2
+    OnClick = BitBtnAceptarClick
+  end
+  object BitBtnCerrar: TBitBtn
+    Left = 538
+    Top = 415
+    Width = 75
+    Height = 25
+    Hint = 'Cancela los cambios y cierra la ventana'
+    Caption = '&Cerrar'
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 3
+    OnClick = BitBtnCerrarClick
+  end
+  object BitBtnGuardar: TBitBtn
+    Left = 371
+    Top = 415
+    Width = 75
+    Height = 25
+    Hint = 'Guardar no cierra ventana'
+    Caption = '&Guardar'
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 4
+  end
+end

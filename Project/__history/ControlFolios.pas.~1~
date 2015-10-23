@@ -1,0 +1,40 @@
+unit ControlFolios;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB, Vcl.StdCtrls,
+  Vcl.Mask, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.ExtCtrls,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+
+type
+  TFormFolios = class(TForm)
+    FDTableFolios: TFDTable;
+    DBNavigator1: TDBNavigator;
+    DBGridDetalle: TDBGrid;
+    DBEditDescripcion: TDBEdit;
+    DBEditSerie: TDBEdit;
+    DBEditFolio: TDBEdit;
+    DBEditID: TDBEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    DataSourceFolios: TDataSource;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormFolios: TFormFolios;
+
+implementation
+
+{$R *.dfm}
+
+end.

@@ -1,0 +1,80 @@
+object FormCatalogoProveedores: TFormCatalogoProveedores
+  Left = 0
+  Top = 0
+  Caption = 'Cat'#225'logo de proveedores'
+  ClientHeight = 242
+  ClientWidth = 527
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  FormStyle = fsMDIChild
+  OldCreateOrder = False
+  Visible = True
+  WindowState = wsMaximized
+  PixelsPerInch = 96
+  TextHeight = 13
+  object ToolBar1: TToolBar
+    Left = 0
+    Top = 0
+    Width = 527
+    Height = 49
+    ButtonHeight = 42
+    Caption = 'ToolBar1'
+    EdgeBorders = [ebLeft, ebTop, ebRight, ebBottom]
+    TabOrder = 0
+    object SpeedButton1: TSpeedButton
+      Left = 0
+      Top = 0
+      Width = 41
+      Height = 42
+    end
+    object SpeedButton2: TSpeedButton
+      Left = 41
+      Top = 0
+      Width = 41
+      Height = 42
+    end
+    object SpeedButton3: TSpeedButton
+      Left = 82
+      Top = 0
+      Width = 41
+      Height = 42
+    end
+    object ToolButton2: TToolButton
+      Left = 123
+      Top = 0
+      Width = 14
+      Caption = 'ToolButton2'
+      ImageIndex = 0
+      Style = tbsSeparator
+    end
+    object SpeedButton4: TSpeedButton
+      Left = 137
+      Top = 0
+      Width = 41
+      Height = 42
+    end
+    object SpeedButton5: TSpeedButton
+      Left = 178
+      Top = 0
+      Width = 41
+      Height = 42
+    end
+    object ToolButton1: TToolButton
+      Left = 219
+      Top = 0
+      Width = 14
+      Caption = 'ToolButton1'
+      Style = tbsSeparator
+    end
+    object SpeedButton6: TSpeedButton
+      Left = 233
+      Top = 0
+      Width = 41
+      Height = 42
+    end
+  end
+end

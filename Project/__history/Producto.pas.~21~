@@ -1,0 +1,74 @@
+unit Producto;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.TabNotBk,
+  Vcl.ExtCtrls, Vcl.Buttons;
+
+type
+  TFormProductos = class(TForm)
+    TabbedNotebook1: TTabbedNotebook;
+    GroupBox1: TGroupBox;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    Image1: TImage;
+    BitBtn1: TBitBtn;
+    GroupBox2: TGroupBox;
+    GroupBox3: TGroupBox;
+    RadioButtonProducto: TRadioButton;
+    RadioButtonServicio: TRadioButton;
+    RadioButtonKit: TRadioButton;
+    GroupBox4: TGroupBox;
+    Label3: TLabel;
+    Label4: TLabel;
+    Image2: TImage;
+    Edit3: TEdit;
+    Edit4: TEdit;
+    BitBtn2: TBitBtn;
+    GroupBox5: TGroupBox;
+    Label5: TLabel;
+    Label6: TLabel;
+    Image3: TImage;
+    Edit5: TEdit;
+    Edit6: TEdit;
+    BitBtn3: TBitBtn;
+    Edit7: TEdit;
+    GroupBox6: TGroupBox;
+    Label7: TLabel;
+    Label8: TLabel;
+    Image4: TImage;
+    Edit8: TEdit;
+    Edit9: TEdit;
+    BitBtn4: TBitBtn;
+    Label9: TLabel;
+    Edit10: TEdit;
+    BitBtnBuscar: TBitBtn;
+    GroupBoxControl: TGroupBox;
+    Label10: TLabel;
+    Label11: TLabel;
+    Edit11: TEdit;
+    Edit12: TEdit;
+    Label12: TLabel;
+    Edit13: TEdit;
+    Label13: TLabel;
+    Edit14: TEdit;
+    BitBtn5: TBitBtn;
+    Label14: TLabel;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormProductos: TFormProductos;
+
+implementation
+
+{$R *.dfm}
+
+end.

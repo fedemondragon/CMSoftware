@@ -1,0 +1,117 @@
+object FormCatalogoProveedores: TFormCatalogoProveedores
+  Left = 0
+  Top = 0
+  Caption = 'Cat'#225'logo de proveedores'
+  ClientHeight = 558
+  ClientWidth = 982
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  FormStyle = fsMDIChild
+  OldCreateOrder = False
+  Visible = True
+  WindowState = wsMaximized
+  PixelsPerInch = 96
+  TextHeight = 13
+  object ToolBar1: TToolBar
+    Left = 0
+    Top = 0
+    Width = 982
+    Height = 49
+    ButtonHeight = 42
+    Caption = 'ToolBar1'
+    EdgeBorders = [ebLeft, ebTop, ebRight, ebBottom]
+    TabOrder = 0
+    ExplicitWidth = 527
+    object SpeedButton1: TSpeedButton
+      Left = 0
+      Top = 0
+      Width = 41
+      Height = 42
+      Caption = 'Agreg'
+    end
+    object SpeedButton2: TSpeedButton
+      Left = 41
+      Top = 0
+      Width = 41
+      Height = 42
+      Caption = 'Mod'
+    end
+    object SpeedButton3: TSpeedButton
+      Left = 82
+      Top = 0
+      Width = 41
+      Height = 42
+      Caption = 'Elimi'
+    end
+    object ToolButton2: TToolButton
+      Left = 123
+      Top = 0
+      Width = 14
+      Caption = 'ToolButton2'
+      ImageIndex = 0
+      Style = tbsSeparator
+    end
+    object SpeedButton4: TSpeedButton
+      Left = 137
+      Top = 0
+      Width = 41
+      Height = 42
+      Caption = 'Busca'
+    end
+    object SpeedButton5: TSpeedButton
+      Left = 178
+      Top = 0
+      Width = 41
+      Height = 42
+      Caption = 'Impri'
+    end
+    object ToolButton1: TToolButton
+      Left = 219
+      Top = 0
+      Width = 14
+      Caption = 'ToolButton1'
+      Style = tbsSeparator
+    end
+    object SpeedButton6: TSpeedButton
+      Left = 233
+      Top = 0
+      Width = 41
+      Height = 42
+      Caption = 'Salir'
+      OnClick = SpeedButton6Click
+    end
+  end
+  object cxGridProveedor: TcxGrid
+    Left = 0
+    Top = 49
+    Width = 982
+    Height = 509
+    Align = alClient
+    TabOrder = 1
+    ExplicitTop = 50
+    object cxGridProveedorDBTableView1: TcxGridDBTableView
+      Navigator.Buttons.CustomButtons = <>
+      DataController.Summary.DefaultGroupSummaryItems = <>
+      DataController.Summary.FooterSummaryItems = <>
+      DataController.Summary.SummaryGroups = <>
+    end
+    object cxGridProveedorLevel1: TcxGridLevel
+      GridView = cxGridProveedorDBTableView1
+    end
+  end
+  object FDGUIxWaitCursorProveedor: TFDGUIxWaitCursor
+    Provider = 'Forms'
+    Left = 264
+    Top = 176
+  end
+  object cxGridPopupMenuProveedor: TcxGridPopupMenu
+    Grid = cxGridProveedor
+    PopupMenus = <>
+    Left = 392
+    Top = 168
+  end
+end

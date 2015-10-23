@@ -1,0 +1,140 @@
+unit TipoEquipos;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons;
+
+type
+  TFormTipoEquipos = class(TForm)
+    GroupBoxTiposdeEquipos: TGroupBox;
+    EditClave: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    EditTipoEquipo: TEdit;
+    MemoObservaciones: TMemo;
+    BitBtnCerrar: TBitBtn;
+    BitBtnGuardar: TBitBtn;
+    Label3: TLabel;
+    procedure BitBtnCerrarClick(Sender: TObject);
+    procedure BitBtnGuardarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormTipoEquipos: TFormTipoEquipos;
+
+implementation
+
+{$R *.dfm}
+
+uses DataModuleInventarios;
+
+procedure TFormTipoEquipos.BitBtnCerrarClick(Sender: TObject);
+begin
+  close;
+end;
+
+procedure TFormTipoEquipos.BitBtnGuardarClick(Sender: TObject);
+var
+  Save:Integer;
+begin
+  if BitBtnGuardar.Caption='&Guardar' then
+    begin
+      Save:=Application.MessageBox('¿Desea Guardar el registro?','¡Confirmando!',MB_YESNOCANCEL);
+        if Save=IDYES then
+          begin
+            With DataModule1.FDQueryTipo_equipo do //Inserta el tipo de equipo
+              begin
+                 sql.Clear;
+                 Sql.Add('Insert into "CMSoftware"."Tipo_equipo" (id_tipo,descripcion,observaciones');
+                 Sql.Add('values(:param1,:param2,:param3)');
+
+                 Params[0].AsInteger:=StrTOInt(Editcid_equipo.Text);
+                 Params[1].AsString:=EditEquipoNombre.Text;
+                 Params[2].AsString:=EditCapacidad.Text;
+                 Params[3].AsString:=EditIdentificador.Text;
+                 Params[4].AsString:=EditCodigo.Text;
+                 Params[5].AsString:=ComboBoxPrioridad.Text;
+                 Params[6].AsString:=EditClasificacion1.Text;
+                 Params[7].AsString:=EditClasificacion2.Text;
+                 Params[8].AsString:=ComboBoxCentroCostos.Text;
+                 Params[9].AsString:=ComboBoxLocalizacion.Text;
+                 Params[10].AsString:=MemoObservaciones.Text;
+                 Params[11].AsString:=EditCampolibre1.Text;
+                 Params[12].AsString:=EditCampolibre2.Text;
+                 Params[13].AsString:=EditCampolibre3.Text;
+                 Params[14].AsString:=EditDescribe1.Text;
+                 Params[15].AsString:=EditDescribe2.Text;
+                 Params[16].AsString:=EditDescribe3.Text;
+                 ExecSQL;
+
+                  CLOSE;
+          //INICIA PROCESO DE LIMPIEZA DE FORMULARIO
+                 Editid_equipo.Clear;
+                 EditEquipoNombre.Clear;
+                 EditCapacidad.Clear;
+                 EditIdentificador.Clear;
+                 EditCodigo.Clear;
+                 ComboBoxPrioridad.Text:='';
+                 EditClasificacion1.Clear;
+                 EditClasificacion2.Clear;
+                 ComboBoxCentroCostos.Text:='';
+                 ComboBoxLocalizacion.Text:='';
+                 MemoObservaciones.lines.Clear;
+                 EditCampolibre1.Clear;
+                 EditCampolibre2.Clear;
+                 EditCampolibre3.Clear;
+                 EditDescribe1.Clear;
+                 EditDescribe2.Clear;
+                 EditDescribe3.Clear;
+              end;
+          end;
+
+    end
+  else
+  if BitBtnGuardar.Caption='&Modificar' then
+    begin
+      Save:=Application.MessageBox('¿Desea Modificar el registro?','¡Confirmando!',MB_YESNOCANCEL);
+        if Save=IDYES then
+          begin
+            With datamoduleinventarios.DataModule1.FDQueryProducto do //Actualiza el equipo
+              begin
+                 sql.Clear;
+                 Sql.Add('Update "CMSoftware"."Equipo" set id_equipo=:param1,tipo_equipo=:param2,capacidad=:param3,identificador=:param4,codigo=:param5,prioridad=:param6,clasificacion1=:param7,');
+                 Sql.Add('clasificacion2=:param8,centro_costos=:param9,localizacion=:param10,observaciones=:param11,campo_libre1=:param12,campo_libre2=:param13,campo_libre3=:param14,');
+                 Sql.Add('descrip_libre1=:param15,descrip_libre2=:param16,descrip_libre3=:param17');
+                 Sql.Add('where id_equipo=:param1');
+
+                 Params[0].AsInteger:=StrToInt(Editid_equipo.Text);
+                 Params[1].AsString:=EditEquipoNombre.Text;
+                 Params[2].AsString:=EditCapacidad.Text;
+                 Params[3].AsString:=EditIdentificador.Text;
+                 Params[4].AsString:=EditCodigo.Text;
+                 Params[5].AsString:=ComboBoxPrioridad.Text;
+                 Params[6].AsString:=EditClasificacion1.Text;
+                 Params[7].AsString:=EditClasificacion2.Text;
+                 Params[8].AsString:=ComboBoxCentroCostos.Text;
+                 Params[9].AsString:=ComboBoxLocalizacion.Text;
+                 Params[10].AsString:=MemoObservaciones.Text;
+                 Params[11].AsString:=EditCampolibre1.Text;
+                 Params[12].AsString:=EditCampolibre2.Text;
+                 Params[13].AsString:=EditCampolibre3.Text;
+                 Params[14].AsString:=EditDescribe1.Text;
+                 Params[15].AsString:=EditDescribe2.Text;
+                 Params[16].AsString:=EditDescribe3.Text;
+                 ExecSQL;
+
+            end;
+          end;
+
+    end
+
+
+end;
+
+end.

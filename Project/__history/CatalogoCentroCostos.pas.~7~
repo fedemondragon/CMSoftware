@@ -1,0 +1,70 @@
+unit CatalogoCentroCostos;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.Buttons, Vcl.ToolWin,
+  cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxStyles,
+  cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator, Data.DB,
+  cxDBData, FireDAC.UI.Intf, FireDAC.VCLUI.Wait, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, cxGridCustomPopupMenu,
+  cxGridPopupMenu, FireDAC.Comp.UI, cxGridLevel, cxClasses, cxGridCustomView,
+  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid;
+
+type
+  TFormCatalogoCentroCostos = class(TForm)
+    ToolBar1: TToolBar;
+    SpeedButtonAgregar: TSpeedButton;
+    SpeedButtonModificar: TSpeedButton;
+    SpeedButtonEliminar: TSpeedButton;
+    ToolButton1: TToolButton;
+    SpeedButtonBuscar: TSpeedButton;
+    SpeedButtonImprimir: TSpeedButton;
+    ToolButton2: TToolButton;
+    SpeedButtonSalir: TSpeedButton;
+    ToolBar2: TToolBar;
+    cxGridCentroCostosDBTableView1: TcxGridDBTableView;
+    cxGridCentroCostosLevel1: TcxGridLevel;
+    cxGridCentroCostos: TcxGrid;
+    DataSourceCentroCostos: TDataSource;
+    FDGUIxWaitCursorcentroCostos: TFDGUIxWaitCursor;
+    cxGridPopupMenuCentroCostos: TcxGridPopupMenu;
+    FDTableCentroCostos: TFDTable;
+    cxGridCentroCostosDBTableView1id_cuenta: TcxGridDBColumn;
+    cxGridCentroCostosDBTableView1descripcion: TcxGridDBColumn;
+    cxGridCentroCostosDBTableView1tipo: TcxGridDBColumn;
+    procedure SpeedButtonAgregarClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormCatalogoCentroCostos: TFormCatalogoCentroCostos;
+
+implementation
+
+{$R *.dfm}
+
+uses CentroCostos;
+
+procedure TFormCatalogoCentroCostos.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  Action:=caFree;
+end;
+
+procedure TFormCatalogoCentroCostos.SpeedButtonAgregarClick(Sender: TObject);
+begin
+  FormCentroCostos.Show;
+  FormCentroCostos.EditCuenta.Setfocus;
+  FormCentroCostos.BitBtnGuardar.Caption:='&Guardar';
+
+end;
+
+end.

@@ -1,0 +1,26 @@
+unit catalogoProveedor;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, Vcl.ToolWin, Vcl.ComCtrls;
+
+type
+  TFormCatalogoProveedores = class(TForm)
+    ToolBar1: TToolBar;
+    SpeedButton1: TSpeedButton;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormCatalogoProveedores: TFormCatalogoProveedores;
+
+implementation
+
+{$R *.dfm}
+
+end.

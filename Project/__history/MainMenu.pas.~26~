@@ -1,0 +1,90 @@
+unit MainMenu;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.Buttons, Vcl.ToolWin,
+  Vcl.ComCtrls, Vcl.ExtCtrls, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.PG,
+  FireDAC.Phys.PGDef, Data.DB, FireDAC.Comp.Client, FireDAC.Stan.Param,
+  FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet;
+
+type
+  TFormMainMenu = class(TForm)
+    MainMenu: TMainMenu;
+    Modulos1: TMenuItem;
+    Administracin1: TMenuItem;
+    Usuarios1: TMenuItem;
+    Compras1: TMenuItem;
+    Inventarios1: TMenuItem;
+    Servicio1: TMenuItem;
+    PlaneadordeOrdendeTrabajo1: TMenuItem;
+    Reportes1: TMenuItem;
+    StockMnimoyMximo1: TMenuItem;
+    Inventariosfaltantes1: TMenuItem;
+    Reimpresindedocumentos1: TMenuItem;
+    OrdenesdeTrabajo1: TMenuItem;
+    OrdendeCompra1: TMenuItem;
+    MovimientoalInventario1: TMenuItem;
+    OrdendeSlida1: TMenuItem;
+    Altadecompras1: TMenuItem;
+    Consultadedocumentos1: TMenuItem;
+    Ctalogodeproductosyservicios1: TMenuItem;
+    Movimientosalinventario1: TMenuItem;
+    Disponibilidaddeinventarios1: TMenuItem;
+    Ctalogodeproveedores1: TMenuItem;
+    Ctalogodeequipos1: TMenuItem;
+    CtalogodeEntidades1: TMenuItem;
+    OrdenesdeTrabajo2: TMenuItem;
+    Ctalogodeserviciosdemantenimiento1: TMenuItem;
+    HistorialdelMantenimiento1: TMenuItem;
+    OrdenesdeSlida1: TMenuItem;
+    Ayuda1: TMenuItem;
+    AcercadeCMSoftware1: TMenuItem;
+    Ctalogodetcnicos1: TMenuItem;
+    N1: TMenuItem;
+    ToolBar1: TToolBar;
+    SpeedButton1: TSpeedButton;
+    SpeedButton2: TSpeedButton;
+    ToolButton1: TToolButton;
+    SpeedButton3: TSpeedButton;
+    FDConnectionPrincipal: TFDConnection;
+    FDTable1: TFDTable;
+    FDQuery1: TFDQuery;
+    procedure Ctalogodeproductosyservicios1Click(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure SpeedButton2Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormMainMenu: TFormMainMenu;
+
+implementation
+
+{$R *.dfm}
+
+uses Producto, Usuario, Inventario;
+
+procedure TFormMainMenu.Ctalogodeproductosyservicios1Click(Sender: TObject);
+begin
+   Formproductos.Show;
+end;
+
+procedure TFormMainMenu.SpeedButton1Click(Sender: TObject);
+begin
+    Formusuarios.show;
+end;
+
+
+procedure TFormMainMenu.SpeedButton2Click(Sender: TObject);
+begin
+  TFormInventario.Create(Self).Show;
+end;
+
+end.

@@ -1,0 +1,33 @@
+unit Producto;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.TabNotBk,
+  Vcl.ExtCtrls, Vcl.Buttons;
+
+type
+  TFormProductos = class(TForm)
+    TabbedNotebook1: TTabbedNotebook;
+    GroupBox1: TGroupBox;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    Image1: TImage;
+    BitBtn1: TBitBtn;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormProductos: TFormProductos;
+
+implementation
+
+{$R *.dfm}
+
+end.

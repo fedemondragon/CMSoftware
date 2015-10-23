@@ -1,0 +1,60 @@
+unit DataModuleInventarios;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+
+type
+  TDataModule1 = class(TDataModule)
+    DataSourceProducto: TDataSource;
+    FDTable1: TFDTable;
+    FDQueryProducto: TFDQuery;
+    FDQueryProductoid_clave: TFMTBCDField;
+    FDQueryProductodescripcion: TWideStringField;
+    FDQueryProductotipo_producto: TFMTBCDField;
+    FDQueryProductolinea: TWideStringField;
+    FDQueryProductocontrol: TWideStringField;
+    FDQueryProductounidad_ent: TWideStringField;
+    FDQueryProductounidad_sal: TWideStringField;
+    FDQueryProductofactor_uni: TFMTBCDField;
+    FDQueryProductounidad_emp: TFMTBCDField;
+    FDQueryProductoprecio_lista: TFMTBCDField;
+    FDQueryProductomoneda: TWideStringField;
+    FDQueryProductocentro_costos: TWideStringField;
+    FDQueryProductoimpuesto: TFMTBCDField;
+    FDQueryProductoexistencia: TFMTBCDField;
+    FDQueryProductostock_min: TFMTBCDField;
+    FDQueryProductostock_max: TFMTBCDField;
+    FDQueryProductopromedio: TFMTBCDField;
+    FDQueryProductoultimo_costo: TFMTBCDField;
+    FDQueryProductocantidad_acumulada: TFMTBCDField;
+    FDQueryProductomonto_acum: TFMTBCDField;
+    FDQueryProductofecha_ult_com: TDateField;
+    FDQueryProductoobservaciones: TWideStringField;
+    FDQueryProductocampolibre1: TWideStringField;
+    FDQueryProductocampolibre2: TWideStringField;
+    FDQueryProductocampolibre3: TWideStringField;
+    FDQueryProductodescrip_libre1: TWideStringField;
+    FDQueryProductodescrip_libre2: TWideStringField;
+    FDQueryProductodescrip_libre3: TWideStringField;
+    FDQueryProductoproveedor: TWideStringField;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  DataModule1: TDataModule1;
+
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+{$R *.dfm}
+
+end.

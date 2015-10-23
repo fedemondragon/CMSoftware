@@ -1,0 +1,49 @@
+object DataModule1: TDataModule1
+  OldCreateOrder = False
+  Height = 398
+  Width = 651
+  object DataSourceProducto: TDataSource
+    DataSet = FDQueryProducto
+    Left = 72
+    Top = 40
+  end
+  object FDTable1: TFDTable
+    Active = True
+    Connection = FormMainMenu.TFDConectionMainMenu
+    UpdateOptions.UpdateTableName = '"Producto"'
+    SchemaName = 'CMSoftware'
+    TableName = '"Producto"'
+    Left = 288
+    Top = 152
+  end
+  object FDQueryProducto: TFDQuery
+    Connection = FormMainMenu.TFDConectionMainMenu
+    Left = 192
+    Top = 192
+  end
+  object FDQueryProveedor: TFDQuery
+    Connection = FormMainMenu.TFDConectionMainMenu
+    Left = 184
+    Top = 248
+  end
+  object FDQueryCentroCostos: TFDQuery
+    Connection = FormMainMenu.TFDConectionMainMenu
+    Left = 392
+    Top = 240
+  end
+  object FDQueryLinea: TFDQuery
+    Connection = FormMainMenu.TFDConectionMainMenu
+    Left = 456
+    Top = 240
+  end
+  object FDQueryEquipos: TFDQuery
+    Connection = FormMainMenu.TFDConectionMainMenu
+    Left = 392
+    Top = 136
+  end
+  object FDQueryTipo_equipo: TFDQuery
+    Connection = FormMainMenu.TFDConectionMainMenu
+    Left = 280
+    Top = 104
+  end
+end

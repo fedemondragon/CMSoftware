@@ -1,0 +1,91 @@
+unit Inventario;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ToolWin, Vcl.ComCtrls, Vcl.Buttons,
+  Vcl.Menus, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters,
+  cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator,
+  Data.DB, cxDBData, cxGridLevel, cxClasses, cxGridCustomView,
+  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, dxServerModeData,
+  dxServerModeFireDACDataSource, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  FireDAC.UI.Intf, FireDAC.VCLUI.Wait, FireDAC.Comp.UI;
+
+type
+  TFormInventario = class(TForm)
+    ToolBar1: TToolBar;
+    SpeedButton1: TSpeedButton;
+    SpeedButton2: TSpeedButton;
+    SpeedButton3: TSpeedButton;
+    ToolButton1: TToolButton;
+    SpeedButton4: TSpeedButton;
+    SpeedButton5: TSpeedButton;
+    ToolButton2: TToolButton;
+    SpeedButton6: TSpeedButton;
+    ToolBar2: TToolBar;
+    cxGrid1DBTableView1: TcxGridDBTableView;
+    cxGrid1Level1: TcxGridLevel;
+    cxGrid1: TcxGrid;
+    DataSource1: TDataSource;
+    FDTable1: TFDTable;
+    dxServerModeFireDACDataSource1: TdxServerModeFireDACDataSource;
+    cxGrid1DBTableView1id_clave: TcxGridDBColumn;
+    cxGrid1DBTableView1descripcion: TcxGridDBColumn;
+    cxGrid1DBTableView1tipo_producto: TcxGridDBColumn;
+    cxGrid1DBTableView1linea: TcxGridDBColumn;
+    cxGrid1DBTableView1control: TcxGridDBColumn;
+    cxGrid1DBTableView1unidad_ent: TcxGridDBColumn;
+    cxGrid1DBTableView1unidad_sal: TcxGridDBColumn;
+    cxGrid1DBTableView1factor_uni: TcxGridDBColumn;
+    cxGrid1DBTableView1unidad_emp: TcxGridDBColumn;
+    cxGrid1DBTableView1precio_lista: TcxGridDBColumn;
+    cxGrid1DBTableView1moneda: TcxGridDBColumn;
+    cxGrid1DBTableView1centro_costos: TcxGridDBColumn;
+    cxGrid1DBTableView1impuesto: TcxGridDBColumn;
+    cxGrid1DBTableView1existencia: TcxGridDBColumn;
+    cxGrid1DBTableView1stock_min: TcxGridDBColumn;
+    cxGrid1DBTableView1stock_max: TcxGridDBColumn;
+    cxGrid1DBTableView1proveedor: TcxGridDBColumn;
+    cxGrid1DBTableView1promedio: TcxGridDBColumn;
+    cxGrid1DBTableView1ultimo_costo: TcxGridDBColumn;
+    cxGrid1DBTableView1cantidad_acumulada: TcxGridDBColumn;
+    cxGrid1DBTableView1monto_acum: TcxGridDBColumn;
+    cxGrid1DBTableView1fecha_ult_com: TcxGridDBColumn;
+    cxGrid1DBTableView1observaciones: TcxGridDBColumn;
+    cxGrid1DBTableView1campolibre1: TcxGridDBColumn;
+    cxGrid1DBTableView1campolibre2: TcxGridDBColumn;
+    cxGrid1DBTableView1campolibre3: TcxGridDBColumn;
+    cxGrid1DBTableView1descrip_libre1: TcxGridDBColumn;
+    cxGrid1DBTableView1descrip_libre2: TcxGridDBColumn;
+    cxGrid1DBTableView1descrip_libre3: TcxGridDBColumn;
+    FDGUIxWaitCursor1: TFDGUIxWaitCursor;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure SpeedButton6Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormInventario: TFormInventario;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFormInventario.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action:=caFree;
+end;
+
+procedure TFormInventario.SpeedButton6Click(Sender: TObject);
+begin
+  close;
+end;
+
+end.

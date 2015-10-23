@@ -1,0 +1,164 @@
+unit CatalogoEquipos;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls, cxLookAndFeels,
+  cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter, cxData,
+  cxDataStorage, cxEdit, cxNavigator, Data.DB, cxDBData, FireDAC.UI.Intf,
+  FireDAC.VCLUI.Wait, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, FireDAC.Comp.UI, Vcl.ComCtrls, Vcl.Buttons, Vcl.ToolWin,
+  cxGridLevel, cxGridCustomTableView, cxGridTableView, cxGridDBTableView,
+  cxClasses, cxGridCustomView, cxGrid;
+
+type
+  TFormCatalogoEquipos = class(TForm)
+    cxGridProveedor: TcxGrid;
+    cxGridProveedorDBTableView1: TcxGridDBTableView;
+    cxGridProveedorLevel1: TcxGridLevel;
+    ToolBar1: TToolBar;
+    SpeedButtonAgregar: TSpeedButton;
+    SpeedButtonModificar: TSpeedButton;
+    SpeedButtonEliminar: TSpeedButton;
+    ToolButton2: TToolButton;
+    SpeedButtonBuscar: TSpeedButton;
+    SpeedButtonImprimir: TSpeedButton;
+    ToolButton1: TToolButton;
+    SpeedButtonSalir: TSpeedButton;
+    ToolBar2: TToolBar;
+    FDGUIxWaitCursorEquipos: TFDGUIxWaitCursor;
+    DataSourceEquipos: TDataSource;
+    FDTableEquipos: TFDTable;
+    cxGridProveedorDBTableView1id_equipo: TcxGridDBColumn;
+    cxGridProveedorDBTableView1tipo_equipo: TcxGridDBColumn;
+    cxGridProveedorDBTableView1capacidad: TcxGridDBColumn;
+    cxGridProveedorDBTableView1identificador: TcxGridDBColumn;
+    cxGridProveedorDBTableView1codigo: TcxGridDBColumn;
+    cxGridProveedorDBTableView1prioridad: TcxGridDBColumn;
+    cxGridProveedorDBTableView1clasificacion1: TcxGridDBColumn;
+    cxGridProveedorDBTableView1clasificacion2: TcxGridDBColumn;
+    cxGridProveedorDBTableView1centro_costos: TcxGridDBColumn;
+    cxGridProveedorDBTableView1localizacion: TcxGridDBColumn;
+    procedure SpeedButtonAgregarClick(Sender: TObject);
+    procedure SpeedButtonModificarClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure SpeedButtonEliminarClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormCatalogoEquipos: TFormCatalogoEquipos;
+
+implementation
+
+{$R *.dfm}
+
+uses DataModuleInventarios, Proveedor, Equipo, CentroCostos;
+
+procedure TFormCatalogoEquipos.FormActivate(Sender: TObject);
+begin
+  DataSourceEquipos.DataSet.Refresh;
+end;
+
+procedure TFormCatalogoEquipos.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+   Action:=caFree;
+end;
+
+procedure TFormCatalogoEquipos.SpeedButtonAgregarClick(Sender: TObject);
+var
+  equipo:Integer;
+begin
+     //Dame la ultima clave del equipo
+  With  DataModule1.FDQueryEquipos do
+      Begin
+        Close;
+        sql.Clear;
+        Sql.add('Select max(id_equipo) from "CMSoftware"."Equipo"');
+        open;
+        equipo:=Fields[0].Asinteger + 1;
+      End;
+      //Asigna lave y abre modulo
+  FormEquipos.Show;
+  FormEquipos.TabbedNotebook1.PageIndex:=0;
+  FormEquipos.Editid_equipo.text:=IntToStr(equipo);
+  FormEquipos.EditEquipoNombre.SetFocus;
+  FormEquipos.BitBtnGuardar.Caption:='&Guardar';
+end;
+
+procedure TFormCatalogoEquipos.SpeedButtonEliminarClick(Sender: TObject);
+var
+  equipo:Integer;
+  Delete:Integer;
+begin
+  equipo:=StrToInt(DataSourceEquipos.DataSet.Fields[0].AsString);
+    begin
+      Delete:=Application.MessageBox('¿Estas seguro de borrar el registro seleccionado?','¡Confirmando!',MB_YESNOCANCEL);
+        if Delete=IDYES then
+          begin
+            With DataModule1.FDQueryEquipos do //borra equipos
+              begin
+                 sql.Clear;
+                 Sql.Add('Delete from "CMSoftware"."Equipo" where id_equipo=:param1');
+                 Params[0].AsInteger:=equipo;
+                 ExecSQL;
+                 DataSourceEquipos.DataSet.Refresh;
+              end;
+          end;
+    end;
+
+
+end;
+
+procedure TFormCatalogoEquipos.SpeedButtonModificarClick(Sender: TObject);
+var
+  Equipos:Integer;
+begin
+
+  Equipos:=strTOInt(DataSourceEquipos.DataSet.Fields[0].AsString);
+With DataModule1.FDQueryEquipos do //consulta y modifica el centro de costos
+              begin
+                 Close;
+                 sql.Clear;
+                 Sql.Add('select id_equipo,tipo_equipo,capacidad,identificador,codigo,prioridad,clasificacion1,');
+                 Sql.Add('clasificacion2,centro_costos,localizacion,observaciones,campo_libre1,campo_libre2,campo_libre3,');
+                 Sql.Add('descrip_libre1,descrip_libre2,descrip_libre3 ');
+                 Sql.Add('from "CMSoftware"."Equipo" where id_equipo=:param1');
+                 Params[0].AsInteger:=Equipos;
+                 open;
+
+            With FormEquipos do
+               begin
+                 Editid_equipo.Text:=IntToStr(Equipos);
+                 EditEquipoNombre.Text:=Fields[1].AsString;
+                 EditCapacidad.Text:=Fields[2].AsString;
+                 EditIdentificador.Text:=Fields[3].AsString;
+                 EditCodigo.Text:=Fields[4].AsString;
+                 ComboBoxPrioridad.Text:=Fields[5].AsString;
+                 EditClasificacion1.Text:=Fields[6].AsString;
+                 EditClasificacion2.Text:=Fields[7].AsString;
+                 ComboBoxCentroCostos.Text:=Fields[8].AsString;
+                 ComboBoxLocalizacion.Text:=Fields[9].AsString;
+                 MemoObservaciones.Text:=Fields[10].AsString;
+                 EditCampolibre1.Text:=Fields[11].AsString;
+                 EditCampolibre2.Text:=Fields[12].AsString;
+                 EditCampolibre3.Text:=Fields[13].AsString;
+                 EditDescribe1.Text:=Fields[14].AsString;
+                 EditDescribe2.Text:=Fields[15].AsString;
+                 EditDescribe3.Text:=Fields[16].AsString;
+                BitBtnGuardar.Caption:='&Modificar';
+               end;
+  end;
+  FormEquipos.Show;
+
+end;
+
+end.

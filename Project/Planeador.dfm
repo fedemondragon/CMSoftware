@@ -1,0 +1,33 @@
+object FormPlaneador: TFormPlaneador
+  Left = 0
+  Top = 0
+  Caption = 'Programaci'#243'n de ordenes de trabajo'
+  ClientHeight = 594
+  ClientWidth = 984
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object cxScheduler1: TcxScheduler
+    Left = 24
+    Top = 24
+    Width = 817
+    Height = 473
+    ViewWeeks.Active = True
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    TabOrder = 0
+    Selection = 35
+    Splitters = {
+      A10200007E00000030030000830000009C02000001000000A1020000D8010000}
+    StoredClientBounds = {010000000100000030030000D8010000}
+  end
+end

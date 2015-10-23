@@ -1,0 +1,185 @@
+unit Equipo;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ComCtrls,
+  Vcl.TabNotBk;
+
+type
+  TFormEquipos = class(TForm)
+    TabbedNotebook1: TTabbedNotebook;
+    GroupBox1: TGroupBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    EditEquipoNombre: TEdit;
+    BitBtn1: TBitBtn;
+    Editid_equipo: TEdit;
+    EditCapacidad: TEdit;
+    EditIdentificador: TEdit;
+    EditCodigo: TEdit;
+    ComboBoxPrioridad: TComboBox;
+    BitBtn2: TBitBtn;
+    EditClasificacion1: TEdit;
+    EditClasificacion2: TEdit;
+    Label9: TLabel;
+    ComboBoxCentroCostos: TComboBox;
+    Label10: TLabel;
+    ComboBoxLocalizacion: TComboBox;
+    BitBtnCerrar: TBitBtn;
+    BitBtnGuardar: TBitBtn;
+    GroupBox2: TGroupBox;
+    MemoObservaciones: TMemo;
+    GroupBox3: TGroupBox;
+    EditCampolibre1: TEdit;
+    EditCampolibre2: TEdit;
+    EditCampolibre3: TEdit;
+    EditDescribe1: TEdit;
+    EditDescribe2: TEdit;
+    EditDescribe3: TEdit;
+    procedure BitBtnCerrarClick(Sender: TObject);
+    procedure BitBtnGuardarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormEquipos: TFormEquipos;
+
+implementation
+
+{$R *.dfm}
+
+uses DataModuleInventarios;
+
+procedure TFormEquipos.BitBtnCerrarClick(Sender: TObject);
+begin
+  close;
+end;
+
+procedure TFormEquipos.BitBtnGuardarClick(Sender: TObject);
+var
+  Save:Integer;
+begin
+  if BitBtnGuardar.Caption='&Guardar' then
+    begin
+      Save:=Application.MessageBox('¿Desea Guardar el registro?','¡Confirmando!',MB_YESNOCANCEL);
+        if Save=IDYES then
+          begin
+            With DataModule1.FDQueryEquipos do //Inserta el producto nuevo
+              begin
+                 sql.Clear;
+                 Sql.Add('Insert into "CMSoftware"."Equipo" (id_equipo,tipo_equipo,capacidad,identificador,codigo,prioridad,clasificacion1,');
+                 Sql.Add('clasificacion2,centro_costos,localizacion,observaciones,campo_libre1,campo_libre2,campo_libre3,');
+                 Sql.Add('descrip_libre1,descrip_libre2,descrip_libre3 ');
+                 Sql.Add('values(:param1,:param2,:param3,:param4,:param5,:param6,:param7,:param8,');
+                 Sql.Add(':param9,:param10,:param11,:param12,:param13,:param14,:param15,:param16,:param17)');
+
+                 Params[0].AsString:=Editid_equipo.Text;
+                 Params[1].AsString:=EditEquipoNombre.Text;
+                 Params[2].AsString:=EditCapacidad.Text;
+                 Params[3].AsString:=EditIdentificador.Text
+                 Params[4].AsString:=EditCodigo.Text;
+                 Params[5].AsString:=ComboBoxPrioridad.Text;
+                 Params[6].AsString:=EditClasificacion1.Text;
+                 Params[7].AsString:=EditClasificacion2.Text;
+                 Params[8].AsString:=ComboBoxCentroCostos.Text;
+                 Params[9].AsString:=ComboBoxLocalizacion.Text;
+                 Params[10].AsString:=MemoObservaciones.Text;
+                 Params[11].AsString:=EditCampolibre1.Text;
+                 Params[12].AsString:=EditCampolibre2.Text;
+                 Params[13].AsString:=EditCampolibre3.Text;
+                 Params[14].AsString:=EditDescribe1.Text;
+                 Params[15].AsString:=EditDescribe2.Text;
+                 Params[16].AsString:=EditDescribe3.Text;
+                 ExecSQL;
+
+                  CLOSE;
+          //INICIA PROCESO DE LIMPIEZA DE FORMULARIO
+                 Editid_equipo.Clear;
+                 EditEquipoNombre.Clear;
+                 EditCapacidad.Clear;
+                 EditIdentificador.Clear
+                 EditCodigo.Clear;
+                 ComboBoxPrioridad.Text:='';
+                 EditClasificacion1.Clear;
+                 EditClasificacion2.Clear;
+                 ComboBoxCentroCostos.Text:='';
+                 ComboBoxLocalizacion.Text:='';
+                 MemoObservaciones.Text.clear;
+                 EditCampolibre1.Text;
+                 EditCampolibre2.Text;
+                 EditCampolibre3.Text;
+                 EditDescribe1.Text;
+                 EditDescribe2.Text;
+                 EditDescribe3.Text;
+              end;
+          end;
+
+    end
+  else
+  if BitBtnGuardar.Caption='&Modificar' then
+    begin
+      Save:=Application.MessageBox('¿Desea Modificar el registro?','¡Confirmando!',MB_YESNOCANCEL);
+        if Save=IDYES then
+          begin
+            With datamoduleinventarios.DataModule1.FDQueryProducto do //Inserta el producto nuevo
+              begin
+                 sql.Clear;
+                 Sql.Add('Update "CMSoftware"."Producto" set id_clave=:param1,descripcion=:param2,tipo_producto=:param3,linea=:param4,control=:param5,');
+                 Sql.Add('unidad_ent=:param6,unidad_sal=:param7,factor_uni=:param8,unidad_emp=:param9,precio_lista=:param10,moneda=:param11,centro_costos=:param12,impuesto=:param13,');
+                 Sql.Add('existencia=:param14,stock_min=:param15,stock_max=:param16,proveedor=:param17,promedio=:param18,ultimo_costo=:param19,');
+                 Sql.Add('observaciones=:param20,campolibre1=:param21,campolibre2=:param22,campolibre3=:param23,descrip_libre1=:param24,descrip_libre2=:param25,descrip_libre3=:param26');
+                 Sql.Add('where id_clave=:param1');
+
+                 Params[0].AsString:=Editid_producto.Text;
+                 Params[1].AsString:=MemoDescripción.Text;
+
+                    if RadioButtonProducto.Checked=true then
+                       Params[2].AsInteger:=1 else
+                    if RadioButtonServicio.Checked=true then
+                       Params[2].AsInteger:=2 else
+                    if RadioButtonKit.Checked=true then
+                       Params[2].AsInteger:=3;
+
+                 Params[3].AsString:=EditLinea.Text;
+                 Params[4].AsString:='1';//control revisar
+                 Params[5].AsString:=EditUnidad_entrada.Text;
+                 Params[6].AsString:=EditUnidad_salida.Text;
+                 Params[7].AsFloat:=StrToFloat(EditFactor_unidades.Text);
+                 Params[8].AsFloat:=StrToFloat(EditUnidad_empaque.Text);
+                 Params[9].AsFloat:=StrToFloat(EditPrecioLista.Text);
+                 Params[10].AsString:=EditMoneda.Text;
+                 Params[11].AsString:=EditCentroCostos.Text;
+                 Params[12].AsInteger:=StrToInt(EditIVA.Text);
+                 Params[13].AsFloat:=StrToFloat(EditExistencia.Text);
+                 Params[14].AsFloat:=StrToFloat(EditStockMin.Text);
+                 Params[15].AsFloat:=StrToFloat(EditStockMax.Text);
+                 Params[16].AsString:=Editproveedor.Text;
+                 Params[17].AsFloat:=StrToFloat(EditPromedio.Text);
+                 Params[18].AsFloat:=StrToFloat(EditUltimo.Text);
+                 Params[19].AsString:=MemoObserva.Text;
+                 Params[20].AsString:=EditCampoLibre1.Text;
+                 Params[21].AsString:=EditCampoLibre2.Text;
+                 Params[22].AsString:=EditCampoLibre3.Text;
+                 Params[23].AsString:=EditDescripcionLibre1.Text;
+                 Params[24].AsString:=EditDescripcionLibre2.Text;
+                 Params[25].AsString:=EditDescripcionLibre3.Text;
+                 ExecSQL;
+
+            end;
+          end;
+
+    end
+end;
+
+end.
