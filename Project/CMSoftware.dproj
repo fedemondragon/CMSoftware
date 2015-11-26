@@ -135,10 +135,6 @@
             <Form>FormAbout</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Planeador.pas">
-            <Form>FormPlaneador</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="CatalogoCentroCostos.pas">
             <Form>FormCatalogoCentroCostos</Form>
             <FormType>dfm</FormType>
@@ -205,6 +201,30 @@
         </DCCReference>
         <DCCReference Include="MovimientosInventario.pas">
             <Form>FormMovimientosInventario</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="AltaMovInventario.pas">
+            <Form>FormAltaMovInv</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Planeador.pas">
+            <Form>FormPlaneador</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="PanelServicio.pas">
+            <Form>FormServicio</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="PathAgenda.pas">
+            <Form>FormPathAgenda</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="SolicitudServicio.pas">
+            <Form>FormSolicitudServicio</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="OrdenServicio.pas">
+            <Form>FormOrdenServicio</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">

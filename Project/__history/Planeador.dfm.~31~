@@ -1,0 +1,52 @@
+object FormPlaneador: TFormPlaneador
+  Left = 0
+  Top = 0
+  Caption = 'Programaci'#243'n de ordenes de trabajo'
+  ClientHeight = 594
+  ClientWidth = 984
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  WindowState = wsMaximized
+  OnClose = FormClose
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object cxSchedulerAgenda: TcxScheduler
+    Left = 0
+    Top = 0
+    Width = 984
+    Height = 594
+    DateNavigator.RowCount = 2
+    ViewDay.Active = True
+    Align = alClient
+    DialogsLookAndFeel.NativeStyle = False
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    LookAndFeel.Kind = lfUltraFlat
+    LookAndFeel.NativeStyle = False
+    OptionsView.WorkDays = [dMonday, dTuesday, dWednesday, dThursday, dFriday, dSaturday]
+    Storage = cxSchedulerStorageAgenda
+    TabOrder = 0
+    ExplicitLeft = 88
+    ExplicitTop = 88
+    ExplicitWidth = 350
+    ExplicitHeight = 250
+    Splitters = {
+      48030000FB000000D70300000001000043030000010000004803000051020000}
+    StoredClientBounds = {0100000001000000D703000051020000}
+  end
+  object cxSchedulerStorageAgenda: TcxSchedulerStorage
+    CustomFields = <>
+    Resources.Items = <>
+    Left = 528
+    Top = 184
+  end
+end

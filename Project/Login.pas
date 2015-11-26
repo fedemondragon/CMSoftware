@@ -31,6 +31,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+    Usuario:Integer;
   end;
 
 var
@@ -46,6 +47,8 @@ procedure TFormLogin.BitBtnEntrarClick(Sender: TObject);
 var
   permiso:Integer;
 begin
+  Usuario:=StrToInt(EditUsuario.Text);
+
   With FDQueryLogin do
   Begin
     Sql.Clear;

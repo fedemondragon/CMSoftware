@@ -116,11 +116,11 @@ object FormUsuarios: TFormUsuarios
       Caption = 'Folio'
     end
     object Label8: TLabel
-      Left = 519
+      Left = 502
       Top = 89
-      Width = 39
+      Width = 85
       Height = 13
-      Caption = 'Folio OT'
+      Caption = 'Orden de Servicio'
     end
     object Label9: TLabel
       Left = 592

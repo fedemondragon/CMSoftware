@@ -1,0 +1,54 @@
+object FormPathAgenda: TFormPathAgenda
+  Left = 0
+  Top = 0
+  Caption = 'Configuraci'#243'n de Archivo de Agenda'
+  ClientHeight = 128
+  ClientWidth = 447
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 24
+    Top = 21
+    Width = 308
+    Height = 13
+    Caption = 'Escriba la Ruta en donde se encuentra el Archivo de Agenda.txt'
+  end
+  object EditRuta: TEdit
+    Left = 24
+    Top = 40
+    Width = 321
+    Height = 21
+    TabOrder = 0
+  end
+  object BitBtn1: TBitBtn
+    Left = 192
+    Top = 83
+    Width = 75
+    Height = 25
+    Caption = 'Guardar'
+    TabOrder = 1
+  end
+  object BitBtn2: TBitBtn
+    Left = 351
+    Top = 38
+    Width = 75
+    Height = 25
+    Caption = 'Ruta'
+    TabOrder = 2
+    OnClick = BitBtn2Click
+  end
+  object SaveDialog: TSaveDialog
+    FileName = 'C:\CMSoftware\Project\Win32\Agenda.dat'
+    OnSelectionChange = SaveDialogSelectionChange
+    Left = 296
+    Top = 76
+  end
+end

@@ -22,8 +22,11 @@ type
     FDQueryBuscaProveedor: TFDQuery;
     FDQueryBuscaProveedorid_proveedor: TFMTBCDField;
     FDQueryBuscaProveedornombre: TWideStringField;
+    BitBtn2: TBitBtn;
     procedure BitBtn1Click(Sender: TObject);
     procedure DBGrid1DblClick(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -51,6 +54,16 @@ begin
     end;
 end;
 
+procedure TFormBuscaProveedor.BitBtn2Click(Sender: TObject);
+begin
+    With FDQueryBuscaProveedor do
+    begin
+      Sql.Clear;
+      Sql.Add('Select id_proveedor,nombre from "CMSoftware"."Proveedor" order by nombre');
+      open;
+    end;
+end;
+
 procedure TFormBuscaProveedor.DBGrid1DblClick(Sender: TObject);
 
 
@@ -63,6 +76,16 @@ begin
 
 
 
+end;
+
+procedure TFormBuscaProveedor.FormShow(Sender: TObject);
+begin
+    With FDQueryBuscaProveedor do
+    begin
+      Sql.Clear;
+      Sql.Add('Select id_proveedor,nombre from "CMSoftware"."Proveedor" order by nombre');
+      open;
+    end;
 end;
 
 end.

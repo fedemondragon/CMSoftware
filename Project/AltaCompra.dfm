@@ -1,7 +1,7 @@
 object FormAltacompra: TFormAltacompra
   Left = 0
   Top = 0
-  Width = 1115
+  Width = 1114
   Height = 738
   AutoScroll = True
   BorderIcons = [biMinimize, biMaximize]
@@ -132,7 +132,7 @@ object FormAltacompra: TFormAltacompra
   object ToolBar2: TToolBar
     Left = 0
     Top = 0
-    Width = 1099
+    Width = 1098
     Height = 23
     Caption = 'ToolBar2'
     Color = clBlue
@@ -144,7 +144,7 @@ object FormAltacompra: TFormAltacompra
   object ToolBar1: TToolBar
     Left = 0
     Top = 23
-    Width = 1099
+    Width = 1098
     Height = 49
     ButtonHeight = 42
     Caption = 'ToolBar1'
@@ -1313,7 +1313,7 @@ object FormAltacompra: TFormAltacompra
   object GroupBox1: TGroupBox
     Left = 0
     Top = 72
-    Width = 1099
+    Width = 1098
     Height = 202
     Align = alTop
     TabOrder = 2
@@ -1876,5 +1876,11 @@ object FormAltacompra: TFormAltacompra
     Connection = FormMainMenu.TFDConectionMainMenu
     Left = 768
     Top = 456
+  end
+  object cxGridPopupMenuDetalleCompra: TcxGridPopupMenu
+    Grid = cxGridDetalleCompra
+    PopupMenus = <>
+    Left = 968
+    Top = 240
   end
 end

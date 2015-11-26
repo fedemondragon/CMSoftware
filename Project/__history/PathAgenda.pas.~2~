@@ -1,0 +1,35 @@
+unit PathAgenda;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtDlgs, Vcl.StdCtrls, Vcl.Buttons;
+
+type
+  TFormPathAgenda = class(TForm)
+    EditRuta: TEdit;
+    Label1: TLabel;
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    SaveDialog: TSaveDialog;
+    procedure BitBtn2Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormPathAgenda: TFormPathAgenda;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFormPathAgenda.BitBtn2Click(Sender: TObject);
+begin
+SaveDialog.Execute;
+end;
+
+end.

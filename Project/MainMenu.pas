@@ -33,7 +33,6 @@ type
     MovimientoalInventario1: TMenuItem;
     OrdendeSlida1: TMenuItem;
     Altadecompras1: TMenuItem;
-    Consultadedocumentos1: TMenuItem;
     Ctalogodeproductosyservicios1: TMenuItem;
     Movimientosalinventario1: TMenuItem;
     Disponibilidaddeinventarios1: TMenuItem;
@@ -41,12 +40,8 @@ type
     Ctalogodeequipos1: TMenuItem;
     CtalogodeEntidades1: TMenuItem;
     OrdenesdeTrabajo2: TMenuItem;
-    Ctalogodeserviciosdemantenimiento1: TMenuItem;
-    HistorialdelMantenimiento1: TMenuItem;
-    OrdenesdeSlida1: TMenuItem;
     Ayuda1: TMenuItem;
     AcercadeCMSoftware1: TMenuItem;
-    Ctalogodetcnicos1: TMenuItem;
     N1: TMenuItem;
     ToolBar1: TToolBar;
     SpeedButtonInventarios: TSpeedButton;
@@ -70,6 +65,8 @@ type
     SpeedButtonProveedor: TSpeedButton;
     SpeedButtonUser: TSpeedButton;
     Conceptosdemovimientosalinventario1: TMenuItem;
+    SpeedButton2: TSpeedButton;
+    RutadeAgenda1: TMenuItem;
     procedure Ctalogodeproductosyservicios1Click(Sender: TObject);
     procedure SpeedButtonInventariosClick(Sender: TObject);
     procedure SpeedButtonSalirClick(Sender: TObject);
@@ -88,10 +85,17 @@ type
     procedure Conceptosdemovimientosalinventario1Click(Sender: TObject);
     procedure Altadecompras1Click(Sender: TObject);
     procedure Ctalogodeproveedores1Click(Sender: TObject);
+    procedure Movimientosalinventario1Click(Sender: TObject);
+    procedure SpeedButton2Click(Sender: TObject);
+    procedure PlaneadordeOrdendeTrabajo1Click(Sender: TObject);
+    procedure SpeedButtonServiciosClick(Sender: TObject);
+    procedure RutadeAgenda1Click(Sender: TObject);
+    procedure OrdenesdeTrabajo2Click(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+
   end;
 
 var
@@ -104,7 +108,8 @@ implementation
 uses Producto, Usuario, Inventario, catalogoProveedor, AcercadeCMSoftware,
   CentroCostos, CatalogoCentroCostos, CatalogoLinea, CatalogoEquipos,
   CatalogoTipoEquipo, CatalogoEntidades, CatalogoCompras, UserTemp, Login,
-  ConceptosInventario;
+  ConceptosInventario, MovimientosInventario, Planeador, PanelServicio,
+  PathAgenda, SolicitudServicio;
 
 procedure TFormMainMenu.AcercadeCMSoftware1Click(Sender: TObject);
 begin
@@ -152,9 +157,30 @@ begin
        TFormCatalogoTipoEquipo.Create(self).Show;
 end;
 
+procedure TFormMainMenu.Movimientosalinventario1Click(Sender: TObject);
+begin
+  TFormMovimientosInventario.create(self).Show;
+end;
+
 procedure TFormMainMenu.N3Click(Sender: TObject);
 begin
        TFormCatalogoCentroCostos.Create(self).Show;
+end;
+
+procedure TFormMainMenu.OrdenesdeTrabajo2Click(Sender: TObject);
+begin
+  TFormSolicitudServicio.Create(Self).Show;
+end;
+
+procedure TFormMainMenu.PlaneadordeOrdendeTrabajo1Click(Sender: TObject);
+begin
+    TFormPlaneador.Create(Self).show;
+
+end;
+
+procedure TFormMainMenu.RutadeAgenda1Click(Sender: TObject);
+begin
+FormPathAgenda.Show;
 end;
 
 procedure TFormMainMenu.Salir1Click(Sender: TObject);
@@ -165,6 +191,11 @@ end;
 procedure TFormMainMenu.SpeedButton1Click(Sender: TObject);
 begin
   TFormCatalogoEquipos.Create(Self).Show;
+end;
+
+procedure TFormMainMenu.SpeedButton2Click(Sender: TObject);
+begin
+  TFormMovimientosInventario.Create(Self).Show;
 end;
 
 procedure TFormMainMenu.SpeedButtonComprasClick(Sender: TObject);
@@ -183,8 +214,21 @@ begin
 end;
 
 procedure TFormMainMenu.SpeedButtonSalirClick(Sender: TObject);
+var
+  Cerrar:Integer;
+ Begin
+  Cerrar:=Application.MessageBox('¿Desea Salir del programa?','¡Confirmando!',MB_YESNO);
+        Begin
+         if Cerrar=IDYES then
+           close;
+        End;
+  End;
+
+
+
+procedure TFormMainMenu.SpeedButtonServiciosClick(Sender: TObject);
 begin
-    close;
+  TFormServicio.Create(Self).Show;
 end;
 
 procedure TFormMainMenu.SpeedButtonUserClick(Sender: TObject);

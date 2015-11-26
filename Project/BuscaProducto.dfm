@@ -11,6 +11,7 @@ object FormBuscaProducto: TFormBuscaProducto
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -80,6 +81,15 @@ object FormBuscaProducto: TFormBuscaProducto
     Width = 121
     Height = 21
     TabOrder = 3
+  end
+  object BitBtn2: TBitBtn
+    Left = 568
+    Top = 17
+    Width = 75
+    Height = 25
+    Caption = 'Todos'
+    TabOrder = 4
+    OnClick = BitBtn2Click
   end
   object DataSourceBuscaProducto: TDataSource
     DataSet = FDQueryBuscaProducto

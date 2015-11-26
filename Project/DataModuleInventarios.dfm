@@ -71,4 +71,14 @@ object DataModule1: TDataModule1
     Left = 56
     Top = 184
   end
+  object FDQueryOrdenServicio: TFDQuery
+    Connection = FormMainMenu.TFDConectionMainMenu
+    Left = 224
+    Top = 216
+  end
+  object FDQueryEntidad: TFDQuery
+    Connection = FormMainMenu.TFDConectionMainMenu
+    Left = 368
+    Top = 208
+  end
 end

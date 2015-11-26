@@ -1,0 +1,27 @@
+unit PathAgenda;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtDlgs, Vcl.StdCtrls;
+
+type
+  TFormPathAgenda = class(TForm)
+    EditRuta: TEdit;
+    Label1: TLabel;
+    OpenTextFileDialogAgenda: TOpenTextFileDialog;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormPathAgenda: TFormPathAgenda;
+
+implementation
+
+{$R *.dfm}
+
+end.

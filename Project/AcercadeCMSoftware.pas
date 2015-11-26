@@ -9,7 +9,6 @@ uses
 
 type
   TFormAbout = class(TForm)
-    Image1: TImage;
     Label1: TLabel;
     Image2: TImage;
     Label2: TLabel;

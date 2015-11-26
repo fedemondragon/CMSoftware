@@ -12,7 +12,7 @@ uses
   FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   Vcl.Menus, FireDAC.Comp.UI, cxGridLevel, cxClasses, cxGridCustomView, cxGrid,
-  Vcl.ComCtrls, Vcl.Buttons, Vcl.ToolWin;
+  Vcl.ComCtrls, Vcl.Buttons, Vcl.ToolWin,StrUtils;
 
 type
   TFormMovimientosInventario = class(TForm)
@@ -52,12 +52,17 @@ type
     cxGridMovimientosInventarioDBTableView1costo_operado: TcxGridDBColumn;
     cxGridMovimientosInventarioDBTableView1cantidad: TcxGridDBColumn;
     cxGridMovimientosInventarioDBTableView1almacen: TcxGridDBColumn;
+    FDQueryMovimientosInventariolinea: TWideStringField;
+    cxGridMovimientosInventarioDBTableView1linea: TcxGridDBColumn;
     procedure SpeedButtonSalirClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure SpeedButtonAgregarClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    FolioUsuario:integer;
   end;
 
 var
@@ -67,10 +72,36 @@ implementation
 
 {$R *.dfm}
 
+uses AltaMovInventario, DataModuleInventarios, MainMenu, AltaCompra;
+
+procedure TFormMovimientosInventario.FormActivate(Sender: TObject);
+begin
+  DataSourceMovimientosInventario.DataSet.Refresh;
+end;
+
 procedure TFormMovimientosInventario.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
      Action:=caFree;
+end;
+
+procedure TFormMovimientosInventario.SpeedButtonAgregarClick(Sender: TObject);
+begin
+  FormAltaMovInv.show;
+With datamodule1.fdQueryusuario do
+   Begin
+     Sql.Clear;
+     Sql.Add('Select "CMSoftware"."Folios".num_folio,"CMSoftware"."Folios".serie from "CMSoftware"."Folios","CMSoftware"."Usuario" where "CMSoftware"."Usuario".id_usuario=:param1 ');
+     Sql.Add('and  "CMSoftware"."Folios".id_folio = "CMSoftware"."Usuario"."Id_folioMI"');
+     Params[0].AsInteger:=StrToInt(RightStr(FormMAinMenu.StatusBarMainMenu.Panels[0].Text,3));
+     open;
+     FolioUsuario:=Fields[0].AsInteger;
+     FormAltaMovInv.EditFolio.Text:=Fields[1].AsString+''+Fields[0].AsString;
+     FormAltaMovInv.LabelFolio.Caption:=Fields[0].AsString;
+     FormAltaMovInv.Caption:='Alta de Movimiento al Inventario '+' '+'[Mov. Núm. ' +FormAltaMovInv.EditFolio.Text+']';
+   End;
+     FormAltaMovInv.DateTimePickerFecha.Date:=Date;
+     FormAltaMovInv.ComboBoxConcepto.SetFocus;
 end;
 
 procedure TFormMovimientosInventario.SpeedButtonSalirClick(Sender: TObject);

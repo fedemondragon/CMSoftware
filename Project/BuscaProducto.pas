@@ -22,8 +22,11 @@ type
     Label2: TLabel;
     FDQueryBuscaProductoid_clave: TWideStringField;
     FDQueryBuscaProductodescripcion: TWideStringField;
+    BitBtn2: TBitBtn;
     procedure BitBtn1Click(Sender: TObject);
     procedure DBGrid1DblClick(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -37,7 +40,7 @@ implementation
 
 {$R *.dfm}
 
-uses AltaCompra;
+uses AltaCompra, AltaMovInventario;
 
 procedure TFormBuscaProducto.BitBtn1Click(Sender: TObject);
 begin
@@ -62,15 +65,45 @@ begin
 
 end;
 
+procedure TFormBuscaProducto.BitBtn2Click(Sender: TObject);
+begin
+    With FDQueryBuscaProducto do
+    begin
+      Sql.Clear;
+      Sql.Add('Select id_clave,descripcion from "CMSoftware"."Producto" order by descripcion ');
+      open;
+    end;
+end;
+
 procedure TFormBuscaProducto.DBGrid1DblClick(Sender: TObject);
 var
   id_clave:String;
 begin
     id_clave:=DataSourceBuscaProducto.DataSet.Fields[0].AsString;
-    FormAltacompra.EditProducto.Text:=id_clave;
-    FormAltacompra.EditProducto.SetFocus;
-    FormBuscaProducto.Close;
 
+   if   FormBuscaProducto.Caption='Busca Producto Movimientos al inventario' then
+     Begin
+       FormAltaMovInv.EditProducto.Text:=id_clave;
+       FormAltaMovInv.EditProducto.SetFocus;
+       FormBuscaProducto.Close;
+     End
+     else
+     Begin
+        FormAltacompra.EditProducto.Text:=id_clave;
+        FormAltacompra.EditProducto.SetFocus;
+        FormBuscaProducto.Close;
+     End;
+     FormBuscaProducto.Caption:='Busca Producto';
+end;
+
+procedure TFormBuscaProducto.FormShow(Sender: TObject);
+begin
+    With FDQueryBuscaProducto do
+    begin
+      Sql.Clear;
+      Sql.Add('Select id_clave,descripcion from "CMSoftware"."Producto" order by descripcion');
+      open;
+    end;
 end;
 
 end.

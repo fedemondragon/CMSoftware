@@ -1,0 +1,61 @@
+unit PathAgenda;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtDlgs, Vcl.StdCtrls, Vcl.Buttons,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client;
+
+type
+  TFormPathAgenda = class(TForm)
+    EditRuta: TEdit;
+    Label1: TLabel;
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    SaveDialog: TSaveDialog;
+    FDQueryAgenda: TFDQuery;
+    procedure BitBtn2Click(Sender: TObject);
+    procedure SaveDialogSelectionChange(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+      PathAgenda:String;
+  end;
+
+var
+  FormPathAgenda: TFormPathAgenda;
+
+implementation
+
+{$R *.dfm}
+
+uses MainMenu;
+
+procedure TFormPathAgenda.BitBtn1Click(Sender: TObject);
+begin
+  With FDQueryAgenda do
+  Begin
+    Sql.Clear;
+    Sql.Add('Update "CMSoftware"."Usuario" set PathAgenda=:param1 where id_usuario=:param2')
+    Params[0].AsString:=EditRuta.Text;
+    Params[1].AsInteger:=MainMenu.
+  End;
+end;
+
+procedure TFormPathAgenda.BitBtn2Click(Sender: TObject);
+begin
+SaveDialog.Execute;
+end;
+
+procedure TFormPathAgenda.SaveDialogSelectionChange(Sender: TObject);
+begin
+   EditRuta.Text:=SaveDialog.FileName;
+end;
+
+end.

@@ -13,7 +13,6 @@ uses
   DataModuleInventarios in 'DataModuleInventarios.pas' {DataModule1: TDataModule},
   catalogoProveedor in 'catalogoProveedor.pas' {FormCatalogoProveedores},
   AcercadeCMSoftware in 'AcercadeCMSoftware.pas' {FormAbout},
-  Planeador in 'Planeador.pas' {FormPlaneador},
   CatalogoCentroCostos in 'CatalogoCentroCostos.pas' {FormCatalogoCentroCostos},
   LineaProducto in 'LineaProducto.pas' {FormLineaProducto},
   CatalogoLinea in 'CatalogoLinea.pas' {FormCatalogoLinea},
@@ -30,7 +29,13 @@ uses
   UserTemp in 'UserTemp.pas' {FormUserTemp},
   Login in 'Login.pas' {FormLogin},
   ConceptosInventario in 'ConceptosInventario.pas' {FormConceptos},
-  MovimientosInventario in 'MovimientosInventario.pas' {FormMovimientosInventario};
+  MovimientosInventario in 'MovimientosInventario.pas' {FormMovimientosInventario},
+  AltaMovInventario in 'AltaMovInventario.pas' {FormAltaMovInv},
+  Planeador in 'Planeador.pas' {FormPlaneador},
+  PanelServicio in 'PanelServicio.pas' {FormServicio},
+  PathAgenda in 'PathAgenda.pas' {FormPathAgenda},
+  SolicitudServicio in 'SolicitudServicio.pas' {FormSolicitudServicio},
+  OrdenServicio in 'OrdenServicio.pas' {FormOrdenServicio};
 
 {$R *.res}
 
@@ -46,7 +51,6 @@ begin
   Application.CreateForm(TFormUsuarios, FormUsuarios);
   Application.CreateForm(TDataModule1, DataModule1);
   Application.CreateForm(TFormAbout, FormAbout);
-  Application.CreateForm(TFormPlaneador, FormPlaneador);
   Application.CreateForm(TFormCentroCostos, FormCentroCostos);
   Application.CreateForm(TFormLineaProducto, FormLineaProducto);
   Application.CreateForm(TFormEntidades, FormEntidades);
@@ -57,6 +61,8 @@ begin
   Application.CreateForm(TFormBuscaProducto, FormBuscaProducto);
   Application.CreateForm(TFormUserTemp, FormUserTemp);
   Application.CreateForm(TFormConceptos, FormConceptos);
-  Application.CreateForm(TFormMovimientosInventario, FormMovimientosInventario);
+  Application.CreateForm(TFormAltaMovInv, FormAltaMovInv);
+  Application.CreateForm(TFormPathAgenda, FormPathAgenda);
+  Application.CreateForm(TFormOrdenServicio, FormOrdenServicio);
   Application.Run;
 end.

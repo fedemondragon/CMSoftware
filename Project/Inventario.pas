@@ -62,6 +62,7 @@ type
     procedure SpeedButton4Click(Sender: TObject);
     procedure SpeedButton3Click(Sender: TObject);
     procedure SpeedButton5Click(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -79,7 +80,7 @@ implementation
 {$R *.dfm}
 
 uses Producto, DataModuleInventarios, CatalogoCentroCostos, CatalogoLinea,
-  Almacenes;
+  Almacenes, MovimientosInventario;
 
 procedure TFormInventario.FormActivate(Sender: TObject);
 begin
@@ -89,6 +90,11 @@ end;
 procedure TFormInventario.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action:=caFree;
+end;
+
+procedure TFormInventario.SpeedButton1Click(Sender: TObject);
+begin
+  TFormMovimientosInventario.Create(Self).Show;
 end;
 
 procedure TFormInventario.SpeedButton3Click(Sender: TObject);

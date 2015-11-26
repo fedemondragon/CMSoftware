@@ -5,7 +5,7 @@ object FormUserTemp: TFormUserTemp
   BorderStyle = bsSingle
   Caption = 'Alta de usuarios Temporal'
   ClientHeight = 252
-  ClientWidth = 537
+  ClientWidth = 587
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object FormUserTemp: TFormUserTemp
   object DBGrid1: TDBGrid
     Left = 24
     Top = 72
-    Width = 481
+    Width = 553
     Height = 120
     DataSource = DataSourceUser
     TabOrder = 0
