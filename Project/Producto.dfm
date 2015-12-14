@@ -100,6 +100,7 @@
           Height = 25
           Caption = 'Buscar'
           TabOrder = 2
+          OnClick = BitBtnBuscarClick
         end
         object GroupBoxControl: TGroupBox
           Left = 224
@@ -172,20 +173,13 @@
             Text = '1.000000'
           end
         end
-        object BitBtnAlmacenes: TBitBtn
-          Left = 143
-          Top = 120
-          Width = 75
-          Height = 25
-          Caption = 'Almacenes'
-          TabOrder = 4
-        end
-        object EditControlAlmacen: TEdit
-          Left = 16
+        object ComboBoxAlmacenes: TComboBox
+          Left = 14
           Top = 155
-          Width = 121
+          Width = 145
           Height = 21
-          TabOrder = 5
+          TabOrder = 4
+          OnDropDown = ComboBoxAlmacenesDropDown
         end
       end
     end
@@ -310,9 +304,18 @@
         object EditCentroCostos: TEdit
           Left = 3
           Top = 21
-          Width = 229
+          Width = 184
           Height = 21
           TabOrder = 0
+        end
+        object BitBtnBuscaCuenta: TBitBtn
+          Left = 193
+          Top = 19
+          Width = 31
+          Height = 25
+          Caption = '?'
+          TabOrder = 1
+          OnClick = BitBtnBuscaCuentaClick
         end
       end
       object GroupBox11: TGroupBox

@@ -1,0 +1,46 @@
+unit OrdendeTrabajo;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.Buttons;
+
+type
+  TFormOT = class(TForm)
+    GroupBox1: TGroupBox;
+    EditOrdenServicio: TEdit;
+    Label1: TLabel;
+    EditOT: TEdit;
+    Label2: TLabel;
+    GroupBox2: TGroupBox;
+    DateTimePicker1: TDateTimePicker;
+    DateTimePicker2: TDateTimePicker;
+    Label3: TLabel;
+    Label4: TLabel;
+    BitBtn1: TBitBtn;
+    MemoDetalle: TMemo;
+    BitBtnCerrar: TBitBtn;
+    Memo1: TMemo;
+    Label5: TLabel;
+    Label6: TLabel;
+    procedure BitBtnCerrarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormOT: TFormOT;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFormOT.BitBtnCerrarClick(Sender: TObject);
+begin
+  close;
+end;
+
+end.

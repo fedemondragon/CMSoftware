@@ -1,0 +1,107 @@
+object FormBuscaTipoEquipo: TFormBuscaTipoEquipo
+  Left = 0
+  Top = 0
+  Caption = 'FormBuscaTipoEquipo'
+  ClientHeight = 243
+  ClientWidth = 788
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Panel1: TPanel
+    Left = -1
+    Top = 0
+    Width = 790
+    Height = 89
+    TabOrder = 0
+    object Label1: TLabel
+      Left = 24
+      Top = 40
+      Width = 37
+      Height = 13
+      Caption = 'Nombre'
+    end
+    object EditNombre: TEdit
+      Left = 67
+      Top = 35
+      Width = 353
+      Height = 21
+      TabOrder = 0
+    end
+    object BitBtnBusca: TBitBtn
+      Left = 440
+      Top = 34
+      Width = 75
+      Height = 25
+      Kind = bkOK
+      NumGlyphs = 2
+      TabOrder = 1
+      OnClick = BitBtnBuscaClick
+    end
+    object BitBtnTodos: TBitBtn
+      Left = 544
+      Top = 34
+      Width = 75
+      Height = 25
+      Caption = 'Todos'
+      TabOrder = 2
+      OnClick = BitBtnTodosClick
+    end
+  end
+  object DBGridEquipos: TDBGrid
+    Left = 0
+    Top = 65
+    Width = 785
+    Height = 161
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+    TabOrder = 1
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    OnDblClick = DBGridEquiposDblClick
+    Columns = <
+      item
+        Expanded = False
+        Visible = True
+      end>
+  end
+  object FDQueryBuscaTiposEquipos: TFDQuery
+    Connection = FormMainMenu.TFDConectionMainMenu
+    SQL.Strings = (
+      
+        'Select id_tipo,descripcion,observaciones from "CMSoftware"."Tipo' +
+        '_equipo"')
+    Left = 472
+    Top = 144
+    object FDQueryBuscaTiposEquiposid_tipo: TFMTBCDField
+      FieldName = 'id_tipo'
+      Origin = 'id_tipo'
+      Precision = 64
+      Size = 0
+    end
+    object FDQueryBuscaTiposEquiposdescripcion: TWideStringField
+      FieldName = 'descripcion'
+      Origin = 'descripcion'
+      FixedChar = True
+      Size = 200
+    end
+    object FDQueryBuscaTiposEquiposobservaciones: TWideStringField
+      FieldName = 'observaciones'
+      Origin = 'observaciones'
+      FixedChar = True
+      Size = 1000
+    end
+  end
+  object DataSourceBuscaTipoEquipos: TDataSource
+    DataSet = FDQueryBuscaTiposEquipos
+    Left = 392
+    Top = 152
+  end
+end

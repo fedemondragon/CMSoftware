@@ -12,7 +12,7 @@ uses
   FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   Vcl.Menus, FireDAC.Comp.UI, cxGridLevel, cxClasses, cxGridCustomView, cxGrid,
-  Vcl.ComCtrls, Vcl.Buttons, Vcl.ToolWin,StrUtils;
+  Vcl.ComCtrls, Vcl.Buttons, Vcl.ToolWin,StrUtils,cxGridExportLink;
 
 type
   TFormMovimientosInventario = class(TForm)
@@ -54,10 +54,12 @@ type
     cxGridMovimientosInventarioDBTableView1almacen: TcxGridDBColumn;
     FDQueryMovimientosInventariolinea: TWideStringField;
     cxGridMovimientosInventarioDBTableView1linea: TcxGridDBColumn;
+    SaveDialogMovsInve: TSaveDialog;
     procedure SpeedButtonSalirClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure SpeedButtonAgregarClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure SpeedButtonBuscarClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -87,7 +89,9 @@ end;
 
 procedure TFormMovimientosInventario.SpeedButtonAgregarClick(Sender: TObject);
 begin
+
   FormAltaMovInv.show;
+  FormAltaMovInv.EditOT.Enabled:=False;
 With datamodule1.fdQueryusuario do
    Begin
      Sql.Clear;
@@ -102,6 +106,18 @@ With datamodule1.fdQueryusuario do
    End;
      FormAltaMovInv.DateTimePickerFecha.Date:=Date;
      FormAltaMovInv.ComboBoxConcepto.SetFocus;
+end;
+
+procedure TFormMovimientosInventario.SpeedButtonBuscarClick(Sender: TObject);
+begin
+    SaveDialogMovsInve.Filter:='Hoja de Cálculo Excel (*.xls) | *.xls';
+    SaveDialogMovsInve.Title:=' Salvar listado como Hoja de Cálculo Excel';
+     if SaveDialogMovsInve.Execute then
+  begin
+	// Salva la información en un archivo de Excell.
+	ExportGridToExcel(SaveDialogMovsInve.FileName,cxGridMovimientosInventario, False);
+	MessageDlg('La información fué salvada en ' + SaveDialogMovsInve.FileName, mtInformation, [mbOk], 0);
+  end;
 end;
 
 procedure TFormMovimientosInventario.SpeedButtonSalirClick(Sender: TObject);

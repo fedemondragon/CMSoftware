@@ -1,0 +1,6 @@
+﻿[cxSchedulerAgenda]
+LayerNames=
+
+[Module Settings]
+ModelLayerNames="no de orden de servicio"
+

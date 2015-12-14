@@ -12,7 +12,7 @@ uses
   FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   cxGridCustomPopupMenu, cxGridPopupMenu, FireDAC.Comp.UI, cxGridLevel,
-  cxClasses, cxGridCustomView, cxGrid, Vcl.ComCtrls, Vcl.Buttons, Vcl.ToolWin;
+  cxClasses, cxGridCustomView, cxGrid, Vcl.ComCtrls, Vcl.Buttons, Vcl.ToolWin,cxGridExportLink;
 
 type
   TFormCatalogoTipoEquipo = class(TForm)
@@ -22,27 +22,27 @@ type
     SpeedButtonModificar: TSpeedButton;
     SpeedButtonEliminar: TSpeedButton;
     ToolButton2: TToolButton;
-    SpeedButtonBuscar: TSpeedButton;
     SpeedButtonImprimir: TSpeedButton;
     ToolButton1: TToolButton;
     SpeedButtonSalir: TSpeedButton;
-    cxGridProveedor: TcxGrid;
-    cxGridProveedorDBTableView1: TcxGridDBTableView;
-    cxGridProveedorLevel1: TcxGridLevel;
+    cxGridTipoEquipos: TcxGrid;
+    cxGridTipoEquiposDBTableView1: TcxGridDBTableView;
+    cxGridTipoEquiposLevel1: TcxGridLevel;
     FDGUIxWaitCursorTipoEquipo: TFDGUIxWaitCursor;
     cxGridPopupMenuTipoEquipo: TcxGridPopupMenu;
     FDTableTipoEquipo: TFDTable;
+    SaveDialogTipoEquipos: TSaveDialog;
     DataSourceTipoEquipo: TDataSource;
-    cxGridProveedorDBTableView1id_tipo: TcxGridDBColumn;
-    cxGridProveedorDBTableView1descripcion: TcxGridDBColumn;
-    cxGridProveedorDBTableView1observaciones: TcxGridDBColumn;
-    SpeedButton1: TSpeedButton;
+    cxGridTipoEquiposDBTableView1id_tipo: TcxGridDBColumn;
+    cxGridTipoEquiposDBTableView1descripcion: TcxGridDBColumn;
+    cxGridTipoEquiposDBTableView1observaciones: TcxGridDBColumn;
     procedure SpeedButtonAgregarClick(Sender: TObject);
     procedure SpeedButtonModificarClick(Sender: TObject);
     procedure SpeedButtonEliminarClick(Sender: TObject);
     procedure SpeedButtonSalirClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
+    procedure SpeedButtonImprimirClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -112,6 +112,20 @@ begin
 
 
 end;
+
+procedure TFormCatalogoTipoEquipo.SpeedButtonImprimirClick(Sender: TObject);
+
+begin
+    SaveDialogTipoEquipos.Filter:='Hoja de Cálculo Excel (*.xls) | *.xls';
+    SaveDialogTipoEquipos.Title:=' Salvar listado como Hoja de Cálculo Excel';
+     if SaveDialogTipoEquipos.Execute then
+  begin
+	// Salva la información en un archivo de Excell.
+	ExportGridToExcel(SaveDialogTipoEquipos.FileName,cxGridTipoEquipos, False);
+	MessageDlg('La información fué salvada en ' + SaveDialogTipoEquipos.FileName, mtInformation, [mbOk], 0);
+  end;
+end;
+
 
 procedure TFormCatalogoTipoEquipo.SpeedButtonModificarClick(Sender: TObject);
 var

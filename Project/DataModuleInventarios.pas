@@ -26,6 +26,7 @@ type
     FDQueryMovimientosInv: TFDQuery;
     FDQueryOrdenServicio: TFDQuery;
     FDQueryEntidad: TFDQuery;
+    FDQueryOT: TFDQuery;
   private
     { Private declarations }
   public

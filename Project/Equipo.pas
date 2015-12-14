@@ -20,13 +20,12 @@ type
     Label7: TLabel;
     Label8: TLabel;
     EditEquipoNombre: TEdit;
-    BitBtn1: TBitBtn;
+    BitBtnTipoEquipo: TBitBtn;
     Editid_equipo: TEdit;
     EditCapacidad: TEdit;
     EditIdentificador: TEdit;
     EditCodigo: TEdit;
     ComboBoxPrioridad: TComboBox;
-    BitBtn2: TBitBtn;
     EditClasificacion1: TEdit;
     EditClasificacion2: TEdit;
     Label9: TLabel;
@@ -44,9 +43,25 @@ type
     EditDescribe1: TEdit;
     EditDescribe2: TEdit;
     EditDescribe3: TEdit;
+    Label11: TLabel;
+    Label12: TLabel;
+    EditRuta: TEdit;
+    EditEconomico: TEdit;
+    Label13: TLabel;
+    ComboBoxTipoEquipo: TComboBox;
+    LabelCuenta: TLabel;
+    BitBtnbusca: TBitBtn;
     procedure BitBtnCerrarClick(Sender: TObject);
     procedure BitBtnGuardarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure ComboBoxTipoEquipoDropDown(Sender: TObject);
+    procedure ComboBoxCentroCostosDropDown(Sender: TObject);
+    procedure BitBtnbuscaClick(Sender: TObject);
+    procedure BitBtnTipoEquipoClick(Sender: TObject);
+    procedure ComboBoxLocalizacionDropDown(Sender: TObject);
+    procedure ComboBoxCentroCostosKeyPress(Sender: TObject; var Key: Char);
+    procedure ComboBoxCentroCostosSelect(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -60,7 +75,13 @@ implementation
 
 {$R *.dfm}
 
-uses DataModuleInventarios;
+uses DataModuleInventarios, BuscaTipoEquipos, BuscaCuentas;
+
+procedure TFormEquipos.BitBtnbuscaClick(Sender: TObject);
+begin
+ FormBuscaCuentas.Caption:='Búsqueda de Centro de Costos [Equipos]';
+  FormBuscaCuentas.Show;
+end;
 
 procedure TFormEquipos.BitBtnCerrarClick(Sender: TObject);
 begin
@@ -69,21 +90,44 @@ end;
 
 procedure TFormEquipos.BitBtnGuardarClick(Sender: TObject);
 var
-  Save:Integer;
+  Save,ID_TIPO:Integer;
+  ENTIDAD:Integer;
 begin
   if BitBtnGuardar.Caption='&Guardar' then
     begin
       Save:=Application.MessageBox('¿Desea Guardar el registro?','¡Confirmando!',MB_YESNOCANCEL);
         if Save=IDYES then
           begin
-            With DataModule1.FDQueryEquipos do //Inserta el producto nuevo
+           With DataModule1.FDQueryTipo_equipo do //Revisa el tipo de equipo
+              begin
+                 sql.Clear;
+                 sQL.Add('select id_tipo from "CMSoftware"."Tipo_equipo" where descripcion=:param1');
+                 params[0].AsString:=ComboBoxTipoEquipo.Text;
+                 Open;
+                 ID_TIPO:=Fields[0].AsInteger;
+              end;
+           With DataModule1.FDQueryTipo_equipo do //REsultado de entidades
+              begin
+                 sql.Clear;
+                 sQL.Add('select id_entidad from "CMSoftware"."Entidades" where nombre_entidad=:param1');
+                 params[0].AsString:=ComboBoxLocalizacion.Text;
+                 Open;
+                 ENTIDAD:=Fields[0].AsInteger;
+              end;
+
+              ///validaciones de campos vacios
+             if (ComboBoxTipoEquipo.Text='') then  ShowMessage('El Tipo de Equipo no puede estar vacio') else
+               if (ComboBoxCentroCostos.Text='') then ShowMessage('El Centro de Costos no puede estar vacio') else
+                 if (EditEquipoNombre.Text='') then ShowMessage('La descripción del equipo no puede estar vacio') else
+                   if (ComboBoxLocalizacion.Text='')then ShowMessage('La localización no puede estar vacio') else
+             With DataModule1.FDQueryEquipos do //Inserta el producto nuevo
               begin
                  sql.Clear;
                  Sql.Add('Insert into "CMSoftware"."Equipo" (id_equipo,tipo_equipo,capacidad,identificador,codigo,prioridad,clasificacion1,');
-                 Sql.Add('clasificacion2,centro_costos,localizacion,observaciones,campo_libre1,campo_libre2,campo_libre3,');
-                 Sql.Add('descrip_libre1,descrip_libre2,descrip_libre3) ');
+                 Sql.Add('clasificacion2,centro_costos,id_entidad,observaciones,campo_libre1,campo_libre2,campo_libre3,');
+                 Sql.Add('descrip_libre1,descrip_libre2,descrip_libre3,ruta,economico,id_tipo) ');
                  Sql.Add('values(:param1,:param2,:param3,:param4,:param5,:param6,:param7,:param8,');
-                 Sql.Add(':param9,:param10,:param11,:param12,:param13,:param14,:param15,:param16,:param17)');
+                 Sql.Add(':param9,:param10,:param11,:param12,:param13,:param14,:param15,:param16,:param17,:param18,:param19,:param20)');
 
                  Params[0].AsInteger:=StrTOInt(Editid_equipo.Text);
                  Params[1].AsString:=EditEquipoNombre.Text;
@@ -94,7 +138,7 @@ begin
                  Params[6].AsString:=EditClasificacion1.Text;
                  Params[7].AsString:=EditClasificacion2.Text;
                  Params[8].AsString:=ComboBoxCentroCostos.Text;
-                 Params[9].AsString:=ComboBoxLocalizacion.Text;
+                 Params[9].AsInteger:=ENTIDAD;
                  Params[10].AsString:=MemoObservaciones.Text;
                  Params[11].AsString:=EditCampolibre1.Text;
                  Params[12].AsString:=EditCampolibre2.Text;
@@ -102,6 +146,9 @@ begin
                  Params[14].AsString:=EditDescribe1.Text;
                  Params[15].AsString:=EditDescribe2.Text;
                  Params[16].AsString:=EditDescribe3.Text;
+                 Params[17].AsString:=EditRuta.Text;
+                 Params[18].AsString:=EditEconomico.Text;
+                 Params[19].AsInteger:=ID_TIPO;
                  ExecSQL;
 
                   CLOSE;
@@ -123,6 +170,9 @@ begin
                  EditDescribe1.Clear;
                  EditDescribe2.Clear;
                  EditDescribe3.Clear;
+                 EditRuta.Clear;
+                 EditEconomico.Clear;
+                 ComboBoxTipoEquipo.Clear;
               end;
           end;
 
@@ -133,12 +183,31 @@ begin
       Save:=Application.MessageBox('¿Desea Modificar el registro?','¡Confirmando!',MB_YESNOCANCEL);
         if Save=IDYES then
           begin
+           With DataModule1.FDQueryTipo_equipo do //Revisa el tipo de equipo
+              begin
+                 sql.Clear;
+                 sQL.Add('select id_tipo from "CMSoftware"."Tipo_equipo" where descripcion=:param1');
+                 params[0].AsString:=ComboBoxTipoEquipo.Text;
+                 Open;
+                 ID_TIPO:=Fields[0].AsInteger;
+              end;
+
+             With DataModule1.FDQueryTipo_equipo do //REsultado de entidades
+              begin
+                 sql.Clear;
+                 sQL.Add('select id_entidad from "CMSoftware"."Entidades" where nombre_entidad=:param1');
+                 params[0].AsString:=ComboBoxLocalizacion.Text;
+                 Open;
+                 ENTIDAD:=Fields[0].AsInteger;
+              end;
+
+
             With datamoduleinventarios.DataModule1.FDQueryProducto do //Actualiza el equipo
               begin
                  sql.Clear;
                  Sql.Add('Update "CMSoftware"."Equipo" set id_equipo=:param1,tipo_equipo=:param2,capacidad=:param3,identificador=:param4,codigo=:param5,prioridad=:param6,clasificacion1=:param7,');
-                 Sql.Add('clasificacion2=:param8,centro_costos=:param9,localizacion=:param10,observaciones=:param11,campo_libre1=:param12,campo_libre2=:param13,campo_libre3=:param14,');
-                 Sql.Add('descrip_libre1=:param15,descrip_libre2=:param16,descrip_libre3=:param17');
+                 Sql.Add('clasificacion2=:param8,centro_costos=:param9,id_entidad=:param10,observaciones=:param11,campo_libre1=:param12,campo_libre2=:param13,campo_libre3=:param14,');
+                 Sql.Add('descrip_libre1=:param15,descrip_libre2=:param16,descrip_libre3=:param17,ruta=:param18,economico=:param19,id_tipo=:param20');
                  Sql.Add('where id_equipo=:param1');
 
                  Params[0].AsInteger:=StrToInt(Editid_equipo.Text);
@@ -150,7 +219,7 @@ begin
                  Params[6].AsString:=EditClasificacion1.Text;
                  Params[7].AsString:=EditClasificacion2.Text;
                  Params[8].AsString:=ComboBoxCentroCostos.Text;
-                 Params[9].AsString:=ComboBoxLocalizacion.Text;
+                 Params[9].AsInteger:=ENTIDAD;
                  Params[10].AsString:=MemoObservaciones.Text;
                  Params[11].AsString:=EditCampolibre1.Text;
                  Params[12].AsString:=EditCampolibre2.Text;
@@ -158,12 +227,123 @@ begin
                  Params[14].AsString:=EditDescribe1.Text;
                  Params[15].AsString:=EditDescribe2.Text;
                  Params[16].AsString:=EditDescribe3.Text;
+                 Params[17].AsString:=EditRuta.Text;
+                 Params[18].AsString:=EditEconomico.Text;
+                 Params[19].AsInteger:=ID_TIPO;
                  ExecSQL;
 
             end;
           end;
 
     end
+end;
+
+procedure TFormEquipos.BitBtnTipoEquipoClick(Sender: TObject);
+begin
+ FormBuscaTipoEquipo.Caption:='Búsqueda de Tipo de Equipos [Equipo]';
+  FormBuscaTipoEquipo.Show;
+
+end;
+
+procedure TFormEquipos.ComboBoxCentroCostosDropDown(Sender: TObject);
+begin
+ With DataModule1.FDQueryCentroCostos do
+  begin
+      Sql.Clear;
+      Sql.Add('Select id_cuenta from "CMSoftware"."Centro_costos" order by id_cuenta');
+     Active:=True;
+    ComboBoxCentroCostos.Clear;
+    while not DataModule1.FDQueryCentroCostos.Eof  do
+    begin
+      ComboBoxCentroCostos.Items.Add(Fields[0].AsString);
+      Next;
+    end;
+     close;
+     open;
+end;
+ 
+end;
+
+procedure TFormEquipos.ComboBoxCentroCostosKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  if key=#13 then
+  With DAtaModule1.FDQueryCentroCostos do
+    begin
+      Sql.Clear;
+      Sql.Add('Select descripcion  from "CMSoftware"."Centro_costos" where id_cuenta= :param1 ');
+      Params[0].AsString:=ComboBoxCentroCostos.Text;
+      open;
+      LabelCuenta.Caption:=Fields[0].AsString;
+    end;
+
+end;
+
+procedure TFormEquipos.ComboBoxCentroCostosSelect(Sender: TObject);
+begin
+ With DAtaModule1.FDQueryCentroCostos do
+    begin
+      Sql.Clear;
+      Sql.Add('Select descripcion  from "CMSoftware"."Centro_costos" where id_cuenta= :param1 ');
+      Params[0].AsString:=ComboBoxCentroCostos.Text;
+      open;
+      LabelCuenta.Caption:=Fields[0].AsString;
+    end;
+    ComboBoxLocalizacion.SetFocus;
+end;
+
+procedure TFormEquipos.ComboBoxLocalizacionDropDown(Sender: TObject);
+begin
+ With DataModule1.FDQueryEntidades do
+  begin
+    Sql.Clear;
+   begin
+      Sql.Clear;
+      Sql.Add('Select nombre_entidad from "CMSoftware"."Entidades" order by nombre_entidad');
+     Active:=True;
+    ComboBoxLocalizacion.Clear;
+    while not DataModule1.FDQueryEntidades.Eof  do
+    begin
+      ComboBoxLocalizacion.Items.Add(Fields[0].AsString);
+      Next;
+    end;
+     close;
+     open;
+  end;
+end;
+end;
+
+procedure TFormEquipos.ComboBoxTipoEquipoDropDown(Sender: TObject);
+begin
+ With DataModule1.FDQueryTipo_equipo do
+  begin
+    Sql.Clear;
+   begin
+      Sql.Clear;
+      Sql.Add('Select descripcion from "CMSoftware"."Tipo_equipo" order by descripcion');
+     Active:=True;
+    ComboBoxTipoEquipo.Clear;
+    while not DataModule1.FDQueryTipo_equipo.Eof  do
+    begin
+      ComboBoxTipoEquipo.Items.Add(Fields[0].AsString);
+      Next;
+    end;
+     close;
+     open;
+  end;
+end;
+end;
+
+procedure TFormEquipos.FormActivate(Sender: TObject);
+begin
+ With DAtaModule1.FDQueryCentroCostos do
+    begin
+      Sql.Clear;
+      Sql.Add('Select descripcion  from "CMSoftware"."Centro_costos" where id_cuenta= :param1 ');
+      Params[0].AsString:=ComboBoxCentroCostos.Text;
+      open;
+      LabelCuenta.Caption:=Fields[0].AsString;
+    end;
 end;
 
 procedure TFormEquipos.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -185,6 +365,9 @@ begin
                  EditDescribe1.Clear;
                  EditDescribe2.Clear;
                  EditDescribe3.Clear;
+                 EditRuta.Clear;
+                 EditEconomico.Clear;
+                 ComboBoxTipoEquipo.Clear;
 end;
 
 end.

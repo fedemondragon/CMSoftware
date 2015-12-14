@@ -50,6 +50,7 @@ object FormTipoEquipos: TFormTipoEquipos
       Top = 21
       Width = 409
       Height = 21
+      ReadOnly = True
       TabOrder = 0
     end
     object EditTipoEquipo: TEdit

@@ -28,7 +28,6 @@ type
     EditFactor_unidades: TEdit;
     Label13: TLabel;
     EditUnidad_empaque: TEdit;
-    BitBtnAlmacenes: TBitBtn;
     Label14: TLabel;
     GroupBox7: TGroupBox;
     BitBtnGuardar: TBitBtn;
@@ -85,9 +84,13 @@ type
     Label4: TLabel;
     MemoDescripción: TMemo;
     cxImage1: TcxImage;
-    EditControlAlmacen: TEdit;
+    ComboBoxAlmacenes: TComboBox;
+    BitBtnBuscaCuenta: TBitBtn;
     procedure BitBtnCerrarClick(Sender: TObject);
     procedure BitBtnGuardarClick(Sender: TObject);
+    procedure BitBtnBuscarClick(Sender: TObject);
+    procedure ComboBoxAlmacenesDropDown(Sender: TObject);
+    procedure BitBtnBuscaCuentaClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -101,7 +104,19 @@ implementation
 
 {$R *.dfm}
 
-uses DataModuleInventarios, Inventario;
+uses DataModuleInventarios, Inventario, BuscaLinea, BuscaCuentas;
+
+procedure TFormProductos.BitBtnBuscaCuentaClick(Sender: TObject);
+begin
+ FormBuscaCuentas.Caption:='Búsqueda de Centro de Costos [Producto]';
+  FormBuscaCuentas.Show;
+
+end;
+
+procedure TFormProductos.BitBtnBuscarClick(Sender: TObject);
+begin
+  FormBuscaLinea.Show;
+end;
 
 procedure TFormProductos.BitBtnCerrarClick(Sender: TObject);
 begin
@@ -132,18 +147,30 @@ begin
           EditDescripcionLibre1.Clear;
           EditDescripcionLibre2.Clear;
           EditDescripcionLibre3.Clear;
+          ComboBoxAlmacenes.Clear;
 
 end;
 
 procedure TFormProductos.BitBtnGuardarClick(Sender: TObject);
 var
-  Save:Integer;
+  Save,ID_ALMACEN:Integer;
 begin
   if BitBtnGuardar.Caption='&Guardar' then
     begin
       Save:=Application.MessageBox('¿Desea Guardar el registro?','¡Confirmando!',MB_YESNOCANCEL);
         if Save=IDYES then
           begin
+ With DataModule1.FDQueryAlmacenes do       // calcula el numero del almacen
+  begin
+    Sql.Clear;
+    Sql.Add('Select id_almacen from "CMSoftware"."Almacenes" where descripcion=:param1');
+    Params[0].AsString:=ComboBoxAlmacenes.text;
+    Open;
+    ID_ALMACEN:=Fields[0].AsInteger;
+  end;
+        if EditCentroCostos.Text='' then   ShowMessage('el campo centro de costos no puede estar vacio')
+          else
+
             With datamoduleinventarios.DataModule1.FDQueryProducto do //Inserta el producto nuevo
               begin
                  sql.Clear;
@@ -166,7 +193,7 @@ begin
                        Params[2].AsInteger:=3;
 
                  Params[3].AsString:=EditLinea.Text;
-                 Params[4].AsString:='1';//control revisar
+                 Params[4].AsString:=IntToStr(ID_ALMACEN);
                  Params[5].AsString:=EditUnidad_entrada.Text;
                  Params[6].AsString:=EditUnidad_salida.Text;
                  Params[7].AsFloat:=StrToFloat(EditFactor_unidades.Text);
@@ -218,6 +245,7 @@ begin
           EditDescripcionLibre1.Clear;
           EditDescripcionLibre2.Clear;
           EditDescripcionLibre3.Clear;
+          ComboBoxAlmacenes.Clear;
               end;
           end;
 
@@ -228,6 +256,16 @@ begin
       Save:=Application.MessageBox('¿Desea Modificar el registro?','¡Confirmando!',MB_YESNOCANCEL);
         if Save=IDYES then
           begin
+           With DataModule1.FDQueryAlmacenes do       // calcula el numero del almacen
+            begin
+              Sql.Clear;
+              Sql.Add('Select id_almacen from "CMSoftware"."Almacenes" where descripcion=:param1');
+              Params[0].AsString:=ComboBoxAlmacenes.text;
+              Open;
+              ID_ALMACEN:=Fields[0].AsInteger;
+            end;
+
+
             With datamoduleinventarios.DataModule1.FDQueryProducto do //Inserta el producto nuevo
               begin
                  sql.Clear;
@@ -248,7 +286,7 @@ begin
                        Params[2].AsInteger:=3;
 
                  Params[3].AsString:=EditLinea.Text;
-                 Params[4].AsString:='1';//control revisar
+                 Params[4].AsString:=IntToStr(ID_ALMACEN);
                  Params[5].AsString:=EditUnidad_entrada.Text;
                  Params[6].AsString:=EditUnidad_salida.Text;
                  Params[7].AsFloat:=StrToFloat(EditFactor_unidades.Text);
@@ -278,5 +316,23 @@ begin
     end
 end;
 
+
+procedure TFormProductos.ComboBoxAlmacenesDropDown(Sender: TObject);
+begin
+ With DataModule1.FDQueryAlmacenes do
+  begin
+    Sql.Clear;
+    Sql.Add('Select descripcion from "CMSoftware"."Almacenes"');
+    Active:=True;
+    ComboBoxAlmacenes.Clear;
+    while not DataModule1.FDQueryAlmacenes.Eof  do
+    begin
+      ComboBoxAlmacenes.Items.Add(Fields[0].AsString);
+      Next;
+    end;
+     close;
+     open;
+  end;
+end;
 
 end.

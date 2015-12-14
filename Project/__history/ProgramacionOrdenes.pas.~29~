@@ -1,0 +1,142 @@
+unit ProgramacionOrdenes;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls, cxLookAndFeels,
+  cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter, cxData,
+  cxDataStorage, cxEdit, cxNavigator, Data.DB, cxDBData, Vcl.ComCtrls,
+  Vcl.Buttons, Vcl.ToolWin, cxGridLevel, cxGridCustomTableView, cxGridTableView,
+  cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, cxGridCustomPopupMenu,
+  cxGridPopupMenu;
+
+type
+  TFormProgramacionOrdenes = class(TForm)
+    cxGridProgramacion: TcxGrid;
+    cxGridProgramacionDBTableView1: TcxGridDBTableView;
+    cxGridProgramacionLevel1: TcxGridLevel;
+    ToolBar1: TToolBar;
+    SpeedButtonAgregar: TSpeedButton;
+    SpeedButtonModificar: TSpeedButton;
+    SpeedButtonEstatus: TSpeedButton;
+    SpeedButtonImprimir: TSpeedButton;
+    SpeedButtonSalir: TSpeedButton;
+    ToolBar2: TToolBar;
+    DateTimePickerStart: TDateTimePicker;
+    ToolButton1: TToolButton;
+    ToolButton3: TToolButton;
+    DateTimePickerFinish: TDateTimePicker;
+    FDQueryProgramacion: TFDQuery;
+    DataSourceProgramacion: TDataSource;
+    SpeedButton1: TSpeedButton;
+    ToolButton2: TToolButton;
+    FDQueryProgramacionid: TFMTBCDField;
+    FDQueryProgramacionstart: TSQLTimeStampField;
+    FDQueryProgramacionfinish: TSQLTimeStampField;
+    FDQueryProgramacioncaption: TWideStringField;
+    FDQueryProgramacionlocation: TWideStringField;
+    FDQueryProgramacionmessage: TWideStringField;
+    FDQueryProgramacionid_solicitud: TWideStringField;
+    FDQueryProgramacionestatus: TWideStringField;
+    cxGridProgramacionDBTableView1id: TcxGridDBColumn;
+    cxGridProgramacionDBTableView1start: TcxGridDBColumn;
+    cxGridProgramacionDBTableView1finish: TcxGridDBColumn;
+    cxGridProgramacionDBTableView1caption: TcxGridDBColumn;
+    cxGridProgramacionDBTableView1location: TcxGridDBColumn;
+    cxGridProgramacionDBTableView1message: TcxGridDBColumn;
+    cxGridProgramacionDBTableView1id_solicitud: TcxGridDBColumn;
+    cxGridProgramacionDBTableView1estatus: TcxGridDBColumn;
+    ToolButton4: TToolButton;
+    cxGridPopupMenu1: TcxGridPopupMenu;
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure SpeedButtonSalirClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure SpeedButtonEstatusClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormProgramacionOrdenes: TFormProgramacionOrdenes;
+
+implementation
+
+{$R *.dfm}
+
+uses Login;
+
+procedure TFormProgramacionOrdenes.FormActivate(Sender: TObject);
+begin
+ with FDQueryProgramacion do
+   Begin
+     Sql.Clear;
+     Sql.Add('Select * from "CMSoftware"."Agenda" order by id');
+     Open;
+     DataSourceProgramacion.DataSet.Refresh;
+   End;
+end;
+
+procedure TFormProgramacionOrdenes.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+        Action:=caFree;
+end;
+
+procedure TFormProgramacionOrdenes.SpeedButton1Click(Sender: TObject);
+begin
+ with FDQueryProgramacion do
+   Begin
+     Sql.Clear;
+     Sql.Add('Select * from "CMSoftware"."Agenda" where start between :param1 and :param2');
+     Params[0].AsDateTime:=DateTimePickerStart.DateTime;
+     Params[1].AsDateTime:=DateTimePickerFinish.DateTime;
+     Open;
+     DataSourceProgramacion.DataSet.Refresh;
+   End;
+end;
+
+procedure TFormProgramacionOrdenes.SpeedButtonEstatusClick(Sender: TObject);
+Var
+  ID,Delete:Integer;
+begin
+  Delete:=Application.MessageBox('¿Desea Cancelar este documento?','¡Confirmando!',MB_YESNO);
+  if Delete=IDYES then
+     Begin
+       ID:=StrToInt(DataSourceProgramacion.DataSet.Fields[0].AsString);
+     if DataSourceProgramacion.dataset.fields[7].AsString='CANCELADO' then
+     ShowMessage('El documento ya se encuentra cancelado') else
+
+      With FDQueryProgramacion do
+       Begin
+         Sql.Clear;
+         Sql.Add('Update "CMSoftware"."Agenda" set estatus=:param1,id_usuario=:param2 where id=:param3 ');
+         Params[0].AsString:='CANCELADO';
+         Params[1].AsInteger:=FormLogin.Usuario;
+         Params[2].AsInteger:=ID;
+
+         ExecSQL;
+         ShowMessage('¡Documento Cancelado!');
+        End;
+  with FDQueryProgramacion do
+   Begin
+     Sql.Clear;
+     Sql.Add('Select * from "CMSoftware"."Agenda" order by id');
+     Open;
+     DataSourceProgramacion.DataSet.Refresh;
+   End;
+     End;
+end;
+
+procedure TFormProgramacionOrdenes.SpeedButtonSalirClick(Sender: TObject);
+begin
+  close;
+end;
+
+end.

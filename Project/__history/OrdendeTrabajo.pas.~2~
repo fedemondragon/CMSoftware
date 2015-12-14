@@ -1,0 +1,34 @@
+unit OrdendeTrabajo;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls;
+
+type
+  TForm1 = class(TForm)
+    GroupBox1: TGroupBox;
+    EditOrdenServicio: TEdit;
+    Label1: TLabel;
+    EditOT: TEdit;
+    Label2: TLabel;
+    GroupBox2: TGroupBox;
+    DateTimePicker1: TDateTimePicker;
+    DateTimePicker2: TDateTimePicker;
+    Label3: TLabel;
+    Label4: TLabel;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+end.

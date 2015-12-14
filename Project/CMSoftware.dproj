@@ -227,6 +227,34 @@
             <Form>FormOrdenServicio</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="OrdendeTrabajo.pas">
+            <Form>FormOT</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="ProgramacionOrdenes.pas">
+            <Form>FormProgramacionOrdenes</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="BuscaEquipos.pas">
+            <Form>FormBuscaEquipos</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="BuscaTipoEquipos.pas">
+            <Form>FormBuscaTipoEquipo</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="BuscaCuentas.pas">
+            <Form>FormBuscaCuentas</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="BuscaLinea.pas">
+            <Form>FormBuscaLinea</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="ApartadoInventario.pas">
+            <Form>FormApartadoInv</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

@@ -32,35 +32,35 @@ object FormAltaMovInv: TFormAltaMovInv
   end
   object Label15: TLabel
     Left = 8
-    Top = 209
+    Top = 233
     Width = 43
     Height = 13
     Caption = 'Cantidad'
   end
   object Label17: TLabel
     Left = 151
-    Top = 211
+    Top = 235
     Width = 43
     Height = 13
     Caption = 'Producto'
   end
   object Label18: TLabel
     Left = 428
-    Top = 211
+    Top = 235
     Width = 68
     Height = 13
     Caption = 'Costo Unitario'
   end
   object Label19: TLabel
     Left = 577
-    Top = 213
+    Top = 237
     Width = 92
     Height = 13
     Caption = 'Subtotal de partida'
   end
   object LabelFolio: TLabel
-    Left = 221
-    Top = 233
+    Left = 341
+    Top = 199
     Width = 47
     Height = 13
     Caption = 'LabelFolio'
@@ -1339,7 +1339,7 @@ object FormAltaMovInv: TFormAltaMovInv
     Left = 8
     Top = 73
     Width = 386
-    Height = 96
+    Height = 127
     Caption = 'Concepto'
     TabOrder = 5
     object LabelFecha: TLabel
@@ -1385,12 +1385,32 @@ object FormAltaMovInv: TFormAltaMovInv
       OnKeyPress = ComboBoxConceptoKeyPress
       OnSelect = ComboBoxConceptoSelect
     end
+    object RadioButtonInclueOS: TRadioButton
+      Left = 15
+      Top = 97
+      Width = 151
+      Height = 21
+      Caption = 'Incluye Orden de Servicio'
+      TabOrder = 3
+      OnClick = RadioButtonInclueOSClick
+    end
+    object RadioButtonNoIncluyeOS: TRadioButton
+      Left = 208
+      Top = 97
+      Width = 159
+      Height = 21
+      Caption = 'No Incluye Orden de Servicio'
+      Checked = True
+      TabOrder = 4
+      TabStop = True
+      OnClick = RadioButtonNoIncluyeOSClick
+    end
   end
   object GroupBox2: TGroupBox
     Left = 404
     Top = 73
     Width = 386
-    Height = 96
+    Height = 131
     Caption = 'Documento'
     TabOrder = 6
     object Label1: TLabel
@@ -1398,7 +1418,7 @@ object FormAltaMovInv: TFormAltaMovInv
       Top = 24
       Width = 85
       Height = 13
-      Caption = 'Orden de Trabajo'
+      Caption = 'Orden de Servicio'
     end
     object Label2: TLabel
       Left = 39
@@ -1409,7 +1429,7 @@ object FormAltaMovInv: TFormAltaMovInv
     end
     object Label4: TLabel
       Left = 67
-      Top = 73
+      Top = 70
       Width = 44
       Height = 13
       Caption = 'Almac'#233'n:'
@@ -1426,6 +1446,7 @@ object FormAltaMovInv: TFormAltaMovInv
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 0
+      Text = '0'
       OnKeyPress = EditOTKeyPress
     end
     object EditFolio: TEdit
@@ -1457,7 +1478,7 @@ object FormAltaMovInv: TFormAltaMovInv
   end
   object EditCantidad: TEdit
     Left = 8
-    Top = 184
+    Top = 206
     Width = 121
     Height = 21
     TabOrder = 7
@@ -1466,7 +1487,7 @@ object FormAltaMovInv: TFormAltaMovInv
   end
   object EditProducto: TEdit
     Left = 151
-    Top = 184
+    Top = 208
     Width = 170
     Height = 21
     TabOrder = 8
@@ -1474,7 +1495,7 @@ object FormAltaMovInv: TFormAltaMovInv
   end
   object BitBtnBuscaProducto: TBitBtn
     Left = 327
-    Top = 182
+    Top = 206
     Width = 18
     Height = 25
     Caption = '?'
@@ -1483,7 +1504,7 @@ object FormAltaMovInv: TFormAltaMovInv
   end
   object EditCostoUnitario: TEdit
     Left = 428
-    Top = 186
+    Top = 210
     Width = 122
     Height = 21
     TabOrder = 10
@@ -1492,7 +1513,7 @@ object FormAltaMovInv: TFormAltaMovInv
   end
   object EditSubtotalPartida: TEdit
     Left = 577
-    Top = 186
+    Top = 210
     Width = 122
     Height = 21
     ReadOnly = True
@@ -1584,6 +1605,6 @@ object FormAltaMovInv: TFormAltaMovInv
   object FDQueryConceptos: TFDQuery
     Connection = FormMainMenu.TFDConectionMainMenu
     Left = 384
-    Top = 192
+    Top = 216
   end
 end

@@ -35,7 +35,7 @@ object FormBuscaProducto: TFormBuscaProducto
     Height = 21
     TabOrder = 0
   end
-  object BitBtn1: TBitBtn
+  object BitBtnBusca: TBitBtn
     Left = 470
     Top = 17
     Width = 75
@@ -43,7 +43,7 @@ object FormBuscaProducto: TFormBuscaProducto
     Kind = bkOK
     NumGlyphs = 2
     TabOrder = 1
-    OnClick = BitBtn1Click
+    OnClick = BitBtnBuscaClick
   end
   object DBGrid1: TDBGrid
     Left = 4
@@ -82,14 +82,14 @@ object FormBuscaProducto: TFormBuscaProducto
     Height = 21
     TabOrder = 3
   end
-  object BitBtn2: TBitBtn
+  object BitBtnTodos: TBitBtn
     Left = 568
     Top = 17
     Width = 75
     Height = 25
     Caption = 'Todos'
     TabOrder = 4
-    OnClick = BitBtn2Click
+    OnClick = BitBtnTodosClick
   end
   object DataSourceBuscaProducto: TDataSource
     DataSet = FDQueryBuscaProducto

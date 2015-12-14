@@ -1,0 +1,281 @@
+unit ApartadoInventario;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls, cxLookAndFeels,
+  cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter, cxData,
+  cxDataStorage, cxEdit, cxNavigator, Data.DB, cxDBData, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, cxGridLevel, cxGridCustomTableView,
+  cxGridTableView, cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid,
+  Vcl.StdCtrls, Vcl.ComCtrls, Vcl.Buttons, Vcl.ToolWin;
+
+type
+  TFormApartadoInv = class(TForm)
+    EditCantidad: TEdit;
+    EditProducto: TEdit;
+    Label15: TLabel;
+    Label17: TLabel;
+    EditCostoUnitario: TEdit;
+    Label18: TLabel;
+    EditSubtotalPartida: TEdit;
+    Label19: TLabel;
+    Label20: TLabel;
+    EditDescripcionProducto: TEdit;
+    Label22: TLabel;
+    EditTotal: TEdit;
+    ToolBar1: TToolBar;
+    SpeedButtonAgregar: TSpeedButton;
+    SpeedButton1: TSpeedButton;
+    SpeedButton2: TSpeedButton;
+    ToolButton1: TToolButton;
+    SpeedButtonImprimir: TSpeedButton;
+    ToolButton2: TToolButton;
+    SpeedButtonSalir: TSpeedButton;
+    ToolBar2: TToolBar;
+    GroupBox1: TGroupBox;
+    Label1: TLabel;
+    EditExistencia: TEdit;
+    EditOrdenServicio: TEdit;
+    Label2: TLabel;
+    EditPartida: TEdit;
+    Label3: TLabel;
+    DateTimePickerFecha: TDateTimePicker;
+    Label4: TLabel;
+    EditDocto: TEdit;
+    Label5: TLabel;
+    BitBtnBuscaProducto: TBitBtn;
+    MemoDescripcion: TMemo;
+    Label11: TLabel;
+    LabelFolio: TLabel;
+    ComboBoxAlmacen: TComboBox;
+    BitBtnAgregar: TBitBtn;
+    cxGridAltaMovimiento: TcxGrid;
+    cxGridAltaMovimientoDBTableView1: TcxGridDBTableView;
+    cxGridAltaMovimientoDBTableView1cantidad: TcxGridDBColumn;
+    cxGridAltaMovimientoDBTableView1id_clave: TcxGridDBColumn;
+    cxGridAltaMovimientoDBTableView1descripcion: TcxGridDBColumn;
+    cxGridAltaMovimientoDBTableView1costo: TcxGridDBColumn;
+    cxGridAltaMovimientoDBTableView1costo_operado: TcxGridDBColumn;
+    cxGridAltaMovimientoLevel1: TcxGridLevel;
+    DataSourceAltaMovimiento: TDataSource;
+    FDQueryAltaMovimiento: TFDQuery;
+    FDQueryAltaMovimientocantidad: TFMTBCDField;
+    FDQueryAltaMovimientoid_clave: TWideStringField;
+    FDQueryAltaMovimientodescripcion: TWideStringField;
+    FDQueryAltaMovimientocosto: TFMTBCDField;
+    FDQueryAltaMovimientocosto_operado: TFMTBCDField;
+    procedure SpeedButtonSalirClick(Sender: TObject);
+    procedure ComboBoxAlmacenDropDown(Sender: TObject);
+    procedure ComboBoxAlmacenKeyPress(Sender: TObject; var Key: Char);
+    procedure EditProductoKeyPress(Sender: TObject; var Key: Char);
+    procedure EditCantidadKeyPress(Sender: TObject; var Key: Char);
+    procedure BitBtnAgregarClick(Sender: TObject);
+    procedure BitBtnBuscaProductoClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    Subtotal,Total,existencia:Real;
+     Impuesto:String;
+  end;
+
+var
+  FormApartadoInv: TFormApartadoInv;
+
+implementation
+
+{$R *.dfm}
+
+uses DataModuleInventarios, BuscaProducto;
+
+procedure TFormApartadoInv.BitBtnAgregarClick(Sender: TObject);
+Var
+    id_concepto,id_almacen:Integer;
+    TipoConcepto:String;
+begin
+if (EditProducto.Text<>'') and (EditCantidad.Text<>'') then
+Begin
+   Begin
+        id_concepto:=10;
+      End;
+   With DataModule1.FDQueryAlmacenes do           //id de almacenes
+   Begin
+     Sql.Clear;
+     Sql.Add('Select id_almacen from "CMSoftware"."Almacenes" where descripcion=:param1');
+     Params[0].AsString:=ComboBoxAlmacen.Text;
+     open;
+     id_almacen:=Fields[0].AsInteger;
+   End;
+
+    With Datamodule1.FDQueryProducto do
+     Begin
+       Sql.Clear;
+       Sql.Add('Select existencia from "CMSoftware"."Producto" where id_clave=:param1');
+       Params[0].AsString:=EditProducto.Text;
+       open;
+       existencia:=Fields[0].AsFloat;
+     End;
+    if (existencia>0)   then       //REVISA EXISTENCIAS
+    begin
+      With DataModule1.FDQueryMovimientosInv do      // Inserta cada movimiento en Movimientos al Inventario
+      Begin
+              Sql.Clear;
+              Sql.Add('Insert into "CMSoftware"."MovimientosInventario" (num_docto,id_clave,id_proveedor_cliente,');
+              Sql.Add('id_concepto,fecha,costo,folio,costo_operado,cantidad,almacen,partida) values(:param1,:param2,:param3,:param4,:param5,:param6,:param7,:param8,:param9,:param10,:param11)');
+
+              Params[0].AsString:=EditOrdenServicio.Text;
+              Params[1].AsString:=EditProducto.Text;
+              Params[2].AsInteger:=0;
+              Params[3].ASInteger:=(id_concepto);
+              Params[4].AsDate:=DateTimePickerFecha.Date;
+
+
+              if TipoConcepto='S' then
+                Begin
+                  Params[5].AsFloat:=StrToFloat(EditCostoUnitario.Text)*-1;
+                  Params[6].AsString:=EditDocto.Text;
+                  Params[7].AsFloat:=StrtoFloat(EditSubtotalPartida.Text)*-1;
+                  Params[8].asFloat:=StrToFloat(EditCantidad.Text)*-1;
+                  Params[9].AsInteger:=(id_almacen);
+                  Params[10].AsInteger:=StrToInt(EditPartida.Text);
+                End
+              else
+               if TipoConcepto='E' then
+                Begin
+                  Params[5].AsFloat:=StrToFloat(EditCostoUnitario.Text);
+                  Params[6].AsString:=EditDocto.Text;
+                  Params[7].AsFloat:=StrtoFloat(EditSubtotalPartida.Text);
+                  Params[8].asFloat:=StrToFloat(EditCantidad.Text);
+                  Params[9].AsInteger:=(id_almacen);
+                  Params[10].AsInteger:=StrToInt(EditPartida.Text);
+                End;
+
+              ExecSQL;
+      End;
+     With FDQueryAltaMovimiento do    //consulta el movimiento al inventario
+     Begin
+       sql.Clear;
+       Sql.Add('Select * from "CMSoftware"."MovimientosInventario","CMSoftware"."Producto"');
+       Sql.Add('where "MovimientosInventario".id_clave="Producto".id_clave and folio=:param1 and id_orden=:param2 and partida=:param3 ');
+       Params[0].AsString:=EditDocto.Text;
+       Params[1].AsString:=EditOrdenServicio.Text;
+       Params[2].AsInteger:=StrToInt(EditPartida.Text);
+       open;
+       DataSourceAltaMovimiento.DataSet.Refresh;
+     End;
+        // AQUI ACTUALIZAR LA TABLA DE DETALLE DE ORDEN PARA QUE SE ACTUALICE EL ESTATUS A EN PROCESO
+       ///////////////////////////////
+
+
+      //limpia el detalle
+     EditCantidad.text:='1';
+     EditProducto.Clear;
+     EditCostoUnitario.text:='0';
+     EditSubtotalPartida.text:='0';
+     EditDescripcionProducto.Clear;
+     EditTotal.Clear;
+     EditCantidad.SetFocus;
+
+   End
+   else
+ ShowMessage('El producto no tiene existencias');
+ end
+ else
+ ShowMessage('La clave del producto y el concepto no pueden estar vacios');
+
+end;
+
+procedure TFormApartadoInv.BitBtnBuscaProductoClick(Sender: TObject);
+begin
+FormBuscaProducto.show;
+  FormBuscaProducto.Caption:='Busca Producto Materiales de apartado';
+end;
+
+procedure TFormApartadoInv.ComboBoxAlmacenDropDown(Sender: TObject);
+begin
+ With DataModule1.FDQueryAlmacenes do
+  begin
+    Sql.Clear;
+    Sql.Add('Select descripcion from "CMSoftware"."Almacenes"');
+    Active:=True;
+    ComboBoxAlmacen.Clear;
+    while not DataModule1.FDQueryAlmacenes.Eof  do
+    begin
+      ComboBoxAlmacen.Items.Add(Fields[0].AsString);
+      Next;
+    end;
+     close;
+     open;
+  end;
+end;
+
+procedure TFormApartadoInv.ComboBoxAlmacenKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+ if key=#13 then
+   EditProducto.SetFocus;
+end;
+
+procedure TFormApartadoInv.EditCantidadKeyPress(Sender: TObject; var Key: Char);
+begin
+if Key=#13 then
+    Begin
+     Subtotal:=StrTofloat(EditCantidad.Text)*(StrTofloat(EditCostoUnitario.Text));
+     EditSubtotalPartida.Text:=FloatToStr(Subtotal);
+     Total:=Subtotal* (StrToFloat('1'+'.'+Impuesto));
+     EditTotal.Text:=FloatToStr(Total);
+     BitBtnAgregar.SetFocus;
+    End;
+
+end;
+
+procedure TFormApartadoInv.EditProductoKeyPress(Sender: TObject; var Key: Char);
+ var
+    CuentaProducto:Integer;
+
+
+begin
+if Key=#13 then
+    Begin
+
+    With DataModule1.FDQueryProducto do
+     Begin
+       Sql.Clear;
+       sql.Add('Select count(*) from "CMSoftware"."Producto" where id_clave=:param1');
+       Params[0].AsString:=EditProducto.Text;
+       open;
+       CuentaProducto:=Fields[0].AsInteger;
+     End;
+
+       if CuentaProducto=0 then
+       ShowMessage('No existe el producto') else
+     Begin
+    With DataModule1.FDQueryProducto do
+    begin
+      Sql.Clear;
+      Sql.Add('Select descripcion,ultimo_costo,impuesto from "CMSoftware"."Producto" where id_clave =:param1');
+      Params[0].AsString:=EditProducto.Text;
+      open;
+    EditDescripcionProducto.Text:=Fields[0].AsString;
+    EditCostoUnitario.Text:=Fields[1].AsString;
+     Impuesto:=Fields[2].AsString;
+    end;
+     Subtotal:=StrTofloat(EditCantidad.Text)*(StrTofloat(EditCostoUnitario.Text));
+     EditSubtotalPartida.Text:=FloatToStr(Subtotal);
+     Total:=Subtotal* (StrToFloat('1'+'.'+Impuesto));
+     EditTotal.Text:=FloatToStr(Total);
+     EditCantidad.SetFocus;
+    End;
+      end;
+end;
+
+procedure TFormApartadoInv.SpeedButtonSalirClick(Sender: TObject);
+begin
+  close;
+end;
+
+end.

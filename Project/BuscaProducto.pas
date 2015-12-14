@@ -13,7 +13,7 @@ uses
 type
   TFormBuscaProducto = class(TForm)
     EditDescripcion: TEdit;
-    BitBtn1: TBitBtn;
+    BitBtnBusca: TBitBtn;
     DBGrid1: TDBGrid;
     DataSourceBuscaProducto: TDataSource;
     FDQueryBuscaProducto: TFDQuery;
@@ -22,10 +22,10 @@ type
     Label2: TLabel;
     FDQueryBuscaProductoid_clave: TWideStringField;
     FDQueryBuscaProductodescripcion: TWideStringField;
-    BitBtn2: TBitBtn;
-    procedure BitBtn1Click(Sender: TObject);
+    BitBtnTodos: TBitBtn;
+    procedure BitBtnBuscaClick(Sender: TObject);
     procedure DBGrid1DblClick(Sender: TObject);
-    procedure BitBtn2Click(Sender: TObject);
+    procedure BitBtnTodosClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }
@@ -40,9 +40,9 @@ implementation
 
 {$R *.dfm}
 
-uses AltaCompra, AltaMovInventario;
+uses AltaCompra, AltaMovInventario, ApartadoInventario;
 
-procedure TFormBuscaProducto.BitBtn1Click(Sender: TObject);
+procedure TFormBuscaProducto.BitBtnBuscaClick(Sender: TObject);
 begin
   if EditId_producto.Text<>'' then
     With FDQueryBuscaProducto do
@@ -65,7 +65,7 @@ begin
 
 end;
 
-procedure TFormBuscaProducto.BitBtn2Click(Sender: TObject);
+procedure TFormBuscaProducto.BitBtnTodosClick(Sender: TObject);
 begin
     With FDQueryBuscaProducto do
     begin
@@ -82,18 +82,26 @@ begin
     id_clave:=DataSourceBuscaProducto.DataSet.Fields[0].AsString;
 
    if   FormBuscaProducto.Caption='Busca Producto Movimientos al inventario' then
+
      Begin
        FormAltaMovInv.EditProducto.Text:=id_clave;
        FormAltaMovInv.EditProducto.SetFocus;
        FormBuscaProducto.Close;
      End
      else
+  if   FormBuscaProducto.Caption='Busca Producto Materiales de apartado' then
      Begin
+       FormApartadoInv.EditProducto.Text:=id_clave;
+       FormApartadoInv.EditProducto.SetFocus;
+       FormBuscaProducto.Close;
+     End
+   else
+ if   FormBuscaProducto.Caption='Busca Producto' then
+      Begin
         FormAltacompra.EditProducto.Text:=id_clave;
         FormAltacompra.EditProducto.SetFocus;
         FormBuscaProducto.Close;
      End;
-     FormBuscaProducto.Caption:='Busca Producto';
 end;
 
 procedure TFormBuscaProducto.FormShow(Sender: TObject);

@@ -34,7 +34,7 @@ object FormBuscaProveedor: TFormBuscaProveedor
       Height = 21
       TabOrder = 0
     end
-    object BitBtn1: TBitBtn
+    object BitBtnBusca: TBitBtn
       Left = 440
       Top = 33
       Width = 75
@@ -42,16 +42,16 @@ object FormBuscaProveedor: TFormBuscaProveedor
       Kind = bkOK
       NumGlyphs = 2
       TabOrder = 1
-      OnClick = BitBtn1Click
+      OnClick = BitBtnBuscaClick
     end
-    object BitBtn2: TBitBtn
+    object BitBtnTodos: TBitBtn
       Left = 544
       Top = 33
       Width = 75
       Height = 25
       Caption = 'Todos'
       TabOrder = 2
-      OnClick = BitBtn2Click
+      OnClick = BitBtnTodosClick
     end
   end
   object DBGrid1: TDBGrid

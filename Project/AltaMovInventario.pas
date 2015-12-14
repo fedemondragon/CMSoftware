@@ -77,6 +77,8 @@ type
     LabelFolio: TLabel;
     BuscaOT: TBitBtn;
     FDQueryConceptos: TFDQuery;
+    RadioButtonInclueOS: TRadioButton;
+    RadioButtonNoIncluyeOS: TRadioButton;
     procedure SpeedButtonSalirClick(Sender: TObject);
     procedure Alta1Click(Sender: TObject);
     procedure ComboBoxConceptoDropDown(Sender: TObject);
@@ -97,6 +99,8 @@ type
     procedure ComboBoxConceptoKeyPress(Sender: TObject; var Key: Char);
     procedure EditOTKeyPress(Sender: TObject; var Key: Char);
     procedure ComboBoxAlmacenKeyPress(Sender: TObject; var Key: Char);
+    procedure RadioButtonInclueOSClick(Sender: TObject);
+    procedure RadioButtonNoIncluyeOSClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -112,7 +116,8 @@ implementation
 
 {$R *.dfm}
 
-uses DataModuleInventarios, BuscaProducto, MainMenu, MovimientosInventario;
+uses DataModuleInventarios, BuscaProducto, MainMenu, MovimientosInventario,
+  Login;
 
 procedure TFormAltaMovInv.Alta1Click(Sender: TObject);
 begin
@@ -177,7 +182,7 @@ procedure TFormAltaMovInv.ComboBoxConceptoKeyPress(Sender: TObject;
   var Key: Char);
 begin
   if key=#13 then
-   EditOT.SetFocus;
+   DateTimePickerFecha.SetFocus;
 
 end;
 
@@ -241,7 +246,7 @@ procedure TFormAltaMovInv.EditCostoUnitarioKeyPress(Sender: TObject;
 
 begin
 
-begin
+
 if Key=#13 then
    Begin
 
@@ -252,7 +257,7 @@ if Key=#13 then
     // cadenaTotal:=Format('%n',[(EditTotal.Text)]);
      //EditTotal.Text:=cadenaTotal;
      EditSubtotalPartida.SetFocus;
-   End;
+
 
    End;
 
@@ -260,9 +265,27 @@ if Key=#13 then
 end;
 
 procedure TFormAltaMovInv.EditOTKeyPress(Sender: TObject; var Key: Char);
+Var
+ ID_ORDEN:Integer;
 begin
   if key=#13 then
-  ComboBoxAlmacen.SetFocus;
+    Begin
+             With DataModule1.FDQueryOrdenServicio do    //Revisa si la orden de servico se encuentra
+              Begin
+                Sql.Clear;
+                Sql.Add('Select count(id_solicitud) from "CMSoftware"."SolicitudServicio" where id_solicitud=:param1');
+                Params[0].AsString:=EditOT.Text;
+                Open;
+                ID_ORDEN:=Fields[0].AsInteger;
+              End;
+                if (ID_ORDEN=0) then ShowMessage('La orden de Sservicio no existe, por favor revise su información!') else
+                  Begin                       //Aquí vamos a poner todo el proceso de descarga de apartados
+                     ComboBoxAlmacen.SetFocus;
+                  End;
+
+
+
+    End;
 
 end;
 
@@ -353,15 +376,27 @@ if Key=#13 then
               Params[2].AsInteger:=0;
               Params[3].ASInteger:=(id_concepto);
               Params[4].AsDate:=DateTimePickerFecha.Date;
-              Params[5].AsFloat:=StrToFloat(EditCostoUnitario.Text);
-              Params[6].AsString:=EditFolio.Text;
-              Params[7].AsFloat:=StrtoFloat(EditSubtotalPartida.Text);
+
 
               if TipoConcepto='S' then
-              Params[8].asFloat:=StrToFloat(EditCantidad.Text)*-1
+                Begin
+                 Params[5].AsFloat:=StrToFloat(EditCostoUnitario.Text)*-1;
+                 Params[6].AsString:=EditFolio.Text;
+                  Params[7].AsFloat:=StrtoFloat(EditSubtotalPartida.Text)*-1;
+                  Params[8].asFloat:=StrToFloat(EditCantidad.Text)*-1;
+                  Params[9].AsInteger:=(id_almacen);
+                End
               else
-              Params[8].asFloat:=StrToFloat(EditCantidad.Text);
-              Params[9].AsInteger:=(id_almacen);
+               if TipoConcepto='E' then
+                Begin
+                 Params[5].AsFloat:=StrToFloat(EditCostoUnitario.Text);
+                 Params[6].AsString:=EditFolio.Text;
+
+                  Params[7].AsFloat:=StrtoFloat(EditSubtotalPartida.Text);
+                  Params[8].asFloat:=StrToFloat(EditCantidad.Text);
+                  Params[9].AsInteger:=(id_almacen);
+                End;
+
               ExecSQL;
       End;
      With FDQueryAltaMovimiento do    //consulta del detalle de compra
@@ -392,6 +427,18 @@ if Key=#13 then
  else
  ShowMessage('La clave del producto y el concepto no pueden estar vacios');
 
+end;
+
+procedure TFormAltaMovInv.RadioButtonInclueOSClick(Sender: TObject);
+begin
+   EditOT.Enabled:=True;
+   EditOT.SetFocus;
+end;
+
+procedure TFormAltaMovInv.RadioButtonNoIncluyeOSClick(Sender: TObject);
+begin
+EditOT.Enabled:=False;
+ComboBoxAlmacen.SetFocus;
 end;
 
 procedure TFormAltaMovInv.SpeedButton1Click(Sender: TObject);
@@ -448,16 +495,32 @@ end;
 procedure TFormAltaMovInv.SpeedButtonAgregarClick(Sender: TObject);
 var
   FolioMI,Save:Integer;
+  ID_ORDEN:Integer;
 begin
       Save:=Application.MessageBox('¿Desea guardar el movimiento al inventario?','¡Confirmando!',MB_YESNO);
         Begin
          if Save=IDYES then
           Begin
+          if ComboBoxConcepto.Text='' then ShowMessage('Debe capturar el Concepto') else //validadores
+                if ComboBoxAlmacen.Text='' then  ShowMessage('Debe capturar el Almacén') else
+
+         begin    //Inicia sin orden de servicio
+             With DataModule1.FDQueryOrdenServicio do    //Revisa si la orden de servico se encuentra
+              Begin
+                Sql.Clear;
+                Sql.Add('Select count(id_solicitud) from "CMSoftware"."SolicitudServicio" where id_solicitud=:param1');
+                Params[0].AsString:=EditOT.Text;
+                Open;
+                ID_ORDEN:=Fields[0].AsInteger;
+              End;
+         if (ID_ORDEN=0) and (RadioButtonInclueOS.Checked=true) then ShowMessage('La orden de Servicio no existe, por favor revise su información!') else
+           Begin  //si tiene orden de servicio graba
+
              With DataModule1.FDQueryUsuario do //actualiza el folio
              Begin
                Sql.Clear;
                Sql.Add('Select "Id_folioMI" from "CMSoftware"."Usuario" where id_usuario=:param1');
-              Params[0].AsInteger:=StrToInt(RightStr(FormMAinMenu.StatusBarMainMenu.Panels[0].Text,3));
+              Params[0].AsInteger:=Formlogin.usuario;
                Open;
                FolioMI:=Fields[0].AsInteger;
               End;
@@ -487,6 +550,9 @@ begin
            EditFolio.Clear;
 
            close;
+
+          End;//termina sin Orden de servicio
+          End;
           End
              else
        End;

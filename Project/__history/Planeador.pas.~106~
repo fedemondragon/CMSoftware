@@ -1,0 +1,344 @@
+unit Planeador;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls, cxLookAndFeels,
+  cxLookAndFeelPainters, cxSchedulerRibbonStyleEventEditor, Vcl.Menus, cxStyles,
+  cxEdit, cxScheduler, cxSchedulerStorage, cxSchedulerCustomControls,
+  cxSchedulerCustomResourceView, cxSchedulerDayView, cxSchedulerDateNavigator,
+  cxSchedulerHolidays, cxSchedulerTimeGridView, cxSchedulerUtils,
+  cxSchedulerWeekView, cxSchedulerYearView, cxSchedulerGanttView,
+  cxSchedulerRecurrence, cxSchedulerTreeListBrowser,
+  cxSchedulercxGridConnection, cxSchedulerDBStorage, cxClasses,
+  cxSchedulerAggregateStorage, Vcl.StdCtrls, cxContainer, Vcl.ExtCtrls,
+  cxCheckBox, cxButtons, cxGroupBox, Data.DB, dxmdaset, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.ComCtrls, Vcl.Buttons,
+  Vcl.ToolWin, dxBar, dxBarExtItems;
+
+type
+  TFormPlaneador = class(TForm)
+    cxSchedulerAgenda: TcxScheduler;
+    lfController: TcxLookAndFeelController;
+    ToolBar1: TToolBar;
+    SpeedButtonAgregar: TSpeedButton;
+    ToolButton2: TToolButton;
+    SpeedButtonSalir: TSpeedButton;
+    DataSourceAgenda: TDataSource;
+    cxSchedulerDBStorageAgenda: TcxSchedulerDBStorage;
+    dxMemDataAgenda: TdxMemData;
+    dxMemDataAgendaID: TAutoIncField;
+    dxMemDataAgendaParentID: TIntegerField;
+    dxMemDataAgendaType: TIntegerField;
+    dxMemDataAgendaStart: TDateTimeField;
+    dxMemDataAgendaFinish: TDateTimeField;
+    dxMemDataAgendaOptions: TIntegerField;
+    dxMemDataAgendaCaption: TStringField;
+    dxMemDataAgendaRecurrenceIndex: TIntegerField;
+    dxMemDataAgendaRecurrenceInfo: TBlobField;
+    dxMemDataAgendaResourceID: TBlobField;
+    dxMemDataAgendaLocation: TStringField;
+    dxMemDataAgendaMessage: TStringField;
+    dxMemDataAgendaReminderDate: TDateTimeField;
+    dxMemDataAgendaReminderMinutes: TIntegerField;
+    dxMemDataAgendaState: TIntegerField;
+    dxMemDataAgendaLabelColor: TIntegerField;
+    dxMemDataAgendaActualStart: TDateTimeField;
+    dxMemDataAgendaActualFinish: TDateTimeField;
+    dxMemDataAgendaSyncIDField: TStringField;
+    FDQueryInsertaAgenda: TFDQuery;
+    DataSourceInsertaAgenda: TDataSource;
+    SpeedButton1: TSpeedButton;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure SpeedButtonSalirClick(Sender: TObject);
+    procedure SpeedButtonAgregarClick(Sender: TObject);
+    procedure cxSchedulerAgendaAfterEditing(Sender: TcxCustomScheduler;
+      AEvent: TcxSchedulerControlEvent);
+    procedure FormShow(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure cxSchedulerAgendaAfterSizingEvent(Sender: TcxCustomScheduler;
+      AEvent: TcxSchedulerControlEvent; X, Y: Integer; var Accept: Boolean);
+    procedure cxSchedulerAgendaEventSelectionChanged(Sender: TcxCustomScheduler;
+      AEvent: TcxSchedulerControlEvent);
+    procedure cxSchedulerAgendaMoreEventsButtonClick(Sender: TcxCustomScheduler;
+      var AHandled: Boolean);
+
+  private
+    { Private declarations }
+
+  public
+    { Public declarations }
+    Path:String;
+  end;
+
+var
+  FormPlaneador: TFormPlaneador;
+
+implementation
+
+{$R *.dfm}
+
+uses SolicitudServicio, PathAgenda, Login, ProgramacionOrdenes;
+
+procedure TFormPlaneador.cxSchedulerAgendaAfterEditing(
+  Sender: TcxCustomScheduler; AEvent: TcxSchedulerControlEvent);
+var
+ cuenta:Integer;
+begin
+With FDQueryInsertaAgenda do
+  Begin
+    Sql.Clear;
+    Sql.Add('Select count(id) from "CMSoftware"."Agenda" where id=:param1');
+    Params[0].AsInteger:=StrToInt(DataSourceAgenda.DataSet.FieldByName('ID').AsString);
+    Open;
+    cuenta:=fields[0].AsInteger;
+  End;
+
+   if cuenta=0 then
+      begin
+        With FDQueryInsertaAgenda do
+          Begin
+            Sql.Clear;
+            Sql.Add('Insert into "CMSoftware"."Agenda" (id,start,finish,caption,location,message,id_solicitud,estatus)');
+            Sql.Add('values(:param1,:param2,:param3,:param4,:param5,:param6,:param7,:param8)');
+            Params[0].AsInteger:=StrtoInt(DataSourceAgenda.DataSet.FieldByName('ID').AsString);
+            Params[1].AsDateTime:=StrToDateTime(DataSourceAgenda.DataSet.FieldByName('Start').AsString);
+            Params[2].AsDateTime:=StrToDateTime(DataSourceAgenda.DataSet.FieldByName('Finish').AsString);
+            Params[3].AsString:=DataSourceAgenda.DataSet.FieldByName('Caption').AsString;
+            Params[4].AsString:=DataSourceAgenda.DataSet.FieldByName('Location').AsString;
+            Params[5].AsString:=DataSourceAgenda.DataSet.FieldByName('Message').AsString;
+            Params[6].AsString:='';
+            Params[7].AsString:='NUEVA';
+            ExecSQL;
+          End;
+      end
+      else
+    if cuenta>0 then
+     begin
+        With FDQueryInsertaAgenda do
+          Begin
+            Sql.Clear;
+            Sql.Add('Update "CMSoftware"."Agenda" set start=:param1,finish=:param2,caption=:param3,location=:param4,');
+            Sql.Add('message=:param5 where id=:param6');
+            Params[0].AsDateTime:=StrToDateTime(DataSourceAgenda.DataSet.FieldByName('Start').AsString);
+            Params[1].AsDateTime:=StrToDateTime(DataSourceAgenda.DataSet.FieldByName('Finish').AsString);
+            Params[2].AsString:=DataSourceAgenda.DataSet.FieldByName('Caption').AsString;
+            Params[3].AsString:=DataSourceAgenda.DataSet.FieldByName('Location').AsString;
+            Params[4].AsString:=DataSourceAgenda.DataSet.FieldByName('Message').AsString;
+            Params[5].AsInteger:=StrtoInt(DataSourceAgenda.DataSet.FieldByName('ID').AsString);
+            ExecSQL;
+          End;
+          End;
+
+end;
+
+procedure TFormPlaneador.cxSchedulerAgendaAfterSizingEvent(
+  Sender: TcxCustomScheduler; AEvent: TcxSchedulerControlEvent; X, Y: Integer;
+  var Accept: Boolean);
+var
+ cuenta:Integer;
+begin
+With FDQueryInsertaAgenda do
+  Begin
+    Sql.Clear;
+    Sql.Add('Select count(id) from "CMSoftware"."Agenda" where id=:param1');
+    Params[0].AsInteger:=StrToInt(DataSourceAgenda.DataSet.FieldByName('ID').AsString);
+    Open;
+    cuenta:=fields[0].AsInteger;
+  End;
+
+   if cuenta=0 then
+      begin
+        With FDQueryInsertaAgenda do
+          Begin
+            Sql.Clear;
+            Sql.Add('Insert into "CMSoftware"."Agenda" (id,start,finish,caption,location,message,id_solicitud,estatus)');
+            Sql.Add('values(:param1,:param2,:param3,:param4,:param5,:param6,:param7,:param8)');
+            Params[0].AsInteger:=StrtoInt(DataSourceAgenda.DataSet.FieldByName('ID').AsString);
+            Params[1].AsDateTime:=StrToDateTime(DataSourceAgenda.DataSet.FieldByName('Start').AsString);
+            Params[2].AsDateTime:=StrToDateTime(DataSourceAgenda.DataSet.FieldByName('Finish').AsString);
+            Params[3].AsString:=DataSourceAgenda.DataSet.FieldByName('Caption').AsString;
+            Params[4].AsString:=DataSourceAgenda.DataSet.FieldByName('Location').AsString;
+            Params[5].AsString:=DataSourceAgenda.DataSet.FieldByName('Message').AsString;
+            Params[6].AsString:='';
+            Params[7].AsString:='NUEVA';
+            ExecSQL;
+          End;
+      end
+      else
+    if cuenta>0 then
+     begin
+        With FDQueryInsertaAgenda do
+          Begin
+            Sql.Clear;
+            Sql.Add('Update "CMSoftware"."Agenda" set start=:param1,finish=:param2,caption=:param3,location=:param4,');
+            Sql.Add('message=:param5 where id=:param6');
+            Params[0].AsDateTime:=StrToDateTime(DataSourceAgenda.DataSet.FieldByName('Start').AsString);
+            Params[1].AsDateTime:=StrToDateTime(DataSourceAgenda.DataSet.FieldByName('Finish').AsString);
+            Params[2].AsString:=DataSourceAgenda.DataSet.FieldByName('Caption').AsString;
+            Params[3].AsString:=DataSourceAgenda.DataSet.FieldByName('Location').AsString;
+            Params[4].AsString:=DataSourceAgenda.DataSet.FieldByName('Message').AsString;
+            Params[5].AsInteger:=StrtoInt(DataSourceAgenda.DataSet.FieldByName('ID').AsString);
+            ExecSQL;
+          End;
+          End;
+
+end;
+
+procedure TFormPlaneador.cxSchedulerAgendaEventSelectionChanged(
+  Sender: TcxCustomScheduler; AEvent: TcxSchedulerControlEvent);
+var
+ cuenta:Integer;
+begin
+With FDQueryInsertaAgenda do
+  Begin
+    Sql.Clear;
+    Sql.Add('Select count(id) from "CMSoftware"."Agenda" where id=:param1');
+    Params[0].AsInteger:=StrToInt(DataSourceAgenda.DataSet.FieldByName('ID').AsString);
+    Open;
+    cuenta:=fields[0].AsInteger;
+  End;
+
+   if cuenta=0 then
+      begin
+        With FDQueryInsertaAgenda do
+          Begin
+            Sql.Clear;
+            Sql.Add('Insert into "CMSoftware"."Agenda" (id,start,finish,caption,location,message,id_solicitud,estatus)');
+            Sql.Add('values(:param1,:param2,:param3,:param4,:param5,:param6,:param7,:param8)');
+            Params[0].AsInteger:=StrtoInt(DataSourceAgenda.DataSet.FieldByName('ID').AsString);
+            Params[1].AsDateTime:=StrToDateTime(DataSourceAgenda.DataSet.FieldByName('Start').AsString);
+            Params[2].AsDateTime:=StrToDateTime(DataSourceAgenda.DataSet.FieldByName('Finish').AsString);
+            Params[3].AsString:=DataSourceAgenda.DataSet.FieldByName('Caption').AsString;
+            Params[4].AsString:=DataSourceAgenda.DataSet.FieldByName('Location').AsString;
+            Params[5].AsString:=DataSourceAgenda.DataSet.FieldByName('Message').AsString;
+            Params[6].AsString:='';
+            Params[7].AsString:='NUEVA';
+            ExecSQL;
+          End;
+      end
+      else
+    if cuenta>0 then
+     begin
+        With FDQueryInsertaAgenda do
+          Begin
+            Sql.Clear;
+            Sql.Add('Update "CMSoftware"."Agenda" set start=:param1,finish=:param2,caption=:param3,location=:param4,');
+            Sql.Add('message=:param5 where id=:param6');
+            Params[0].AsDateTime:=StrToDateTime(DataSourceAgenda.DataSet.FieldByName('Start').AsString);
+            Params[1].AsDateTime:=StrToDateTime(DataSourceAgenda.DataSet.FieldByName('Finish').AsString);
+            Params[2].AsString:=DataSourceAgenda.DataSet.FieldByName('Caption').AsString;
+            Params[3].AsString:=DataSourceAgenda.DataSet.FieldByName('Location').AsString;
+            Params[4].AsString:=DataSourceAgenda.DataSet.FieldByName('Message').AsString;
+            Params[5].AsInteger:=StrtoInt(DataSourceAgenda.DataSet.FieldByName('ID').AsString);
+            ExecSQL;
+          End;
+          End;
+end;
+
+procedure TFormPlaneador.cxSchedulerAgendaMoreEventsButtonClick(
+  Sender: TcxCustomScheduler; var AHandled: Boolean);
+var
+ cuenta:Integer;
+begin
+With FDQueryInsertaAgenda do
+  Begin
+    Sql.Clear;
+    Sql.Add('Select count(id) from "CMSoftware"."Agenda" where id=:param1');
+    Params[0].AsInteger:=StrToInt(DataSourceAgenda.DataSet.FieldByName('ID').AsString);
+    Open;
+    cuenta:=fields[0].AsInteger;
+  End;
+
+   if cuenta=0 then
+      begin
+        With FDQueryInsertaAgenda do
+          Begin
+            Sql.Clear;
+            Sql.Add('Insert into "CMSoftware"."Agenda" (id,start,finish,caption,location,message,id_solicitud,estatus)');
+            Sql.Add('values(:param1,:param2,:param3,:param4,:param5,:param6,:param7,:param8)');
+            Params[0].AsInteger:=StrtoInt(DataSourceAgenda.DataSet.FieldByName('ID').AsString);
+            Params[1].AsDateTime:=StrToDateTime(DataSourceAgenda.DataSet.FieldByName('Start').AsString);
+            Params[2].AsDateTime:=StrToDateTime(DataSourceAgenda.DataSet.FieldByName('Finish').AsString);
+            Params[3].AsString:=DataSourceAgenda.DataSet.FieldByName('Caption').AsString;
+            Params[4].AsString:=DataSourceAgenda.DataSet.FieldByName('Location').AsString;
+            Params[5].AsString:=DataSourceAgenda.DataSet.FieldByName('Message').AsString;
+            Params[6].AsString:='';
+            Params[7].AsString:='NUEVA';
+            ExecSQL;
+          End;
+      end
+      else
+    if cuenta>0 then
+     begin
+        With FDQueryInsertaAgenda do
+          Begin
+            Sql.Clear;
+            Sql.Add('Update "CMSoftware"."Agenda" set start=:param1,finish=:param2,caption=:param3,location=:param4,');
+            Sql.Add('message=:param5 where id=:param6');
+            Params[0].AsDateTime:=StrToDateTime(DataSourceAgenda.DataSet.FieldByName('Start').AsString);
+            Params[1].AsDateTime:=StrToDateTime(DataSourceAgenda.DataSet.FieldByName('Finish').AsString);
+            Params[2].AsString:=DataSourceAgenda.DataSet.FieldByName('Caption').AsString;
+            Params[3].AsString:=DataSourceAgenda.DataSet.FieldByName('Location').AsString;
+            Params[4].AsString:=DataSourceAgenda.DataSet.FieldByName('Message').AsString;
+            Params[5].AsInteger:=StrtoInt(DataSourceAgenda.DataSet.FieldByName('ID').AsString);
+            ExecSQL;
+          End;
+          End;
+
+
+end;
+
+procedure TFormPlaneador.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+            With FormPathAgenda.FDQueryAgenda do
+            Begin
+              Sql.Clear;
+              Sql.Add('Select pathagenda from "CMSoftware"."Usuario" where id_usuario=:param1');
+              Params[0].AsInteger:=FormLogin.Usuario;
+              Open;
+              Path:=Fields[0].AsString;
+             end;
+
+  dxMemDataAgenda.SaveToBinaryFile(Path);
+  dxMemDataAgenda.Edit;
+  dxMemDataAgenda.Post;
+  Action:=caFree;
+end;
+
+procedure TFormPlaneador.FormShow(Sender: TObject);
+begin
+          With FormPathAgenda.FDQueryAgenda do
+            Begin
+              Sql.Clear;
+              Sql.Add('Select pathagenda from "CMSoftware"."Usuario" where id_usuario=:param1');
+              Params[0].AsInteger:=FormLogin.Usuario;
+              Open;
+              Path:=Fields[0].AsString;
+             end;
+
+  dxMemDataAgenda.LoadFromBinaryFile(Path);
+  dxMemDataAgenda.Open;
+end;
+
+procedure TFormPlaneador.SpeedButton1Click(Sender: TObject);
+begin
+
+TFormProgramacionOrdenes.Create(Self).Show;
+
+end;
+procedure TFormPlaneador.SpeedButtonAgregarClick(Sender: TObject);
+begin
+  TFormSolicitudServicio.Create(Self).Show;
+end;
+
+procedure TFormPlaneador.SpeedButtonSalirClick(Sender: TObject);
+begin
+
+  close;
+end;
+
+end.

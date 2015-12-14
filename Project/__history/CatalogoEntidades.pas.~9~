@@ -1,0 +1,165 @@
+unit CatalogoEntidades;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls, cxLookAndFeels,
+  cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter, cxData,
+  cxDataStorage, cxEdit, cxNavigator, Data.DB, cxDBData, FireDAC.UI.Intf,
+  FireDAC.VCLUI.Wait, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, cxGridCustomTableView,
+  cxGridTableView, cxGridDBTableView, cxGridCustomPopupMenu, cxGridPopupMenu,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, FireDAC.Comp.UI, cxGridLevel,
+  cxClasses, cxGridCustomView, cxGrid, Vcl.ComCtrls, Vcl.Buttons, Vcl.ToolWin,cxGridExportLink;
+
+type
+  TFormCatalogoEntidades = class(TForm)
+    ToolBar2: TToolBar;
+    ToolBar1: TToolBar;
+    SpeedButtonAgregar: TSpeedButton;
+    SpeedButtonModificar: TSpeedButton;
+    SpeedButtonEliminar: TSpeedButton;
+    ToolButton2: TToolButton;
+    SpeedButtonImprimir: TSpeedButton;
+    ToolButton1: TToolButton;
+    SpeedButtonSalir: TSpeedButton;
+    cxGridProveedor: TcxGrid;
+    cxGridProveedorDBTableView1: TcxGridDBTableView;
+    cxGridProveedorLevel1: TcxGridLevel;
+    FDGUIxWaitCursorEnbtidades: TFDGUIxWaitCursor;
+    FDTableEntidades: TFDTable;
+    cxGridPopupMenuEntidades: TcxGridPopupMenu;
+    DataSourceEntidades: TDataSource;
+    cxGridProveedorDBTableView1nombre_entidad: TcxGridDBColumn;
+    cxGridProveedorDBTableView1ubicacion: TcxGridDBColumn;
+    cxGridProveedorDBTableView1responsable: TcxGridDBColumn;
+    cxGridProveedorDBTableView1id_entidad: TcxGridDBColumn;
+    SaveDialogEntidades: TSaveDialog;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+    procedure SpeedButtonSalirClick(Sender: TObject);
+    procedure SpeedButtonAgregarClick(Sender: TObject);
+    procedure SpeedButtonModificarClick(Sender: TObject);
+    procedure SpeedButtonEliminarClick(Sender: TObject);
+    procedure SpeedButtonImprimirClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormCatalogoEntidades: TFormCatalogoEntidades;
+
+implementation
+
+{$R *.dfm}
+
+uses DataModuleInventarios, Entidades, Equipo;
+
+procedure TFormCatalogoEntidades.FormActivate(Sender: TObject);
+begin
+  DataSourceEntidades.DataSet.Refresh;
+end;
+
+procedure TFormCatalogoEntidades.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+   Action:=caFree;
+end;
+
+procedure TFormCatalogoEntidades.SpeedButtonAgregarClick(Sender: TObject);
+var
+  entidad:Integer;
+begin
+     //Dame la ultima clave del equipo
+  With  DataModule1.FDQueryEntidades do
+      Begin
+        Close;
+        sql.Clear;
+        Sql.add('Select max(id_entidad) from "CMSoftware"."Entidades"');
+        open;
+        entidad:=Fields[0].Asinteger + 1;
+      End;
+      //Asigna lave y abre modulo
+  FormEntidades.Show;
+
+  FormEntidades.EditClave.text:=IntToStr(entidad);
+  FormEntidades.EditTipoEquipo.SetFocus;
+  FormEntidades.BitBtnGuardar.Caption:='&Guardar';
+
+end;
+
+procedure TFormCatalogoEntidades.SpeedButtonEliminarClick(Sender: TObject);
+var
+  Entidad:Integer;
+  Delete:Integer;
+begin
+  Entidad:=StrToInt(DataSourceEntidades.DataSet.Fields[0].AsString);
+    begin
+      Delete:=Application.MessageBox('¿Estas seguro de borrar el registro seleccionado?','¡Confirmando!',MB_YESNOCANCEL);
+        if Delete=IDYES then
+          begin
+            With DataModule1.FDQueryEquipos do //borra entidades
+              begin
+                 sql.Clear;
+                 Sql.Add('Delete from "CMSoftware"."Entidades" where id_equipo=:param1');
+                 Params[0].AsInteger:=Entidad;
+                 ExecSQL;
+                 DataSourceEntidades.DataSet.Refresh;
+              end;
+          end;
+    end;
+end;
+
+procedure TFormCatalogoEntidades.SpeedButtonImprimirClick(Sender: TObject);
+begin
+begin
+    SaveDialogEntidades.Filter:='Hoja de Cálculo Excel (*.xls) | *.xls';
+    SaveDialogEntidades.Title:=' Salvar listado como Hoja de Cálculo Excel';
+     if SaveDialogEntidades.Execute then
+  begin
+	// Salva la información en un archivo de Excell.
+	ExportGridToExcel(SaveDialogEntidades.FileName,cxGrid, False);
+	MessageDlg('La información fué salvada en ' + SaveDialogEntidades.FileName, mtInformation, [mbOk], 0);
+  end;
+
+end;
+
+end;
+procedure TFormCatalogoEntidades.SpeedButtonModificarClick(Sender: TObject);
+var
+  Entidad:Integer;
+begin
+
+  Entidad:=strTOInt(DataSourceEntidades.DataSet.Fields[0].AsString);
+With DataModule1.FDQueryEntidades do //consulta y modifica el centro de costos
+              begin
+                 Close;
+                 sql.Clear;
+                 Sql.Add('select id_entidad,nombre_entidad,ubicacion,responsable');
+                 Sql.Add('from "CMSoftware"."Entidades" where id_entidad=:param1');
+                 Params[0].AsInteger:=Entidad;
+                 open;
+
+            With FormEntidades do
+               begin
+                 EditClave.Text:=IntToStr(Entidad);
+                 EditTipoEquipo.Text:=Fields[1].AsString;
+                 MemoUbicacion.Text:=Fields[2].AsString;
+                 EditResponsable.Text:=Fields[3].AsString;
+                BitBtnGuardar.Caption:='&Modificar';
+               end;
+  end;
+  FormEntidades.Show;
+
+end;
+
+procedure TFormCatalogoEntidades.SpeedButtonSalirClick(Sender: TObject);
+begin
+  close;
+end;
+
+end.

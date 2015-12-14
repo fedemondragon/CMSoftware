@@ -14,6 +14,7 @@ object FormEquipos: TFormEquipos
   Font.Style = []
   OldCreateOrder = False
   Position = poDesktopCenter
+  OnActivate = FormActivate
   OnClose = FormClose
   PixelsPerInch = 96
   TextHeight = 13
@@ -37,14 +38,14 @@ object FormEquipos: TFormEquipos
         Left = 8
         Top = 5
         Width = 481
-        Height = 340
+        Height = 380
         TabOrder = 0
         object Label1: TLabel
           Left = 24
           Top = 40
-          Width = 70
+          Width = 54
           Height = 13
-          Caption = 'Tipo de Equipo'
+          Caption = 'Descripci'#243'n'
         end
         object Label2: TLabel
           Left = 24
@@ -104,10 +105,38 @@ object FormEquipos: TFormEquipos
         end
         object Label10: TLabel
           Left = 24
-          Top = 299
+          Top = 315
           Width = 56
           Height = 13
           Caption = 'Localizaci'#243'n'
+        end
+        object Label11: TLabel
+          Left = 68
+          Top = 352
+          Width = 23
+          Height = 13
+          Caption = 'Ruta'
+        end
+        object Label12: TLabel
+          Left = 264
+          Top = 352
+          Width = 50
+          Height = 13
+          Caption = 'Econ'#243'mico'
+        end
+        object Label13: TLabel
+          Left = 208
+          Top = 16
+          Width = 70
+          Height = 13
+          Caption = 'Tipo de Equipo'
+        end
+        object LabelCuenta: TLabel
+          Left = 112
+          Top = 291
+          Width = 87
+          Height = 13
+          Caption = 'Descripcioncuenta'
         end
         object EditEquipoNombre: TEdit
           Left = 100
@@ -116,19 +145,21 @@ object FormEquipos: TFormEquipos
           Height = 21
           TabOrder = 0
         end
-        object BitBtn1: TBitBtn
+        object BitBtnTipoEquipo: TBitBtn
           Left = 439
-          Top = 35
+          Top = 6
           Width = 25
           Height = 25
           Caption = '?'
           TabOrder = 1
+          OnClick = BitBtnTipoEquipoClick
         end
         object Editid_equipo: TEdit
-          Left = 100
+          Left = 109
           Top = 10
-          Width = 333
+          Width = 93
           Height = 21
+          ReadOnly = True
           TabOrder = 2
         end
         object EditCapacidad: TEdit
@@ -163,41 +194,68 @@ object FormEquipos: TFormEquipos
             'Media'
             'Baja')
         end
-        object BitBtn2: TBitBtn
-          Left = 223
-          Top = 163
-          Width = 25
-          Height = 25
-          Caption = '?'
-          TabOrder = 7
-        end
         object EditClasificacion1: TEdit
           Left = 100
           Top = 194
           Width = 333
           Height = 21
-          TabOrder = 8
+          TabOrder = 7
         end
         object EditClasificacion2: TEdit
           Left = 100
           Top = 221
           Width = 333
           Height = 21
-          TabOrder = 9
+          TabOrder = 8
         end
         object ComboBoxCentroCostos: TComboBox
           Left = 112
-          Top = 261
-          Width = 321
+          Top = 264
+          Width = 166
           Height = 21
-          TabOrder = 10
+          TabOrder = 9
+          OnDropDown = ComboBoxCentroCostosDropDown
+          OnKeyPress = ComboBoxCentroCostosKeyPress
+          OnSelect = ComboBoxCentroCostosSelect
         end
         object ComboBoxLocalizacion: TComboBox
           Left = 112
-          Top = 296
+          Top = 312
           Width = 321
           Height = 21
+          TabOrder = 10
+          OnDropDown = ComboBoxLocalizacionDropDown
+        end
+        object EditRuta: TEdit
+          Left = 112
+          Top = 349
+          Width = 81
+          Height = 21
           TabOrder = 11
+        end
+        object EditEconomico: TEdit
+          Left = 336
+          Top = 349
+          Width = 97
+          Height = 21
+          TabOrder = 12
+        end
+        object ComboBoxTipoEquipo: TComboBox
+          Left = 288
+          Top = 10
+          Width = 145
+          Height = 21
+          TabOrder = 13
+          OnDropDown = ComboBoxTipoEquipoDropDown
+        end
+        object BitBtnbusca: TBitBtn
+          Left = 284
+          Top = 264
+          Width = 30
+          Height = 25
+          Caption = '?'
+          TabOrder = 14
+          OnClick = BitBtnbuscaClick
         end
       end
     end

@@ -12,15 +12,16 @@ type
     SpeedButtonAgregar: TSpeedButton;
     SpeedButtonModificar: TSpeedButton;
     SpeedButtonEliminar: TSpeedButton;
-    ToolButton2: TToolButton;
     SpeedButtonImprimir: TSpeedButton;
     ToolButton1: TToolButton;
     SpeedButtonSalir: TSpeedButton;
     ToolBar2: TToolBar;
+    SpeedButton1: TSpeedButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure SpeedButtonSalirClick(Sender: TObject);
     procedure SpeedButtonImprimirClick(Sender: TObject);
     procedure SpeedButtonAgregarClick(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -34,11 +35,16 @@ implementation
 
 {$R *.dfm}
 
-uses Planeador, SolicitudServicio;
+uses Planeador, SolicitudServicio, ProgramacionOrdenes;
 
 procedure TFormServicio.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
    Action:=caFree;
+end;
+
+procedure TFormServicio.SpeedButton1Click(Sender: TObject);
+begin
+TFormProgramacionOrdenes.Create(Self).Show;
 end;
 
 procedure TFormServicio.SpeedButtonAgregarClick(Sender: TObject);

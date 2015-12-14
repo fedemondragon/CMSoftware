@@ -35,7 +35,14 @@ uses
   PanelServicio in 'PanelServicio.pas' {FormServicio},
   PathAgenda in 'PathAgenda.pas' {FormPathAgenda},
   SolicitudServicio in 'SolicitudServicio.pas' {FormSolicitudServicio},
-  OrdenServicio in 'OrdenServicio.pas' {FormOrdenServicio};
+  OrdenServicio in 'OrdenServicio.pas' {FormOrdenServicio},
+  OrdendeTrabajo in 'OrdendeTrabajo.pas' {FormOT},
+  ProgramacionOrdenes in 'ProgramacionOrdenes.pas' {FormProgramacionOrdenes},
+  BuscaEquipos in 'BuscaEquipos.pas' {FormBuscaEquipos},
+  BuscaTipoEquipos in 'BuscaTipoEquipos.pas' {FormBuscaTipoEquipo},
+  BuscaCuentas in 'BuscaCuentas.pas' {FormBuscaCuentas},
+  BuscaLinea in 'BuscaLinea.pas' {FormBuscaLinea},
+  ApartadoInventario in 'ApartadoInventario.pas' {FormApartadoInv};
 
 {$R *.res}
 
@@ -64,5 +71,11 @@ begin
   Application.CreateForm(TFormAltaMovInv, FormAltaMovInv);
   Application.CreateForm(TFormPathAgenda, FormPathAgenda);
   Application.CreateForm(TFormOrdenServicio, FormOrdenServicio);
+  Application.CreateForm(TFormOT, FormOT);
+  Application.CreateForm(TFormBuscaEquipos, FormBuscaEquipos);
+  Application.CreateForm(TFormBuscaTipoEquipo, FormBuscaTipoEquipo);
+  Application.CreateForm(TFormBuscaCuentas, FormBuscaCuentas);
+  Application.CreateForm(TFormBuscaLinea, FormBuscaLinea);
+  Application.CreateForm(TFormApartadoInv, FormApartadoInv);
   Application.Run;
 end.

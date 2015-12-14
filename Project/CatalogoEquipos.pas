@@ -12,13 +12,10 @@ uses
   FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, FireDAC.Comp.UI, Vcl.ComCtrls, Vcl.Buttons, Vcl.ToolWin,
   cxGridLevel, cxGridCustomTableView, cxGridTableView, cxGridDBTableView,
-  cxClasses, cxGridCustomView, cxGrid, cxGridCustomPopupMenu, cxGridPopupMenu;
+  cxClasses, cxGridCustomView, cxGrid, cxGridCustomPopupMenu, cxGridPopupMenu,cxGridExportLink;
 
 type
   TFormCatalogoEquipos = class(TForm)
-    cxGridProveedor: TcxGrid;
-    cxGridProveedorDBTableView1: TcxGridDBTableView;
-    cxGridProveedorLevel1: TcxGridLevel;
     ToolBar1: TToolBar;
     SpeedButtonAgregar: TSpeedButton;
     SpeedButtonModificar: TSpeedButton;
@@ -30,27 +27,42 @@ type
     ToolBar2: TToolBar;
     FDGUIxWaitCursorEquipos: TFDGUIxWaitCursor;
     DataSourceEquipos: TDataSource;
-    FDTableEquipos: TFDTable;
-    cxGridProveedorDBTableView1id_equipo: TcxGridDBColumn;
-    cxGridProveedorDBTableView1tipo_equipo: TcxGridDBColumn;
-    cxGridProveedorDBTableView1capacidad: TcxGridDBColumn;
-    cxGridProveedorDBTableView1identificador: TcxGridDBColumn;
-    cxGridProveedorDBTableView1codigo: TcxGridDBColumn;
-    cxGridProveedorDBTableView1prioridad: TcxGridDBColumn;
-    cxGridProveedorDBTableView1clasificacion1: TcxGridDBColumn;
-    cxGridProveedorDBTableView1clasificacion2: TcxGridDBColumn;
-    cxGridProveedorDBTableView1centro_costos: TcxGridDBColumn;
-    cxGridProveedorDBTableView1localizacion: TcxGridDBColumn;
     cxGridPopupMenuEquipos: TcxGridPopupMenu;
     SpeedButton1: TSpeedButton;
     SpeedButton2: TSpeedButton;
-    cxGridProveedorDBTableView1observaciones: TcxGridDBColumn;
-    cxGridProveedorDBTableView1campo_libre1: TcxGridDBColumn;
-    cxGridProveedorDBTableView1campo_libre2: TcxGridDBColumn;
-    cxGridProveedorDBTableView1campo_libre3: TcxGridDBColumn;
-    cxGridProveedorDBTableView1descrip_libre1: TcxGridDBColumn;
-    cxGridProveedorDBTableView1descrip_libre2: TcxGridDBColumn;
-    cxGridProveedorDBTableView1descrip_libre3: TcxGridDBColumn;
+    cxGridEquipos: TcxGrid;
+    cxGridEquiposDBTableView1: TcxGridDBTableView;
+    cxGridEquiposLevel1: TcxGridLevel;
+    FDQueryEquipos: TFDQuery;
+    FDQueryEquiposdescripcion: TWideStringField;
+    FDQueryEquiposid_equipo: TFMTBCDField;
+    FDQueryEquipostipo_equipo: TWideStringField;
+    FDQueryEquiposcapacidad: TWideStringField;
+    FDQueryEquiposidentificador: TWideStringField;
+    FDQueryEquiposcodigo: TWideStringField;
+    FDQueryEquiposprioridad: TWideStringField;
+    FDQueryEquiposclasificacion1: TWideStringField;
+    FDQueryEquiposclasificacion2: TWideStringField;
+    FDQueryEquiposcentro_costos: TWideStringField;
+    FDQueryEquiposobservaciones: TWideStringField;
+    FDQueryEquiposruta: TWideStringField;
+    FDQueryEquiposeconomico: TWideStringField;
+    cxGridEquiposDBTableView1id_equipo: TcxGridDBColumn;
+    cxGridEquiposDBTableView1tipo_equipo: TcxGridDBColumn;
+    cxGridEquiposDBTableView1capacidad: TcxGridDBColumn;
+    cxGridEquiposDBTableView1descripcion: TcxGridDBColumn;
+    cxGridEquiposDBTableView1identificador: TcxGridDBColumn;
+    cxGridEquiposDBTableView1codigo: TcxGridDBColumn;
+    cxGridEquiposDBTableView1prioridad: TcxGridDBColumn;
+    cxGridEquiposDBTableView1clasificacion1: TcxGridDBColumn;
+    cxGridEquiposDBTableView1clasificacion2: TcxGridDBColumn;
+    cxGridEquiposDBTableView1centro_costos: TcxGridDBColumn;
+    cxGridEquiposDBTableView1observaciones: TcxGridDBColumn;
+    cxGridEquiposDBTableView1ruta: TcxGridDBColumn;
+    cxGridEquiposDBTableView1economico: TcxGridDBColumn;
+    SaveDialogEquipos: TSaveDialog;
+    FDQueryEquiposnombre_entidad: TWideStringField;
+    cxGridEquiposDBTableView1nombre_entidad: TcxGridDBColumn;
     procedure SpeedButtonAgregarClick(Sender: TObject);
     procedure SpeedButtonModificarClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -59,6 +71,7 @@ type
     procedure SpeedButtonSalirClick(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure SpeedButton2Click(Sender: TObject);
+    procedure SpeedButtonImprimirClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -77,7 +90,21 @@ uses DataModuleInventarios, Proveedor, Equipo, CentroCostos, CatalogoEntidades,
 
 procedure TFormCatalogoEquipos.FormActivate(Sender: TObject);
 begin
+{  With FDQueryEquipos do
+    Begin
+      Sql.Clear;
+      Sql.Add('SELECT "Tipo_equipo".descripcion, "Equipo".id_equipo,"Equipo".tipo_equipo, "Equipo".capacidad,');
+      Sql.Add('"Equipo".identificador,"Equipo".codigo,"Equipo".prioridad,"Equipo".clasificacion1,"Equipo".clasificacion2,');
+      Sql.Add('"Equipo".centro_costos,"Entidades".nombre_entidad,"Equipo".observaciones,"Equipo".ruta,"Equipo".economico');
+      Sql.Add('FROM "CMSoftware"."Equipo","CMSoftware"."Tipo_equipo","CMSoftware"."Entidades" WHERE "Tipo_equipo".id_tipo = "Equipo".id_tipo and "Equipo".id_entidad = "Entidades".id_entidad order by id_equipo;');
+      Open;
+    End;  }
+
+
   DataSourceEquipos.DataSet.Refresh;
+
+
+
 end;
 
 procedure TFormCatalogoEquipos.FormClose(Sender: TObject;
@@ -141,19 +168,37 @@ begin
 
 end;
 
+procedure TFormCatalogoEquipos.SpeedButtonImprimirClick(Sender: TObject);
+begin
+    SaveDialogEquipos.Filter:='Hoja de Cálculo Excel (*.xls) | *.xls';
+    SaveDialogEquipos.Title:=' Salvar listado como Hoja de Cálculo Excel';
+     if SaveDialogEquipos.Execute then
+  begin
+	// Salva la información en un archivo de Excell.
+	ExportGridToExcel(SaveDialogEquipos.FileName,cxGridEquipos, False);
+	MessageDlg('La información fué salvada en ' + SaveDialogEquipos.FileName, mtInformation, [mbOk], 0);
+  end;
+
+
+end;
+
 procedure TFormCatalogoEquipos.SpeedButtonModificarClick(Sender: TObject);
 var
   Equipos:Integer;
+  TipoEquipo,ID_TIPO_EQUIPO,ENTIDAD:String;
 begin
   FormEquipos.TabbedNotebook1.PageIndex:=0;
   Equipos:=strTOInt(DataSourceEquipos.DataSet.Fields[0].AsString);
-With DataModule1.FDQueryEquipos do //consulta y modifica el centro de costos
+         ID_TIPO_EQUIPO:=DataSourceEquipos.DataSet.Fields[2].AsString;
+         ENTIDAD:=DataSourceEquipos.DataSet.Fields[10].AsString;
+
+
+            With DataModule1.FDQueryEquipos do //consulta y modifica el centro de costos
               begin
-                 Close;
                  sql.Clear;
                  Sql.Add('select id_equipo,tipo_equipo,capacidad,identificador,codigo,prioridad,clasificacion1,');
-                 Sql.Add('clasificacion2,centro_costos,localizacion,observaciones,campo_libre1,campo_libre2,campo_libre3,');
-                 Sql.Add('descrip_libre1,descrip_libre2,descrip_libre3 ');
+                 Sql.Add('clasificacion2,centro_costos,observaciones,campo_libre1,campo_libre2,campo_libre3,');
+                 Sql.Add('descrip_libre1,descrip_libre2,descrip_libre3,id_tipo,ruta,economico');
                  Sql.Add('from "CMSoftware"."Equipo" where id_equipo=:param1');
                  Params[0].AsInteger:=Equipos;
                  open;
@@ -169,14 +214,17 @@ With DataModule1.FDQueryEquipos do //consulta y modifica el centro de costos
                  EditClasificacion1.Text:=Fields[6].AsString;
                  EditClasificacion2.Text:=Fields[7].AsString;
                  ComboBoxCentroCostos.Text:=Fields[8].AsString;
-                 ComboBoxLocalizacion.Text:=Fields[9].AsString;
-                 MemoObservaciones.Text:=Fields[10].AsString;
-                 EditCampolibre1.Text:=Fields[11].AsString;
-                 EditCampolibre2.Text:=Fields[12].AsString;
-                 EditCampolibre3.Text:=Fields[13].AsString;
-                 EditDescribe1.Text:=Fields[14].AsString;
-                 EditDescribe2.Text:=Fields[15].AsString;
-                 EditDescribe3.Text:=Fields[16].AsString;
+                 ComboBoxLocalizacion.Text:=ENTIDAD;
+                 MemoObservaciones.Text:=Fields[9].AsString;
+                 EditCampolibre1.Text:=Fields[10].AsString;
+                 EditCampolibre2.Text:=Fields[11].AsString;
+                 EditCampolibre3.Text:=Fields[12].AsString;
+                 EditDescribe1.Text:=Fields[13].AsString;
+                 EditDescribe2.Text:=Fields[14].AsString;
+                 EditDescribe3.Text:=Fields[15].AsString;
+                 EditRuta.Text:=Fields[17].AsString;
+                 EditEconomico.Text:=Fields[18].AsString;
+                 ComboBoxTipoEquipo.Text:=ID_TIPO_EQUIPO;
                 BitBtnGuardar.Caption:='&Modificar';
                end;
   end;

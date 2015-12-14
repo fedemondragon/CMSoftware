@@ -1,0 +1,353 @@
+object FormEquipos: TFormEquipos
+  Left = 0
+  Top = 0
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
+  Caption = 'C'#225'talogos de equipos'
+  ClientHeight = 472
+  ClientWidth = 516
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  OnClose = FormClose
+  PixelsPerInch = 96
+  TextHeight = 13
+  object TabbedNotebook1: TTabbedNotebook
+    Left = 0
+    Top = 0
+    Width = 516
+    Height = 417
+    Align = alTop
+    TabFont.Charset = DEFAULT_CHARSET
+    TabFont.Color = clBtnText
+    TabFont.Height = -11
+    TabFont.Name = 'Tahoma'
+    TabFont.Style = []
+    TabOrder = 0
+    object TTabPage
+      Left = 4
+      Top = 24
+      Caption = 'Datos Generales'
+      object GroupBox1: TGroupBox
+        Left = 8
+        Top = 5
+        Width = 481
+        Height = 380
+        TabOrder = 0
+        object Label1: TLabel
+          Left = 24
+          Top = 40
+          Width = 54
+          Height = 13
+          Caption = 'Descripci'#243'n'
+        end
+        object Label2: TLabel
+          Left = 24
+          Top = 16
+          Width = 27
+          Height = 13
+          Caption = 'Clave'
+        end
+        object Label3: TLabel
+          Left = 24
+          Top = 72
+          Width = 50
+          Height = 13
+          Caption = 'Capacidad'
+        end
+        object Label4: TLabel
+          Left = 24
+          Top = 104
+          Width = 129
+          Height = 13
+          Caption = 'Indentificador, serie, placa'
+        end
+        object Label5: TLabel
+          Left = 24
+          Top = 136
+          Width = 33
+          Height = 13
+          Caption = 'Codigo'
+        end
+        object Label6: TLabel
+          Left = 24
+          Top = 168
+          Width = 42
+          Height = 13
+          Caption = 'Prioridad'
+        end
+        object Label7: TLabel
+          Left = 24
+          Top = 200
+          Width = 67
+          Height = 13
+          Caption = 'Clasificaci'#243'n 1'
+        end
+        object Label8: TLabel
+          Left = 24
+          Top = 232
+          Width = 67
+          Height = 13
+          Caption = 'Clasificaci'#243'n 2'
+        end
+        object Label9: TLabel
+          Left = 24
+          Top = 264
+          Width = 82
+          Height = 13
+          Caption = 'Centro de costos'
+        end
+        object Label10: TLabel
+          Left = 24
+          Top = 315
+          Width = 56
+          Height = 13
+          Caption = 'Localizaci'#243'n'
+        end
+        object Label11: TLabel
+          Left = 68
+          Top = 352
+          Width = 23
+          Height = 13
+          Caption = 'Ruta'
+        end
+        object Label12: TLabel
+          Left = 264
+          Top = 352
+          Width = 50
+          Height = 13
+          Caption = 'Econ'#243'mico'
+        end
+        object Label13: TLabel
+          Left = 208
+          Top = 16
+          Width = 70
+          Height = 13
+          Caption = 'Tipo de Equipo'
+        end
+        object LabelCuenta: TLabel
+          Left = 112
+          Top = 291
+          Width = 87
+          Height = 13
+          Caption = 'Descripcioncuenta'
+        end
+        object EditEquipoNombre: TEdit
+          Left = 100
+          Top = 37
+          Width = 333
+          Height = 21
+          TabOrder = 0
+        end
+        object BitBtnTipoEquipo: TBitBtn
+          Left = 439
+          Top = 8
+          Width = 25
+          Height = 25
+          Caption = '?'
+          TabOrder = 1
+        end
+        object Editid_equipo: TEdit
+          Left = 109
+          Top = 10
+          Width = 93
+          Height = 21
+          ReadOnly = True
+          TabOrder = 2
+        end
+        object EditCapacidad: TEdit
+          Left = 100
+          Top = 64
+          Width = 333
+          Height = 21
+          TabOrder = 3
+        end
+        object EditIdentificador: TEdit
+          Left = 160
+          Top = 96
+          Width = 273
+          Height = 21
+          TabOrder = 4
+        end
+        object EditCodigo: TEdit
+          Left = 100
+          Top = 133
+          Width = 333
+          Height = 21
+          TabOrder = 5
+        end
+        object ComboBoxPrioridad: TComboBox
+          Left = 100
+          Top = 165
+          Width = 117
+          Height = 21
+          TabOrder = 6
+          Items.Strings = (
+            'Alta'
+            'Media'
+            'Baja')
+        end
+        object EditClasificacion1: TEdit
+          Left = 100
+          Top = 194
+          Width = 333
+          Height = 21
+          TabOrder = 7
+        end
+        object EditClasificacion2: TEdit
+          Left = 100
+          Top = 221
+          Width = 333
+          Height = 21
+          TabOrder = 8
+        end
+        object ComboBoxCentroCostos: TComboBox
+          Left = 112
+          Top = 264
+          Width = 166
+          Height = 21
+          TabOrder = 9
+          OnDropDown = ComboBoxCentroCostosDropDown
+        end
+        object ComboBoxLocalizacion: TComboBox
+          Left = 112
+          Top = 312
+          Width = 321
+          Height = 21
+          TabOrder = 10
+        end
+        object EditRuta: TEdit
+          Left = 112
+          Top = 349
+          Width = 81
+          Height = 21
+          TabOrder = 11
+        end
+        object EditEconomico: TEdit
+          Left = 336
+          Top = 349
+          Width = 97
+          Height = 21
+          TabOrder = 12
+        end
+        object ComboBoxTipoEquipo: TComboBox
+          Left = 288
+          Top = 10
+          Width = 145
+          Height = 21
+          TabOrder = 13
+          OnDropDown = ComboBoxTipoEquipoDropDown
+        end
+        object BitBtnbusca: TBitBtn
+          Left = 284
+          Top = 264
+          Width = 30
+          Height = 25
+          Caption = '?'
+          TabOrder = 14
+          OnClick = BitBtnbuscaClick
+        end
+      end
+    end
+    object TTabPage
+      Left = 4
+      Top = 24
+      Caption = 'Notas '
+      object GroupBox2: TGroupBox
+        Left = 8
+        Top = 5
+        Width = 481
+        Height = 130
+        Caption = 'Observaciones'
+        TabOrder = 0
+        object MemoObservaciones: TMemo
+          Left = 15
+          Top = 35
+          Width = 449
+          Height = 89
+          ScrollBars = ssVertical
+          TabOrder = 0
+        end
+      end
+      object GroupBox3: TGroupBox
+        Left = 8
+        Top = 141
+        Width = 481
+        Height = 122
+        Caption = 'Campos Libres'
+        TabOrder = 1
+        object EditCampolibre1: TEdit
+          Left = 24
+          Top = 31
+          Width = 121
+          Height = 21
+          TabOrder = 0
+        end
+        object EditCampolibre2: TEdit
+          Left = 24
+          Top = 56
+          Width = 121
+          Height = 21
+          TabOrder = 1
+        end
+        object EditCampolibre3: TEdit
+          Left = 24
+          Top = 85
+          Width = 121
+          Height = 21
+          TabOrder = 2
+        end
+        object EditDescribe1: TEdit
+          Left = 151
+          Top = 31
+          Width = 312
+          Height = 21
+          TabOrder = 3
+        end
+        object EditDescribe2: TEdit
+          Left = 151
+          Top = 56
+          Width = 313
+          Height = 21
+          TabOrder = 4
+        end
+        object EditDescribe3: TEdit
+          Left = 151
+          Top = 85
+          Width = 313
+          Height = 21
+          TabOrder = 5
+        end
+      end
+    end
+  end
+  object BitBtnCerrar: TBitBtn
+    Left = 290
+    Top = 423
+    Width = 75
+    Height = 25
+    Hint = 'Cancela los cambios y cierra la ventana'
+    Caption = '&Cerrar'
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 1
+    OnClick = BitBtnCerrarClick
+  end
+  object BitBtnGuardar: TBitBtn
+    Left = 144
+    Top = 423
+    Width = 75
+    Height = 25
+    Hint = 'Guardar no cierra ventana'
+    Caption = '&Guardar'
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 2
+    OnClick = BitBtnGuardarClick
+  end
+end

@@ -14,7 +14,7 @@ uses
   FireDAC.Stan.Async, FireDAC.DApt, dxServerModeData,
   dxServerModeFireDACDataSource, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   FireDAC.UI.Intf, FireDAC.VCLUI.Wait, FireDAC.Comp.UI, Vcl.ActnMan,
-  Vcl.ActnCtrls, Vcl.ActnMenus, cxGridCustomPopupMenu, cxGridPopupMenu;
+  Vcl.ActnCtrls, Vcl.ActnMenus, cxGridCustomPopupMenu, cxGridPopupMenu,cxGridExportLink;
 
 type
   TFormInventario = class(TForm)
@@ -53,6 +53,7 @@ type
     SpeedButton4: TSpeedButton;
     ToolButton3: TToolButton;
     SpeedButton5: TSpeedButton;
+    SaveDialoginventario: TSaveDialog;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure SpeedButtonSalirClick(Sender: TObject);
     procedure SpeedButtonAgregarClick(Sender: TObject);
@@ -63,6 +64,7 @@ type
     procedure SpeedButton3Click(Sender: TObject);
     procedure SpeedButton5Click(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
+    procedure SpeedButtonImprimirClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -127,12 +129,22 @@ end;
 procedure TFormInventario.SpeedButtonModificarClick(Sender: TObject);
 var
   Clave_producto:String;
+  Control:Integer;
 begin
 
   FormProductos.TabbedNotebook1.PageIndex:=0;
   Clave_producto:=DataSourceInventarios.DataSet.Fields[0].AsString;
+   Control:=DataSourceInventarios.DataSet.Fields[4].AsInteger;
+ With DataModule1.FDQueryAlmacenes do
+  begin
+    Sql.Clear;
+    Sql.Add('Select descripcion from "CMSoftware"."Almacenes" where id_almacen=:param1');
+    PArams[0].AsInteger:=Control;
+    open;
+    FormProductos.ComboBoxAlmacenes.Text:=Fields[0].AsString;
 
-With datamoduleinventarios.DataModule1.FDQueryProducto do //consulta el producto
+  end;
+           With datamoduleinventarios.DataModule1.FDQueryProducto do //consulta el producto
               begin
                  Close;
                  sql.Clear;
@@ -158,7 +170,7 @@ With datamoduleinventarios.DataModule1.FDQueryProducto do //consulta el producto
 
 
                  EditLinea.Text:=Fields[3].AsString;
-                 EditControlAlmacen.text:=Fields[4].AsString;
+                 //ComboBoxAlmacenes.text:=Fields[4].AsString;
                  EditUnidad_entrada.Text:=Fields[5].AsString;
                  EditUnidad_salida.Text:=Fields[6].AsString;
                  EditFactor_unidades.Text:=Fields[7].AsString;
@@ -212,6 +224,18 @@ begin
               end;
           end;
     end;
+end;
+
+procedure TFormInventario.SpeedButtonImprimirClick(Sender: TObject);
+begin
+    SaveDialoginventario.Filter:='Hoja de Cálculo Excel (*.xls) | *.xls';
+    SaveDialoginventario.Title:=' Salvar listado como Hoja de Cálculo Excel';
+     if SaveDialoginventario.Execute then
+  begin
+	// Salva la información en un archivo de Excell.
+	ExportGridToExcel(SaveDialoginventario.FileName,cxGridInventarios, False);
+	MessageDlg('La información fué salvada en ' + SaveDialoginventario.FileName, mtInformation, [mbOk], 0);
+  end;
 end;
 
 procedure TFormInventario.SpeedButtonSalirClick(Sender: TObject);

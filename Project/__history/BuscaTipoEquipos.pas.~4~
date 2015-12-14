@@ -1,0 +1,57 @@
+unit BuscaTipoEquipos;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids,
+  Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls;
+
+type
+  TFormBuscaTipoEquipo = class(TForm)
+    Panel1: TPanel;
+    Label1: TLabel;
+    EditNombre: TEdit;
+    BitBtnBusca: TBitBtn;
+    BitBtnTodos: TBitBtn;
+    DBGridEquipos: TDBGrid;
+    FDQueryBuscaTiposEquipos: TFDQuery;
+    FDQueryBuscaTiposEquiposid_equipo: TFMTBCDField;
+    FDQueryBuscaTiposEquipostipo_equipo: TWideStringField;
+    FDQueryBuscaTiposEquiposcapacidad: TWideStringField;
+    FDQueryBuscaTiposEquiposidentificador: TWideStringField;
+    FDQueryBuscaTiposEquiposcodigo: TWideStringField;
+    FDQueryBuscaTiposEquiposclasificacion1: TWideStringField;
+    FDQueryBuscaTiposEquiposruta: TWideStringField;
+    FDQueryBuscaTiposEquiposeconomico: TWideStringField;
+    DataSourceBuscaTipoEquipos: TDataSource;
+    procedure BitBtnBuscaClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormBuscaTipoEquipo: TFormBuscaTipoEquipo;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFormBuscaTipoEquipo.BitBtnBuscaClick(Sender: TObject);
+begin
+    With FDQueryBuscaTipoEquipos do
+    begin
+      Sql.Clear;
+      Sql.Add('Select id_tipo,descripcion,observaciones from "CMSoftware"."Tipo_equipo" where descripcion like :param1');
+      Params[0].AsString:=EditNombre.Text+'%';
+      open;
+    end;
+
+end;
+
+end.

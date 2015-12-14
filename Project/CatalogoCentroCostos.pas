@@ -12,7 +12,7 @@ uses
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, cxGridCustomPopupMenu,
   cxGridPopupMenu, FireDAC.Comp.UI, cxGridLevel, cxClasses, cxGridCustomView,
-  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid;
+  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,cxGridExportLink;
 
 type
   TFormCatalogoCentroCostos = class(TForm)
@@ -21,7 +21,6 @@ type
     SpeedButtonModificar: TSpeedButton;
     SpeedButtonEliminar: TSpeedButton;
     ToolButton1: TToolButton;
-    SpeedButtonBuscar: TSpeedButton;
     SpeedButtonImprimir: TSpeedButton;
     ToolButton2: TToolButton;
     SpeedButtonSalir: TSpeedButton;
@@ -36,12 +35,14 @@ type
     cxGridCentroCostosDBTableView1id_cuenta: TcxGridDBColumn;
     cxGridCentroCostosDBTableView1descripcion: TcxGridDBColumn;
     cxGridCentroCostosDBTableView1tipo: TcxGridDBColumn;
+    SaveDialogCentroCostos: TSaveDialog;
     procedure SpeedButtonAgregarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure SpeedButtonSalirClick(Sender: TObject);
     procedure SpeedButtonModificarClick(Sender: TObject);
     procedure SpeedButtonEliminarClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure SpeedButtonImprimirClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -97,6 +98,18 @@ begin
           end;
     end;
 
+end;
+
+procedure TFormCatalogoCentroCostos.SpeedButtonImprimirClick(Sender: TObject);
+begin
+    SaveDialogCentroCostos.Filter:='Hoja de Cálculo Excel (*.xls) | *.xls';
+    SaveDialogCentroCostos.Title:=' Salvar listado como Hoja de Cálculo Excel';
+     if SaveDialogCentroCostos.Execute then
+  begin
+	// Salva la información en un archivo de Excell.
+	ExportGridToExcel(SaveDialogCentroCostos.FileName,cxGridCentroCostos, False);
+	MessageDlg('La información fué salvada en ' + SaveDialogCentroCostos.FileName, mtInformation, [mbOk], 0);
+  end;
 end;
 
 procedure TFormCatalogoCentroCostos.SpeedButtonModificarClick(Sender: TObject);

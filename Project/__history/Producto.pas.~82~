@@ -1,0 +1,282 @@
+unit Producto;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.TabNotBk,
+  Vcl.ExtCtrls, Vcl.Buttons, cxGraphics, cxControls, cxLookAndFeels,
+  cxLookAndFeelPainters, cxContainer, cxEdit, cxImage;
+
+type
+  TFormProductos = class(TForm)
+    TabbedNotebook1: TTabbedNotebook;
+    GroupBox2: TGroupBox;
+    GroupBox3: TGroupBox;
+    RadioButtonProducto: TRadioButton;
+    RadioButtonServicio: TRadioButton;
+    RadioButtonKit: TRadioButton;
+    Label9: TLabel;
+    EditLinea: TEdit;
+    BitBtnBuscar: TBitBtn;
+    GroupBoxControl: TGroupBox;
+    Label10: TLabel;
+    Label11: TLabel;
+    EditUnidad_entrada: TEdit;
+    EditUnidad_salida: TEdit;
+    Label12: TLabel;
+    EditFactor_unidades: TEdit;
+    Label13: TLabel;
+    EditUnidad_empaque: TEdit;
+    BitBtnAlmacenes: TBitBtn;
+    Label14: TLabel;
+    GroupBox7: TGroupBox;
+    BitBtnGuardar: TBitBtn;
+    BitBtnCerrar: TBitBtn;
+    GroupBox8: TGroupBox;
+    Label15: TLabel;
+    EditPrecioLista: TEdit;
+    BitBtnPrecios: TBitBtn;
+    EditMoneda: TEdit;
+    Label16: TLabel;
+    GroupBox9: TGroupBox;
+    Label17: TLabel;
+    Label18: TLabel;
+    Label19: TLabel;
+    EditExistencia: TEdit;
+    EditStockMin: TEdit;
+    EditStockMax: TEdit;
+    GroupBox10: TGroupBox;
+    GroupBox11: TGroupBox;
+    Label20: TLabel;
+    Label21: TLabel;
+    EditIVA: TEdit;
+    Label22: TLabel;
+    GroupBox12: TGroupBox;
+    Label23: TLabel;
+    Editproveedor: TEdit;
+    BitBtn7: TBitBtn;
+    GroupBox13: TGroupBox;
+    Label24: TLabel;
+    Label25: TLabel;
+    EditPromedio: TEdit;
+    EditUltimo: TEdit;
+    GroupBox14: TGroupBox;
+    Label26: TLabel;
+    Label27: TLabel;
+    EditFechaUltimaCompra: TEdit;
+    Label28: TLabel;
+    EditCantidadAcumulada: TEdit;
+    EditmontoAcumulado: TEdit;
+    GroupBox15: TGroupBox;
+    MemoObserva: TMemo;
+    EditCampoLibre1: TEdit;
+    EditCampoLibre2: TEdit;
+    EditCampoLibre3: TEdit;
+    EditDescripcionLibre1: TEdit;
+    EditDescripcionLibre2: TEdit;
+    EditDescripcionLibre3: TEdit;
+    GroupBox1: TGroupBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    Editid_producto: TEdit;
+    EditCentroCostos: TEdit;
+    Label3: TLabel;
+    Label4: TLabel;
+    MemoDescripción: TMemo;
+    cxImage1: TcxImage;
+    EditControlAlmacen: TEdit;
+    procedure BitBtnCerrarClick(Sender: TObject);
+    procedure BitBtnGuardarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormProductos: TFormProductos;
+
+implementation
+
+{$R *.dfm}
+
+uses DataModuleInventarios, Inventario;
+
+procedure TFormProductos.BitBtnCerrarClick(Sender: TObject);
+begin
+  close;
+          //INICIA PROCESO DE LIMPIEZA DE FORMULARIO
+          Editid_producto.Clear;
+          MemoDescripción.Lines.Clear;
+          RadioButtonProducto.Checked:=true;
+          EditLinea.Clear;
+          EditUnidad_entrada.Text:='pz';
+          EditUnidad_salida.Text:='pz';
+          EditFactor_unidades.Text:='1.000000';
+          EditUnidad_empaque.Text:='1.000000';
+          EditPrecioLista.Text:='0';
+          EditMoneda.Text:='MX';
+          EditCentroCostos.Clear;
+          EditIVA.Text:='16';
+          EditExistencia.Text:='0';
+          EditStockMin.Text:='0';
+          EditStockMax.Text:='0';
+          Editproveedor.Clear;
+          EditPromedio.Text:='0';
+          EditUltimo.Text:='0';
+          MemoObserva.Lines.Clear;
+          EditCampoLibre1.Clear;
+          EditCampoLibre2.Clear;
+          EditCampoLibre3.Clear;
+          EditDescripcionLibre1.Clear;
+          EditDescripcionLibre2.Clear;
+          EditDescripcionLibre3.Clear;
+
+end;
+
+procedure TFormProductos.BitBtnGuardarClick(Sender: TObject);
+var
+  Save:Integer;
+begin
+  if BitBtnGuardar.Caption='&Guardar' then
+    begin
+      Save:=Application.MessageBox('¿Desea Guardar el registro?','¡Confirmando!',MB_YESNOCANCEL);
+        if Save=IDYES then
+          begin
+            With datamoduleinventarios.DataModule1.FDQueryProducto do //Inserta el producto nuevo
+              begin
+                 sql.Clear;
+                 Sql.Add('Insert into "CMSoftware"."Producto"(id_clave,descripcion,tipo_producto,linea,control,');
+                 Sql.Add('unidad_ent,unidad_sal,factor_uni,unidad_emp,precio_lista,moneda,centro_costos,impuesto,');
+                 Sql.Add('existencia,stock_min,stock_max,proveedor,promedio,ultimo_costo,');
+                 Sql.Add('observaciones,campolibre1,campolibre2,campolibre3,descrip_libre1,descrip_libre2,descrip_libre3)');
+                 Sql.Add('values(:param1,:param2,:param3,:param4,:param5,:param6,:param7,:param8,');
+                 Sql.Add(':param9,:param10,:param11,:param12,:param13,:param14,:param15,:param16,:param17,:param18,:param19,');
+                 Sql.Add(':param20,:param21,:param22,:param23,:param24,:param25,:param26)');
+
+                 Params[0].AsString:=Editid_producto.Text;
+                 Params[1].AsString:=MemoDescripción.Text;
+
+                    if RadioButtonProducto.Checked=true then
+                       Params[2].AsInteger:=1 else
+                    if RadioButtonServicio.Checked=true then
+                       Params[2].AsInteger:=2 else
+                    if RadioButtonKit.Checked=true then
+                       Params[2].AsInteger:=3;
+
+                 Params[3].AsString:=EditLinea.Text;
+                 Params[4].AsString:='1';//control revisar
+                 Params[5].AsString:=EditUnidad_entrada.Text;
+                 Params[6].AsString:=EditUnidad_salida.Text;
+                 Params[7].AsFloat:=StrToFloat(EditFactor_unidades.Text);
+                 Params[8].AsFloat:=StrToFloat(EditUnidad_empaque.Text);
+                 Params[9].AsFloat:=StrToFloat(EditPrecioLista.Text);
+                 Params[10].AsString:=EditMoneda.Text;
+                 Params[11].AsString:=EditCentroCostos.Text;
+                 Params[12].AsInteger:=StrToInt(EditIVA.Text);
+                 Params[13].AsFloat:=StrToFloat(EditExistencia.Text);
+                 Params[14].AsFloat:=StrToFloat(EditStockMin.Text);
+                 Params[15].AsFloat:=StrToFloat(EditStockMax.Text);
+                 Params[16].AsString:=Editproveedor.Text;
+                 Params[17].AsFloat:=StrToFloat(EditPromedio.Text);
+                 Params[18].AsFloat:=StrToFloat(EditUltimo.Text);
+
+                 Params[19].AsString:=MemoObserva.Text;
+                 Params[20].AsString:=EditCampoLibre1.Text;
+                 Params[21].AsString:=EditCampoLibre2.Text;
+                 Params[22].AsString:=EditCampoLibre3.Text;
+                 Params[23].AsString:=EditDescripcionLibre1.Text;
+                 Params[24].AsString:=EditDescripcionLibre2.Text;
+                 Params[25].AsString:=EditDescripcionLibre3.Text;
+                 ExecSQL;
+
+                  CLOSE;
+          //INICIA PROCESO DE LIMPIEZA DE FORMULARIO
+          Editid_producto.Clear;
+          MemoDescripción.Lines.Clear;
+          RadioButtonProducto.Checked:=true;
+          EditLinea.Clear;
+          EditUnidad_entrada.Text:='pz';
+          EditUnidad_salida.Text:='pz';
+          EditFactor_unidades.Text:='1.000000';
+          EditUnidad_empaque.Text:='1.000000';
+          EditPrecioLista.Text:='0';
+          EditMoneda.Text:='MX';
+          EditCentroCostos.Clear;
+          EditIVA.Text:='16';
+          EditExistencia.Text:='0';
+          EditStockMin.Text:='0';
+          EditStockMax.Text:='0';
+          Editproveedor.Clear;
+          EditPromedio.Text:='0';
+          EditUltimo.Text:='0';
+          MemoObserva.Lines.Clear;
+          EditCampoLibre1.Clear;
+          EditCampoLibre2.Clear;
+          EditCampoLibre3.Clear;
+          EditDescripcionLibre1.Clear;
+          EditDescripcionLibre2.Clear;
+          EditDescripcionLibre3.Clear;
+              end;
+          end;
+
+    end
+  else
+  if BitBtnGuardar.Caption='&Modificar' then
+    begin
+      Save:=Application.MessageBox('¿Desea Modificar el registro?','¡Confirmando!',MB_YESNOCANCEL);
+        if Save=IDYES then
+          begin
+            With datamoduleinventarios.DataModule1.FDQueryProducto do //Inserta el producto nuevo
+              begin
+                 sql.Clear;
+                 Sql.Add('Update "CMSoftware"."Producto" set id_clave=:param1,descripcion=:param2,tipo_producto=:param3,linea=:param4,control=:param5,');
+                 Sql.Add('unidad_ent=:param6,unidad_sal=:param7,factor_uni=:param8,unidad_emp=:param9,precio_lista=:param10,moneda=:param11,centro_costos=:param12,impuesto=:param13,');
+                 Sql.Add('existencia=:param14,stock_min=:param15,stock_max=:param16,proveedor=:param17,promedio=:param18,ultimo_costo=:param19,');
+                 Sql.Add('observaciones=:param20,campolibre1=:param21,campolibre2=:param22,campolibre3=:param23,descrip_libre1=:param24,descrip_libre2=:param25,descrip_libre3=:param26');
+                 Sql.Add('where id_clave=:param1');
+
+                 Params[0].AsString:=Editid_producto.Text;
+                 Params[1].AsString:=MemoDescripción.Text;
+
+                    if RadioButtonProducto.Checked=true then
+                       Params[2].AsInteger:=1 else
+                    if RadioButtonServicio.Checked=true then
+                       Params[2].AsInteger:=2 else
+                    if RadioButtonKit.Checked=true then
+                       Params[2].AsInteger:=3;
+
+                 Params[3].AsString:=EditLinea.Text;
+                 Params[4].AsString:='1';//control revisar
+                 Params[5].AsString:=EditUnidad_entrada.Text;
+                 Params[6].AsString:=EditUnidad_salida.Text;
+                 Params[7].AsFloat:=StrToFloat(EditFactor_unidades.Text);
+                 Params[8].AsFloat:=StrToFloat(EditUnidad_empaque.Text);
+                 Params[9].AsFloat:=StrToFloat(EditPrecioLista.Text);
+                 Params[10].AsString:=EditMoneda.Text;
+                 Params[11].AsString:=EditCentroCostos.Text;
+                 Params[12].AsInteger:=StrToInt(EditIVA.Text);
+                 Params[13].AsFloat:=StrToFloat(EditExistencia.Text);
+                 Params[14].AsFloat:=StrToFloat(EditStockMin.Text);
+                 Params[15].AsFloat:=StrToFloat(EditStockMax.Text);
+                 Params[16].AsString:=Editproveedor.Text;
+                 Params[17].AsFloat:=StrToFloat(EditPromedio.Text);
+                 Params[18].AsFloat:=StrToFloat(EditUltimo.Text);
+                 Params[19].AsString:=MemoObserva.Text;
+                 Params[20].AsString:=EditCampoLibre1.Text;
+                 Params[21].AsString:=EditCampoLibre2.Text;
+                 Params[22].AsString:=EditCampoLibre3.Text;
+                 Params[23].AsString:=EditDescripcionLibre1.Text;
+                 Params[24].AsString:=EditDescripcionLibre2.Text;
+                 Params[25].AsString:=EditDescripcionLibre3.Text;
+                 ExecSQL;
+
+            end;
+          end;
+
+    end
+end;
+
+
+end.

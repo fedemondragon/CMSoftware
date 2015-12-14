@@ -15,17 +15,17 @@ type
   TFormBuscaProveedor = class(TForm)
     Panel1: TPanel;
     EditNombre: TEdit;
-    BitBtn1: TBitBtn;
+    BitBtnBusca: TBitBtn;
     Label1: TLabel;
     DBGrid1: TDBGrid;
     DataSourceBuscaProveedor: TDataSource;
     FDQueryBuscaProveedor: TFDQuery;
     FDQueryBuscaProveedorid_proveedor: TFMTBCDField;
     FDQueryBuscaProveedornombre: TWideStringField;
-    BitBtn2: TBitBtn;
-    procedure BitBtn1Click(Sender: TObject);
+    BitBtnTodos: TBitBtn;
+    procedure BitBtnBuscaClick(Sender: TObject);
     procedure DBGrid1DblClick(Sender: TObject);
-    procedure BitBtn2Click(Sender: TObject);
+    procedure BitBtnTodosClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }
@@ -43,7 +43,7 @@ implementation
 
 uses Compra, AltaCompra;
 
-procedure TFormBuscaProveedor.BitBtn1Click(Sender: TObject);
+procedure TFormBuscaProveedor.BitBtnBuscaClick(Sender: TObject);
 begin
     With FDQueryBuscaProveedor do
     begin
@@ -54,7 +54,7 @@ begin
     end;
 end;
 
-procedure TFormBuscaProveedor.BitBtn2Click(Sender: TObject);
+procedure TFormBuscaProveedor.BitBtnTodosClick(Sender: TObject);
 begin
     With FDQueryBuscaProveedor do
     begin

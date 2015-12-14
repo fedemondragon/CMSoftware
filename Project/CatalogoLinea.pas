@@ -24,9 +24,6 @@ type
     SpeedButtonModificar: TSpeedButton;
     SpeedButtonEliminar: TSpeedButton;
     ToolButton1: TToolButton;
-    SpeedButtonBuscar: TSpeedButton;
-    SpeedButtonImprimir: TSpeedButton;
-    ToolButton2: TToolButton;
     SpeedButtonSalir: TSpeedButton;
     ToolBar2: TToolBar;
     FDGUIxWaitCursorLinea: TFDGUIxWaitCursor;
