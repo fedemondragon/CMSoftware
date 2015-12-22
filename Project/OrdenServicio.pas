@@ -18,8 +18,8 @@ type
   TFormOrdenServicio = class(TForm)
     ToolBar1: TToolBar;
     SpeedButtonAgregar: TSpeedButton;
-    SpeedButton1: TSpeedButton;
-    SpeedButton2: TSpeedButton;
+    SpeedButtonEliminar: TSpeedButton;
+    SpeedButtonInsertar: TSpeedButton;
     ToolButton2: TToolButton;
     SpeedButtonSalir: TSpeedButton;
     ToolBar2: TToolBar;
@@ -67,7 +67,7 @@ type
     cxGridDetalleOSDBTableView1estatus: TcxGridDBColumn;
     PopupMenuOT: TPopupMenu;
     Cambiarestatus1: TMenuItem;
-    SpeedButton3: TSpeedButton;
+    SpeedButtonEstatus: TSpeedButton;
     EditID_programacion: TEdit;
     Label13: TLabel;
     BitBtn1: TBitBtn;
@@ -93,8 +93,8 @@ type
     procedure ComboBoxEquiposKeyPress(Sender: TObject; var Key: Char);
     procedure BitBtnAgregarClick(Sender: TObject);
     procedure SpeedButtonAgregarClick(Sender: TObject);
-    procedure SpeedButton2Click(Sender: TObject);
-    procedure SpeedButton1Click(Sender: TObject);
+    procedure SpeedButtonInsertarClick(Sender: TObject);
+    procedure SpeedButtonEliminarClick(Sender: TObject);
     procedure Cambiarestatus1Click(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
     procedure BitBtn1Click(Sender: TObject);
@@ -148,13 +148,23 @@ end;
 procedure TFormOrdenServicio.Apartarproductosdelalmacn1Click(Sender: TObject);
 Var
     Descripcion:String;
-    Partida:Integer;
+    Partida,Cuenta:Integer;
 begin
       Partida:=DataSourceDetalleOS.DataSet.Fields[0].AsInteger;
       Descripcion:=DataSourceDetalleOS.DataSet.Fields[4].AsString;
       if Descripcion='' then ShowMessage('No hay datos') else
-      Begin
-        With datamodule1.fdQueryusuario do
+    Begin
+  With DataModule1.FDQueryMovimientosInv do
+    Begin
+      Sql.Clear;
+      Sql.Add('Select count(num_docto) from "CMSoftware"."MovimientosInventario" where num_docto=:param1');
+      Params[0].AsString:=EditId_Orden.Text;
+      Open;
+      Cuenta:=Fields[0].AsInteger;
+    End;
+  if Cuenta=0 then    //Cuando no existe la orden en movs al inventario
+    Begin
+      With datamodule1.fdQueryusuario do
        Begin
          Sql.Clear;
          Sql.Add('Select "CMSoftware"."Folios".num_folio,"CMSoftware"."Folios".serie from "CMSoftware"."Folios","CMSoftware"."Usuario" where "CMSoftware"."Usuario".id_usuario=:param1 ');
@@ -164,18 +174,48 @@ begin
          FolioUsuario:=Fields[0].AsInteger;
          FormApartadoInv.EditDocto.Text:=Fields[1].AsString+''+Fields[0].AsString;
          FormApartadoInv.LabelFolio.Caption:=Fields[0].AsString;
-         FormApartadoInv.Caption:='Apartado de MAteriales '+' '+'[Mov. Núm. ' +FormApartadoInv.EditDocto.Text+']';
+         FormApartadoInv.Caption:='Apartado de Materiales '+' '+'[Mov. Núm. ' +FormApartadoInv.EditDocto.Text+']';
        End;
-
-
          FormApartadoInv.MemoDescripcion.Text:=Descripcion;
          FormApartadoInv.EditOrdenServicio.Text:=EditId_Orden.Text;
          FormApartadoInv.EditPartida.text:=IntToStr(Partida);
          FormApartadoInv.show;
          FormApartadoInv.EditProducto.SetFocus;
          FormApartadoInv.DateTimePickerFecha.Date;
-        End;
+        End
 
+    else      // si es que ya existe algun movimiento al inventario
+  With DataModule1.FDQueryMovimientosInv do
+    Begin
+      Sql.Clear;
+      Sql.Add('Select folio,fecha from "CMSoftware"."MovimientosInventario" where num_docto=:param');
+      Params[0].AsString:=EditId_Orden.Text;
+
+      Open;
+      FormApartadoInv.EditDocto.Text:=Fields[0].AsString;
+      FormApartadoInv.LabelFolio.Caption:=Fields[0].AsString;
+      FormApartadoInv.Caption:='Apartado de Materiales '+' '+'[Mov. Núm. ' +FormApartadoInv.EditDocto.Text+']';
+      FormApartadoInv.MemoDescripcion.Text:=Descripcion;
+      FormApartadoInv.EditOrdenServicio.Text:=EditId_Orden.Text;
+      FormApartadoInv.EditPartida.text:=IntToStr(Partida);
+      FormApartadoInv.show;
+      FormApartadoInv.EditProducto.SetFocus;
+      formApartadoInv.DateTimePickerFecha.Date:=Fields[1].AsDateTime;
+    End;
+         With FormApartadoInv.FDQueryAltaMovimiento do    //consulta el movimiento al inventario
+     Begin
+       sql.Clear;
+       Sql.Add('Select * from "CMSoftware"."MovimientosInventario","CMSoftware"."Producto"');
+       Sql.Add('where "MovimientosInventario".id_clave="Producto".id_clave and "CMSoftware"."MovimientosInventario".folio=:param1 and "CMSoftware"."MovimientosInventario".num_docto=:param2 and "CMSoftware"."MovimientosInventario".partida=:param3 ');
+       Params[0].AsString:=FormApartadoInv.EditDocto.Text;
+       Params[1].AsString:=FormApartadoInv.EditOrdenServicio.Text;
+       Params[2].AsInteger:=StrToInt(FormApartadoInv.EditPartida.Text);
+       open;
+       FormApartadoInv.DataSourceAltaMovimiento.DataSet.Refresh;
+     End;
+
+
+    End;
 
 
 end;
@@ -420,7 +460,7 @@ begin
 
 end;
 
-procedure TFormOrdenServicio.SpeedButton1Click(Sender: TObject);
+procedure TFormOrdenServicio.SpeedButtonEliminarClick(Sender: TObject);
 var
   Delete,Partida:Integer;
 Begin
@@ -441,7 +481,7 @@ Begin
         End;
 end;
 
-procedure TFormOrdenServicio.SpeedButton2Click(Sender: TObject);
+procedure TFormOrdenServicio.SpeedButtonInsertarClick(Sender: TObject);
 begin
   ComboBoxTipoEquipo.clear;
   ComboBoxEquipos.Clear;
@@ -453,6 +493,7 @@ end;
 procedure TFormOrdenServicio.SpeedButtonAgregarClick(Sender: TObject);
 Var
    Save,FolioOT:Integer;
+  Clave_Entidad,Tecnicos:Integer;
 begin
      Save:=Application.MessageBox('¿Desea Guardar la Orden de Servicio y salir?','¡Confirmando!',MB_YESNO);
         Begin
@@ -474,24 +515,41 @@ begin
                 Open;
                 Tecnicos:=Fields[0].AsInteger;
               End;
+           if FormOrdenServicio.Caption='Orden de Servicio [Consulta]' then
+             Begin
+               With FDQueryEncabezadoOS do
+                Begin
+                   sql.Clear;
+                   sql.Add('Update "CMSoftware"."SolicitudServicio" set id_entidad=:param1,Solicitante=:param2,id_tecnico=:param3,');
+                   Sql.add('observaciones=:Param4 where id_solicitud=:param5');
+                   Params[0].AsInteger:=Clave_Entidad;
+                   Params[1].AsString:=EditSolicitante.Text;
+                   Params[2].AsInteger:=Tecnicos;
+                   Params[3].AsString:=MemoObservaciones.Text;
+                   Params[4].AsString:=EditId_Orden.Text;
+                   ExecSQL;
+                End;
+
+             End
+             else
+             Begin
+
             With FDQueryEncabezadoOS do   //Inserta el encabezado de la orden de servicio
               Begin
                 Sql.Clear;
                 Sql.Add('Insert Into "CMSoftware"."SolicitudServicio" (id_solicitud,fecha,id_tecnico,');
-                Sql.Add('id_entidad,observaciones,ruta,economico,estatus,tipoServicio,Solicitante,id_usuario,id_programacion)');
-                Sql.Add('values(:param1,:param2,:param3,:param4,:param5,:param6,:param7,:param8,:param9,:param10,:param11,:param12)');
+                Sql.Add('id_entidad,observaciones,estatus,tipoServicio,Solicitante,id_usuario,id_programacion)');
+                Sql.Add('values(:param1,:param2,:param3,:param4,:param5,:param6,:param7,:param8,:param9,:param10)');
                 Params[0].AsString:=EditId_Orden.Text;
                 Params[1].AsDate:=DateTimePickerFecha.Date;
                 Params[2].AsInteger:=Tecnicos;
                 Params[3].AsInteger:=Clave_Entidad;
                 Params[4].AsString:=MemoObservaciones.Text;
-                Params[5].AsString:=EditRuta.Text;
-                Params[6].AsString:=EditEconomico.Text;
-                Params[7].AsInteger:=0;
-                Params[8].AsString:='';
-                Params[9].AsString:=EditSolicitante.Text;
-                Params[10].AsInteger:=formLogin.Usuario;
-                Params[11].AsInteger:=StrToInt(EditID_programacion.Text);
+                Params[5].AsInteger:=0;
+                Params[6].AsString:='';
+                Params[7].AsString:=EditSolicitante.Text;
+                Params[8].AsInteger:=formLogin.Usuario;
+                Params[9].AsInteger:=StrToInt(EditID_programacion.Text);
                 ExecSQL;
                End;
              With DataModule1.FDQueryUsuario do //actualiza el folio
@@ -534,7 +592,8 @@ begin
                MemoObservaciones.Clear;
                DataSourceDetalleOS.DataSet.Close;
               close;
-          End
+          End;
+           End
           else
 
         End;
@@ -548,18 +607,20 @@ var
   OrdenServicio:Integer;
 begin
   begin
+ if FormOrdenServicio.Caption<>'Orden de Servicio [Consulta]' then
+    Begin
       Save:=Application.MessageBox('¿Desea Salir del registro de Orden de Servicio, no se guardarán los registros capturados?','¡Confirmando!',MB_YESNO);
         Begin
          if Save=IDYES then
            Begin
             With FDQueryDetalleOrdenServicio do
-              Begin
+             Begin
               Sql.Clear;
               Sql.Add('Select count(id_solicitud) from "CMSoftware"."SolicitudServicio" where id_solicitud=:param1');
               Params[0].AsString:=EditId_Orden.Text;
               Open;
               OrdenServicio:=Fields[0].AsInteger;
-            End;
+             End;
               if OrdenServicio=0 then
                 Begin
                  With FDQueryDetalleOrdenServicio do   //Borra registros capturados en el sistema
@@ -599,8 +660,26 @@ begin
 
 
           End;
+
         End;
+
+  end
+  else
+   if FormOrdenServicio.Caption='Orden de Servicio [Consulta]' then
+   close;
+  {  DataSourceDetalleOS.DataSet.Close;
+    ComboBoxEntidad.Clear;
+    EditSolicitante.Clear;
+    ComboBoxTecnicos.Clear;
+    EditRuta.Clear;
+    EditEconomico.Clear;
+    ComboBoxTipoEquipo.Clear;
+    ComboBoxEquipos.Clear;
+    MemoDescripcion.Clear;
+    MemoObservaciones.Clear;
+    EditID_programacion.Clear;}
   end;
+
 end;
 
 

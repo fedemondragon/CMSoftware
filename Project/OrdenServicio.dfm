@@ -262,7 +262,7 @@ object FormOrdenServicio: TFormOrdenServicio
       ShowHint = True
       OnClick = SpeedButtonAgregarClick
     end
-    object SpeedButton1: TSpeedButton
+    object SpeedButtonEliminar: TSpeedButton
       Left = 41
       Top = 0
       Width = 41
@@ -489,9 +489,9 @@ object FormOrdenServicio: TFormOrdenServicio
         0000}
       ParentShowHint = False
       ShowHint = True
-      OnClick = SpeedButton1Click
+      OnClick = SpeedButtonEliminarClick
     end
-    object SpeedButton2: TSpeedButton
+    object SpeedButtonInsertar: TSpeedButton
       Left = 82
       Top = 0
       Width = 41
@@ -718,9 +718,9 @@ object FormOrdenServicio: TFormOrdenServicio
         0000}
       ParentShowHint = False
       ShowHint = True
-      OnClick = SpeedButton2Click
+      OnClick = SpeedButtonInsertarClick
     end
-    object SpeedButton3: TSpeedButton
+    object SpeedButtonEstatus: TSpeedButton
       Left = 123
       Top = 0
       Width = 46
@@ -1283,8 +1283,7 @@ object FormOrdenServicio: TFormOrdenServicio
       Left = 464
       Top = 10
       Width = 145
-      Height = 22
-      Style = csOwnerDrawFixed
+      Height = 21
       TabOrder = 2
       OnDropDown = ComboBoxEntidadDropDown
       OnKeyPress = ComboBoxEntidadKeyPress
@@ -1302,8 +1301,7 @@ object FormOrdenServicio: TFormOrdenServicio
       Left = 299
       Top = 48
       Width = 277
-      Height = 22
-      Style = csOwnerDrawFixed
+      Height = 21
       TabOrder = 4
       OnDropDown = ComboBoxTecnicosDropDown
       OnKeyPress = ComboBoxTecnicosKeyPress
@@ -1604,7 +1602,7 @@ object FormOrdenServicio: TFormOrdenServicio
     Left = 440
     Top = 292
     object Cambiarestatus1: TMenuItem
-      Caption = 'Cambiar estatus a Orden de Servicio'
+      Caption = 'Capturar Orden de Trabajo'
       OnClick = Cambiarestatus1Click
     end
     object N1: TMenuItem

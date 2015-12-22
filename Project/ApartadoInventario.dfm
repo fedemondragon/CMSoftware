@@ -19,7 +19,7 @@ object FormApartadoInv: TFormApartadoInv
   object Label15: TLabel
     Left = 224
     Top = 265
-    Width = 42
+    Width = 43
     Height = 13
     Caption = 'Cantidad'
   end
@@ -118,7 +118,6 @@ object FormApartadoInv: TFormApartadoInv
     Caption = 'ToolBar1'
     EdgeBorders = [ebLeft, ebTop, ebRight, ebBottom]
     TabOrder = 6
-    ExplicitWidth = 798
     object SpeedButtonAgregar: TSpeedButton
       Left = 0
       Top = 0
@@ -346,6 +345,7 @@ object FormApartadoInv: TFormApartadoInv
         0000}
       ParentShowHint = False
       ShowHint = True
+      OnClick = SpeedButtonAgregarClick
     end
     object SpeedButton1: TSpeedButton
       Left = 41
@@ -574,6 +574,7 @@ object FormApartadoInv: TFormApartadoInv
         0000}
       ParentShowHint = False
       ShowHint = True
+      OnClick = SpeedButton1Click
     end
     object SpeedButton2: TSpeedButton
       Left = 82
@@ -802,6 +803,7 @@ object FormApartadoInv: TFormApartadoInv
         0000}
       ParentShowHint = False
       ShowHint = True
+      OnClick = SpeedButton2Click
     end
     object ToolButton1: TToolButton
       Left = 123
@@ -1287,8 +1289,6 @@ object FormApartadoInv: TFormApartadoInv
     HotTrackColor = clBlue
     ParentColor = False
     TabOrder = 7
-    ExplicitLeft = -10
-    ExplicitWidth = 798
   end
   object GroupBox1: TGroupBox
     Left = 5
@@ -1469,7 +1469,25 @@ object FormApartadoInv: TFormApartadoInv
       OptionsSelection.CellSelect = False
       OptionsSelection.UnselectFocusedRecordOnExit = False
       OptionsView.Footer = True
-      object cxGridAltaMovimientoDBTableView1Column1: TcxGridDBColumn
+      object cxGridAltaMovimientoDBTableView1cantidad: TcxGridDBColumn
+        DataBinding.FieldName = 'cantidad'
+        Width = 100
+      end
+      object cxGridAltaMovimientoDBTableView1id_clave: TcxGridDBColumn
+        DataBinding.FieldName = 'id_clave'
+        Width = 200
+      end
+      object cxGridAltaMovimientoDBTableView1descripcion: TcxGridDBColumn
+        DataBinding.FieldName = 'descripcion'
+        Width = 200
+      end
+      object cxGridAltaMovimientoDBTableView1costo: TcxGridDBColumn
+        DataBinding.FieldName = 'costo'
+        Width = 200
+      end
+      object cxGridAltaMovimientoDBTableView1costo_operado: TcxGridDBColumn
+        DataBinding.FieldName = 'costo_operado'
+        Width = 200
       end
     end
     object cxGridAltaMovimientoLevel1: TcxGridLevel

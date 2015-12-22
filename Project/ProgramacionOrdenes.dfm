@@ -349,6 +349,7 @@ object FormProgramacionOrdenes: TFormProgramacionOrdenes
         0000}
       ParentShowHint = False
       ShowHint = True
+      OnClick = SpeedButtonAgregarClick
     end
     object SpeedButtonModificar: TSpeedButton
       Left = 41
@@ -577,6 +578,7 @@ object FormProgramacionOrdenes: TFormProgramacionOrdenes
         0000}
       ParentShowHint = False
       ShowHint = True
+      OnClick = SpeedButtonModificarClick
     end
     object SpeedButtonEstatus: TSpeedButton
       Left = 82
@@ -815,8 +817,19 @@ object FormProgramacionOrdenes: TFormProgramacionOrdenes
       ImageIndex = 1
       Style = tbsSeparator
     end
-    object DateTimePickerStart: TDateTimePicker
+    object SpeedButtonImprimir: TSpeedButton
       Left = 131
+      Top = 0
+      Width = 41
+      Height = 42
+      Hint = 'Imprimir'
+      Caption = 'Expor'
+      ParentShowHint = False
+      ShowHint = True
+      OnClick = SpeedButtonImprimirClick
+    end
+    object DateTimePickerStart: TDateTimePicker
+      Left = 172
       Top = 0
       Width = 94
       Height = 42
@@ -826,13 +839,13 @@ object FormProgramacionOrdenes: TFormProgramacionOrdenes
       TabOrder = 0
     end
     object ToolButton3: TToolButton
-      Left = 225
+      Left = 266
       Top = 0
       Caption = 'ToolButton3'
       ImageIndex = 1
     end
     object DateTimePickerFinish: TDateTimePicker
-      Left = 248
+      Left = 289
       Top = 0
       Width = 95
       Height = 42
@@ -841,7 +854,7 @@ object FormProgramacionOrdenes: TFormProgramacionOrdenes
       TabOrder = 1
     end
     object ToolButton2: TToolButton
-      Left = 343
+      Left = 384
       Top = 0
       Width = 16
       Caption = 'ToolButton2'
@@ -849,7 +862,7 @@ object FormProgramacionOrdenes: TFormProgramacionOrdenes
       Style = tbsSeparator
     end
     object SpeedButton1: TSpeedButton
-      Left = 359
+      Left = 400
       Top = 0
       Width = 40
       Height = 42
@@ -857,7 +870,7 @@ object FormProgramacionOrdenes: TFormProgramacionOrdenes
       OnClick = SpeedButton1Click
     end
     object SpeedButton2: TSpeedButton
-      Left = 399
+      Left = 440
       Top = 0
       Width = 39
       Height = 42
@@ -865,7 +878,7 @@ object FormProgramacionOrdenes: TFormProgramacionOrdenes
       OnClick = SpeedButton2Click
     end
     object ToolButton4: TToolButton
-      Left = 438
+      Left = 479
       Top = 0
       Width = 25
       Caption = 'ToolButton4'
@@ -873,7 +886,7 @@ object FormProgramacionOrdenes: TFormProgramacionOrdenes
       Style = tbsSeparator
     end
     object SpeedButtonSalir: TSpeedButton
-      Left = 463
+      Left = 504
       Top = 0
       Width = 41
       Height = 42
@@ -1177,5 +1190,9 @@ object FormProgramacionOrdenes: TFormProgramacionOrdenes
       Caption = 'Cancelar programaci'#243'n'
       OnClick = Cancelarprogramacin1Click
     end
+  end
+  object SaveDialogOrdenesServicio: TSaveDialog
+    Left = 176
+    Top = 136
   end
 end
