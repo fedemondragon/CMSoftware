@@ -123,7 +123,7 @@ object FormApartadoInv: TFormApartadoInv
       Top = 0
       Width = 41
       Height = 42
-      Hint = 'Guardar Compra'
+      Hint = 'Guardar'
       Glyph.Data = {
         1E1B0000424D1E1B0000000000003600000028000000290000002A0000000100
         200000000000E81A000000000000000000000000000000000000000000000000
@@ -1344,7 +1344,12 @@ object FormApartadoInv: TFormApartadoInv
       Width = 47
       Height = 13
       Caption = 'LabelFolio'
-      Visible = False
+    end
+    object TLabel
+      Left = 320
+      Top = 112
+      Width = 3
+      Height = 13
     end
     object EditExistencia: TEdit
       Left = 80
@@ -1497,7 +1502,7 @@ object FormApartadoInv: TFormApartadoInv
   object DataSourceAltaMovimiento: TDataSource
     DataSet = FDQueryAltaMovimiento
     Left = 600
-    Top = 40
+    Top = 24
   end
   object FDQueryAltaMovimiento: TFDQuery
     Connection = FormMainMenu.TFDConectionMainMenu

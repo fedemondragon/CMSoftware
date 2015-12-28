@@ -86,4 +86,9 @@ object DataModule1: TDataModule1
     Left = 496
     Top = 208
   end
+  object FDQueryAgenda: TFDQuery
+    Connection = FormMainMenu.TFDConectionMainMenu
+    Left = 384
+    Top = 264
+  end
 end

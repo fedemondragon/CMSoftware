@@ -85,15 +85,35 @@ uses Login, OrdenServicio, DataModuleInventarios;
 procedure TFormProgramacionOrdenes.AltadeOrdendeservicio1Click(Sender: TObject);
 Var
     FolioUsuario:Integer;
+    ASUNTO,UBICACION,MENSAJE:String;
 begin
+   ASUNTO:=DataSourceProgramacion.DataSet.Fields[3].AsString;
+   UBICACION:=DataSourceProgramacion.DataSet.Fields[4].AsString;
+   MENSAJE:=DataSourceProgramacion.DataSet.Fields[5].AsString;
+
   if DataSourceProgramacion.dataset.fields[7].AsString='CANCELADO' then
      ShowMessage('El documento ya se encuentra cancelado') else
         if DataSourceProgramacion.dataset.fields[7].AsString='ASIGNADO' then
      ShowMessage('El documento ya se encuentra asignado') else
      Begin
-      FormOrdenServicio.show;
+       With FormOrdenServicio.FDQueryDetalleOS do
+        Begin
+            Sql.Clear;
+            Sql.Add('SELECT  "Detalle_solicitud".partida,"Tipo_equipo".descripcion,"Equipo".tipo_equipo,"Detalle_solicitud".fecha,');
+            Sql.Add('"Detalle_solicitud".descripcion_servicio,"Detalle_solicitud".estatus FROM "CMSoftware"."Detalle_solicitud","CMSoftware"."Equipo", "CMSoftware"."Tipo_equipo"' );
+            Sql.Add('WHERE "Detalle_solicitud".id_tipo_equipo = "Tipo_equipo".id_tipo AND "Equipo".id_equipo = "Detalle_solicitud".id_equipo');
+            Sql.Add('and "Detalle_solicitud".id_solicitud=:param1 ');
+            Params[0].AsString:=FormOrdenServicio.EditId_Orden.Text;
+            open;
+            FormOrdenServicio.DataSourceDetalleOS.DataSet.Refresh;
+          End;
+
+
+     FormOrdenServicio.show;
+
       FormOrdenServicio.DateTimePickerFecha.SetFocus;
       FormOrdenServicio.DateTimePickerFecha.Date:=Date;
+      FormOrdenServicio.MemoDescripcion.Text:='('+ASUNTO+', '+UBICACION+', '+MENSAJE+')';
 
       With datamodule1.fdQueryusuario do
        Begin
@@ -267,6 +287,7 @@ Var
     NOMBRE_ENTIDAD,NOMBRE_TECNICO:String;
 begin
   ID_PROGRAMACION:=DataSourceProgramacion.DataSet.Fields[0].AsInteger;
+
   if DataSourceProgramacion.dataset.fields[7].AsString='ASIGNADO' then
      Begin
           With DataModule1.FDQueryOrdenServicio do   //id del tecnico y entidad de servicio
@@ -275,8 +296,8 @@ begin
              Sql.Add('Select id_entidad,id_tecnico from "CMSoftware"."SolicitudServicio" where id_programacion=:param1');
              Params[0].AsInteger:=ID_PROGRAMACION;
              Open;
-             TECNICO:=Fields[0].AsInteger;
-             ENTIDAD:=Fields[1].AsInteger;
+             ENTIDAD:=Fields[0].AsInteger;
+             TECNICO:=Fields[1].AsInteger;
            End;
 
             With DataModule1.FDQueryEntidades do   //Resuelve Entidad
@@ -315,6 +336,7 @@ begin
                ComboBoxTecnicos.Text:=NOMBRE_TECNICO;
              End;
         End;
+        FormOrdenServicio.DataSourceDetalleOS.DataSet.close;
         With FormOrdenServicio.FDQueryDetalleOS do
         Begin
             Sql.Clear;

@@ -27,6 +27,7 @@ type
     FDQueryOrdenServicio: TFDQuery;
     FDQueryEntidad: TFDQuery;
     FDQueryOT: TFDQuery;
+    FDQueryAgenda: TFDQuery;
   private
     { Private declarations }
   public

@@ -342,8 +342,9 @@ end;
 
 procedure TFormApartadoInv.SpeedButtonAgregarClick(Sender: TObject);
 var
-  FolioMI,Save:Integer;
+  Save,ExisteFolio:Integer;
   ID_ORDEN:Integer;
+  FolioMI:Integer;
 begin
       Save:=Application.MessageBox('¿Desea guardar el movimiento al inventario?','¡Confirmando!',MB_YESNO);
         Begin
@@ -382,6 +383,20 @@ begin
                ExecSQL;
              End;
 
+             With DataModule1.FDQueryMovimientosInv do
+              Begin
+                Sql.Clear;
+                Sql.Add('Select count(num_docto) from "CMSoftware"."MovimientosInventario" where num_docto=:param1 and folio=:param2 and partida=:param3');
+                Params[0].AsString:=EditOrdenServicio.Text;
+                Params[1].AsString:=EditDocto.Text;
+                Params[2].AsInteger:=StrToInt(EditPartida.Text);
+                Open;
+                ExisteFolio:=Fields[0].AsInteger;
+                ShowMessage(IntToStr(ExisteFolio));
+              End;
+
+           if ExisteFolio=0 then
+              Begin
             With DataModule1.FDQueryfolios do  //Actualiza el Folio
              Begin
                Sql.Clear;
@@ -390,8 +405,8 @@ begin
                Params[1].AsInteger:=FolioMI;
                ExecSQL;
                ShowMessage('Movimiento guardado éxitosamente');
-
              End;
+              end;
 
            EditOrdenServicio.Clear;
            ComboBoxAlmacen.Text:='';
@@ -447,6 +462,7 @@ begin
 
     End
      else
+      if Cuenta=0 then
     Begin
       Delete:=Application.MessageBox('¿Desea Salir del registro de movimientos al inventario?','¡Confirmando!',MB_YESNO);
         Begin
