@@ -67,6 +67,7 @@ type
     procedure SpeedButton5Click(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure SpeedButtonImprimirClick(Sender: TObject);
+    procedure SpeedButton6Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -116,11 +117,34 @@ begin
   FormAlmacenes.show;
 end;
 
+procedure TFormInventario.SpeedButton6Click(Sender: TObject);
+Var
+ Valor_existencia:Real;
+begin
+  With FDQueryActualiza do
+    Begin
+      Sql.Clear;
+      Sql.Add('SELECT sum(cantidad) FROM "CMSoftware"."MovimientosInventario" where id_clave=id_clave group by id_clave');
+      Active:=True;
+      Open;
+      Valor_Existencia:=Fields[0].AsFloat;
+      Active:=True;
+      while not FDQueryActualiza.Eof  do
+     begin
+      Sql.Add('update "CMSoftware"."Producto" set existencia=Valor_Existencia where id_clave=id_clave');
+      Next;
+    end;
+     close;
+     ExecSQL;
+  end;
 
+end;
 
 procedure TFormInventario.SpeedButtonAgregarClick(Sender: TObject);
 
 begin
+
+
   FormProductos.Show;
   FormProductos.TabbedNotebook1.PageIndex:=0;
   FormProductos.Editid_producto.text:=IntToStr(cuenta);

@@ -54,8 +54,6 @@ type
     ToolButton3: TToolButton;
     SpeedButton5: TSpeedButton;
     SaveDialoginventario: TSaveDialog;
-    SpeedButton6: TSpeedButton;
-    FDQueryActualiza: TFDQuery;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure SpeedButtonSalirClick(Sender: TObject);
     procedure SpeedButtonAgregarClick(Sender: TObject);
@@ -116,11 +114,11 @@ begin
   FormAlmacenes.show;
 end;
 
-
-
 procedure TFormInventario.SpeedButtonAgregarClick(Sender: TObject);
 
 begin
+
+
   FormProductos.Show;
   FormProductos.TabbedNotebook1.PageIndex:=0;
   FormProductos.Editid_producto.text:=IntToStr(cuenta);

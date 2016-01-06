@@ -1663,15 +1663,8 @@ object FormInventario: TFormInventario
       Caption = 'Almacenes'
       OnClick = SpeedButton5Click
     end
-    object SpeedButton6: TSpeedButton
-      Left = 385
-      Top = 0
-      Width = 40
-      Height = 42
-      Caption = 'Actualiza'
-    end
     object ToolButton2: TToolButton
-      Left = 425
+      Left = 385
       Top = 0
       Width = 10
       Caption = 'ToolButton2'
@@ -1679,7 +1672,7 @@ object FormInventario: TFormInventario
       Style = tbsSeparator
     end
     object SpeedButtonSalir: TSpeedButton
-      Left = 435
+      Left = 395
       Top = 0
       Width = 41
       Height = 42
@@ -2061,10 +2054,5 @@ object FormInventario: TFormInventario
   object SaveDialoginventario: TSaveDialog
     Left = 400
     Top = 160
-  end
-  object FDQueryActualiza: TFDQuery
-    Connection = FormMainMenu.TFDConectionMainMenu
-    Left = 464
-    Top = 296
   end
 end

@@ -1669,6 +1669,7 @@ object FormInventario: TFormInventario
       Width = 40
       Height = 42
       Caption = 'Actualiza'
+      OnClick = SpeedButton6Click
     end
     object ToolButton2: TToolButton
       Left = 425
